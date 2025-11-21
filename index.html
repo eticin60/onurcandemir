@@ -4,18 +4,19 @@
   <meta charset="UTF-8" />
   <title>Onurcan Demir — Full-Stack Engineer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Onurcan Demir — Full-Stack Software Engineer. Building web, mobile, cloud and blockchain products end-to-end." />
+  <meta name="description" content="Onurcan Demir — Full-Stack Software Engineer building web, mobile, cloud and blockchain products end-to-end." />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
   <style>
     :root{
       --bg:#020617;
+      --bg-soft:#020817;
       --fg:#ecfdf5;
-      --muted:#94a3b8;
+      --muted:#9ca3af;
+      --green:#22c55e;
       --cyan:#22d3ee;
-      --blue:#3b82f6;
-      --purple:#a855f7;
+      --emerald:#10b981;
       --card:#020617;
-      --border:rgba(148,163,184,.45);
+      --border:rgba(148,163,184,.4);
     }
 
     *{
@@ -31,231 +32,261 @@
     }
 
     body{
-      font-family:"Poppins",system-ui,-apple-system, BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:radial-gradient(circle at top,#020617 0,#020617 40%,#000 100%);
+      font-family:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:radial-gradient(circle at top,#022c22 0,var(--bg) 45%,#000 100%);
       color:var(--fg);
     }
 
-    /* Kod yağmuru canvas */
-    #codeRain{
+    /* Arkaplan canvas (particle grid) */
+    #bg-canvas{
       position:fixed;
       inset:0;
       width:100%;
       height:100%;
       opacity:.25;
-      mix-blend-mode:screen;
       pointer-events:none;
       z-index:0;
     }
 
-    /* Neon orblar */
+    .bg-grid-overlay{
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(to right, rgba(15,118,110,.35) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15,118,110,.35) 1px, transparent 1px);
+      background-size:90px 90px;
+      opacity:.18;
+      pointer-events:none;
+      z-index:0;
+    }
+
     .orb{
       position:fixed;
       width:420px;
       height:420px;
       border-radius:999px;
-      filter:blur(80px);
-      opacity:.35;
+      filter:blur(100px);
+      opacity:.5;
       pointer-events:none;
       z-index:0;
     }
     .orb-left{
-      left:5%;
-      top:10%;
-      background:radial-gradient(circle,rgba(34,211,238,.6),transparent 70%);
+      left:0;
+      top:0;
+      background:radial-gradient(circle,rgba(16,185,129,.75),transparent 70%);
     }
     .orb-right{
-      right:5%;
-      bottom:5%;
-      background:radial-gradient(circle,rgba(168,85,247,.7),transparent 70%);
+      right:-80px;
+      bottom:-40px;
+      background:radial-gradient(circle,rgba(45,212,191,.7),transparent 70%);
     }
 
-    /* Sayfa iskeleti */
     .page{
       position:relative;
       z-index:1;
-      min-height:100vh;
-      padding:22px 60px;
+      height:100vh;
+      padding:18px 52px 20px;
       display:flex;
       flex-direction:column;
+      gap:20px;
     }
 
-    /* Küçük ekranlarda sığdırmak için küçültme */
-    @media (max-height:780px){
+    /* Küçük ekranlarda skala */
+    @media (max-height:830px){
       .page{
-        transform:scale(.9);
+        transform:scale(.92);
         transform-origin:top center;
       }
     }
-    @media (max-height:680px){
+    @media (max-height:720px){
       .page{
-        transform:scale(.8);
+        transform:scale(.85);
+      }
+    }
+    @media (max-width:1000px){
+      .page{
+        padding:14px 24px;
       }
     }
 
-    /* Navbar */
-    .nav{
+    /* ÜST BAR */
+    .top-bar{
       display:flex;
       align-items:center;
       justify-content:space-between;
       padding:10px 18px;
       border-radius:999px;
       background:rgba(15,23,42,.9);
-      border:1px solid rgba(148,163,184,.4);
-      box-shadow:0 18px 40px rgba(15,23,42,.9);
+      border:1px solid var(--border);
       backdrop-filter:blur(22px);
+      box-shadow:0 20px 45px rgba(15,23,42,.9);
     }
 
-    .nav-left{
+    .tb-left{
       display:flex;
       align-items:center;
       gap:10px;
     }
 
-    .nav-badge{
+    .tb-badge{
       width:42px;
       height:42px;
-      border-radius:16px;
-      background:linear-gradient(135deg,var(--cyan),var(--purple));
+      border-radius:15px;
+      background:linear-gradient(135deg,#16a34a,#22d3ee);
       display:flex;
       align-items:center;
       justify-content:center;
       font-weight:900;
       font-size:20px;
+      box-shadow:0 0 26px rgba(16,185,129,.95);
     }
 
-    .nav-title-main{
+    .tb-name{
+      font-size:15px;
       font-weight:600;
-      font-size:16px;
     }
-    .nav-title-sub{
+    .tb-role{
       font-size:11px;
       color:var(--muted);
     }
 
-    .nav-links{
+    .tb-centre{
       display:flex;
       align-items:center;
       gap:18px;
-      font-size:13px;
+      font-size:12px;
       color:var(--muted);
     }
-    .nav-links a{
-      text-decoration:none;
-      color:inherit;
-      padding:4px 0;
+    .tb-centre span{
       position:relative;
+      padding-bottom:2px;
     }
-    .nav-links a::after{
+    .tb-centre span::after{
       content:"";
       position:absolute;
       left:0;
-      bottom:-4px;
+      bottom:-3px;
       width:0;
       height:2px;
-      background:linear-gradient(90deg,var(--cyan),var(--purple));
-      transition:width .22s ease;
+      background:linear-gradient(90deg,var(--emerald),var(--cyan));
+      transition:width .2s;
     }
-    .nav-links a:hover{
+    .tb-centre span:hover{
       color:var(--fg);
     }
-    .nav-links a:hover::after{
+    .tb-centre span:hover::after{
       width:100%;
     }
 
-    .nav-cta{
+    .tb-right{
       display:flex;
       align-items:center;
       gap:10px;
     }
 
-    .nav-availability{
+    .pill-available{
       display:flex;
       align-items:center;
       gap:6px;
       padding:4px 10px;
       border-radius:999px;
-      border:1px solid rgba(34,197,94,.7);
-      background:rgba(22,163,74,.12);
+      border:1px solid rgba(34,197,94,.8);
+      background:rgba(21,128,61,.25);
+      color:#bbf7d0;
       font-size:11px;
       font-weight:500;
-      color:#bbf7d0;
+      letter-spacing:.06em;
+      text-transform:uppercase;
     }
     .dot-live{
       width:7px;
       height:7px;
       border-radius:999px;
       background:#22c55e;
-      box-shadow:0 0 12px #22c55e;
+      box-shadow:0 0 16px #22c55e;
       animation:pulse 1.4s ease-out infinite;
     }
-
     @keyframes pulse{
       0%{transform:scale(1);opacity:1;}
-      70%{transform:scale(1.7);opacity:0;}
+      70%{transform:scale(1.8);opacity:0;}
       100%{transform:scale(1);opacity:0;}
     }
 
-    .nav-button{
-      padding:7px 16px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,.6);
-      background:rgba(15,23,42,.9);
-      color:var(--fg);
-      font-size:11px;
-      font-weight:500;
-      text-decoration:none;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-      transition:all .18s ease-out;
+    .social-links{
+      display:flex;
+      align-items:center;
+      gap:8px;
     }
-    .nav-button:hover{
-      border-color:var(--cyan);
-      box-shadow:0 0 22px rgba(34,211,238,.35);
+    .social-btn{
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.55);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:13px;
+      color:var(--muted);
+      text-decoration:none;
+      transition:all .18s ease-out;
+      background:rgba(15,23,42,.8);
+    }
+    .social-btn:hover{
+      color:var(--fg);
+      border-color:var(--emerald);
+      box-shadow:0 0 20px rgba(34,197,94,.55);
       transform:translateY(-1px);
     }
 
-    /* Hero (tek ekran) */
-    .hero{
+    /* ORTA LAYOUT */
+    .main-layout{
       flex:1;
+      display:grid;
+      grid-template-columns:1.1fr 1.1fr;
+      grid-template-rows:1.5fr 1fr;
+      gap:22px;
+      margin-top:6px;
+    }
+
+    .hero-wrapper{
+      grid-column:1 / 3;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:52px;
-      margin-top:28px;
+      gap:40px;
     }
 
-    .hero-left{
-      max-width:520px;
+    .hero-text{
+      flex:1;
     }
 
-    .hero-pill{
+    .badge-role{
       display:inline-flex;
       align-items:center;
       gap:8px;
       padding:6px 14px;
       border-radius:999px;
-      border:1px solid rgba(56,189,248,.55);
-      background:rgba(8,47,73,.6);
-      color:var(--cyan);
+      border:1px solid rgba(16,185,129,.6);
+      background:rgba(6,78,59,.6);
+      color:#6ee7b7;
       font-size:11px;
-      letter-spacing:.15em;
+      letter-spacing:.14em;
       text-transform:uppercase;
       font-weight:600;
     }
-    .hero-pill-dot{
+    .badge-dot{
       width:7px;
       height:7px;
       border-radius:999px;
-      background:var(--cyan);
-      box-shadow:0 0 16px rgba(34,211,238,.9);
+      background:#6ee7b7;
+      box-shadow:0 0 18px rgba(52,211,153,.9);
     }
 
     .hero-title{
       margin-top:18px;
       line-height:1.02;
       letter-spacing:-.06em;
-      font-size:56px;
+      font-size:52px;
     }
     .hero-title span:first-child{
       display:block;
@@ -264,7 +295,7 @@
     .hero-title span:last-child{
       display:block;
       font-weight:900;
-      background:linear-gradient(90deg,var(--cyan),var(--blue),var(--purple));
+      background:linear-gradient(90deg,#6ee7b7,#22d3ee);
       -webkit-background-clip:text;
       background-clip:text;
       color:transparent;
@@ -272,59 +303,59 @@
 
     .hero-sub{
       margin-top:18px;
-      font-size:16px;
       color:var(--muted);
+      font-size:15px;
       max-width:460px;
     }
 
-    .hero-badges{
+    .hero-tags{
       display:flex;
       flex-wrap:wrap;
       gap:8px;
-      margin-top:16px;
+      margin-top:14px;
     }
-    .hero-badge{
-      padding:6px 12px;
+    .hero-tag{
+      padding:6px 11px;
       border-radius:999px;
-      background:rgba(15,23,42,.9);
-      border:1px solid rgba(148,163,184,.35);
+      background:rgba(15,23,42,.88);
+      border:1px solid rgba(148,163,184,.5);
+      color:#e5e7eb;
       font-size:11px;
-      color:#cbd5f5;
       display:flex;
       align-items:center;
       gap:6px;
     }
 
-    .hero-buttons{
+    .hero-actions{
       display:flex;
-      gap:12px;
-      margin-top:22px;
+      gap:10px;
+      margin-top:20px;
     }
 
     .btn-primary{
-      padding:11px 24px;
+      padding:10px 22px;
       border-radius:999px;
       border:none;
-      background:linear-gradient(90deg,var(--cyan),var(--blue));
-      color:#0b1220;
-      font-weight:700;
+      background:linear-gradient(90deg,#22c55e,#22d3ee);
+      color:#022c22;
       font-size:13px;
+      font-weight:700;
       letter-spacing:.08em;
       text-transform:uppercase;
-      cursor:pointer;
-      box-shadow:0 18px 40px rgba(56,189,248,.45);
       display:inline-flex;
       align-items:center;
       gap:8px;
-      transition:transform .18s ease, box-shadow .18s ease;
+      cursor:pointer;
+      box-shadow:0 20px 45px rgba(16,185,129,.7);
+      transition:transform .18s, box-shadow .18s;
     }
     .btn-primary:hover{
       transform:translateY(-2px);
-      box-shadow:0 24px 50px rgba(56,189,248,.75);
+      box-shadow:0 26px 55px rgba(16,185,129,1);
     }
 
     .btn-ghost{
-      padding:11px 24px;
+      padding:10px 22px;
       border-radius:999px;
       border:1px solid rgba(148,163,184,.6);
       background:rgba(15,23,42,.9);
@@ -333,406 +364,627 @@
       font-weight:600;
       letter-spacing:.08em;
       text-transform:uppercase;
-      cursor:pointer;
       display:inline-flex;
       align-items:center;
       gap:8px;
+      cursor:pointer;
       transition:all .18s ease-out;
     }
     .btn-ghost:hover{
       border-color:var(--cyan);
-      box-shadow:0 0 24px rgba(148,163,184,.40);
+      box-shadow:0 0 22px rgba(56,189,248,.5);
       transform:translateY(-2px);
     }
 
-    /* Sağ taraf hologram kart */
-    .hero-right{
-      flex:1;
-      display:flex;
-      justify-content:flex-end;
-    }
-
-    .card-3d-wrapper{
-      perspective:1400px;
-    }
-
-    .card-3d{
-      width:420px;
-      max-width:100%;
-      padding:22px;
-      border-radius:26px;
-      background:linear-gradient(135deg,rgba(15,23,42,.96),rgba(15,23,42,.86));
-      border:1px solid rgba(56,189,248,.5);
+    /* HERO BADGE (LOGO) */
+    .hero-badge-shell{
+      width:260px;
+      height:260px;
+      border-radius:999px;
       position:relative;
-      overflow:hidden;
-      box-shadow:0 26px 80px rgba(15,23,42,.95);
-    }
-
-    .card-scanlines{
-      position:absolute;
-      inset:0;
-      opacity:.22;
-      background-image:repeating-linear-gradient(
-        to bottom,
-        rgba(15,23,42,0),
-        rgba(15,23,42,0) 2px,
-        rgba(56,189,248,.18) 3px
-      );
-      pointer-events:none;
-    }
-
-    .card-inner{
-      position:relative;
-      z-index:1;
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-    }
-
-    .card-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-    }
-
-    .card-avatar{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .card-avatar-badge{
-      width:54px;
-      height:54px;
-      border-radius:18px;
-      background:linear-gradient(135deg,var(--cyan),var(--purple));
       display:flex;
       align-items:center;
       justify-content:center;
-      font-weight:900;
-      font-size:26px;
-      box-shadow:0 0 26px rgba(129,230,217,.85);
     }
 
-    .card-avatar-text-main{
-      font-weight:600;
-      font-size:17px;
+    .hero-badge-outer{
+      position:absolute;
+      inset:0;
+      border-radius:999px;
+      border:2px solid rgba(52,211,153,.5);
+      box-shadow:0 0 45px rgba(16,185,129,.9);
+      animation:spin-slow 22s linear infinite;
     }
-    .card-avatar-text-sub{
-      font-size:12px;
+
+    .hero-badge-inner-ring{
+      position:absolute;
+      inset:18px;
+      border-radius:999px;
+      border:2px solid rgba(45,212,191,.65);
+      box-shadow:0 0 35px rgba(45,212,191,.8) inset;
+    }
+
+    .hero-badge-core{
+      position:absolute;
+      inset:34px;
+      border-radius:999px;
+      overflow:hidden;
+      background:radial-gradient(circle at top,#059669,#020617 70%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-badge-core img{
+      width:110%;
+      height:110%;
+      object-fit:cover;
+      filter:drop-shadow(0 0 18px rgba(16,185,129,.9));
+    }
+
+    @keyframes spin-slow{
+      from{transform:rotate(0deg);}
+      to{transform:rotate(360deg);}
+    }
+
+    /* ALT GRID (3 BLOK) */
+    .bottom-grid{
+      grid-column:1 / 3;
+      display:grid;
+      grid-template-columns:1.4fr 1.3fr 1.1fr;
+      gap:18px;
+    }
+
+    .card{
+      background:radial-gradient(circle at top left,rgba(16,185,129,.18),rgba(15,23,42,.96));
+      border-radius:22px;
+      border:1px solid rgba(51,65,85,.9);
+      box-shadow:0 18px 45px rgba(15,23,42,.9);
+      padding:16px 18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:radial-gradient(circle at top,rgba(45,212,191,.12),transparent 60%);
+      opacity:0;
+      transition:opacity .25s;
+    }
+    .card:hover::before{
+      opacity:1;
+    }
+
+    /* DEV CARD */
+    .dev-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .dev-title{
+      font-size:14px;
+      font-weight:600;
+    }
+    .dev-sub{
+      font-size:11px;
       color:var(--muted);
     }
 
-    .card-available{
-      padding:6px 11px;
+    .dev-chip{
+      padding:4px 9px;
       border-radius:999px;
-      border:1px solid rgba(22,163,74,.8);
-      background:rgba(21,128,61,.2);
+      border:1px solid rgba(16,185,129,.7);
+      background:rgba(6,95,70,.6);
+      color:#bbf7d0;
       font-size:11px;
       display:flex;
       align-items:center;
-      gap:6px;
-      color:#bbf7d0;
-      text-transform:uppercase;
-      letter-spacing:.10em;
-      font-weight:600;
+      gap:5px;
     }
 
-    .card-availability-dot{
-      width:7px;
-      height:7px;
-      border-radius:999px;
-      background:#22c55e;
-      box-shadow:0 0 16px #22c55e;
-    }
-
-    /* Code window */
     .code-window{
-      border-radius:18px;
-      background:rgba(2,6,23,.95);
-      border:1px solid rgba(56,189,248,.55);
-      padding:14px 16px 16px;
+      margin-top:8px;
+      border-radius:16px;
+      background:rgba(2,6,23,.98);
+      border:1px solid rgba(56,189,248,.5);
       font-family:SFMono-Regular,Menlo,Monaco,"Roboto Mono",monospace;
-      font-size:12px;
+      font-size:11px;
       color:#e5e7eb;
+      padding:10px 12px 12px;
+      position:relative;
     }
-
     .code-dots{
       display:flex;
-      align-items:center;
-      gap:6px;
-      margin-bottom:10px;
+      gap:5px;
+      margin-bottom:6px;
     }
     .code-dot{
-      width:9px;
-      height:9px;
+      width:8px;
+      height:8px;
       border-radius:999px;
     }
     .code-dot.red{background:#f97373;}
     .code-dot.yellow{background:#facc15;}
     .code-dot.green{background:#22c55e;}
 
-    .code-line{
-      white-space:pre;
-    }
-    .code-keyword{color:#c4b5fd;}
-    .code-var{color:#38bdf8;}
-    .code-key{color:#22d3ee;}
-    .code-string{color:#4ade80;}
-    .code-special{color:#fb7185;font-weight:700;}
+    .code-line{white-space:pre;}
+    .kw{color:#c4b5fd;}
+    .vr{color:#38bdf8;}
+    .key{color:#22d3ee;}
+    .str{color:#4ade80;}
+    .sp{color:#fb7185;font-weight:700;}
 
-    /* Emoji skill grid */
-    .skill-grid{
-      margin-top:14px;
+    .code-footer{
+      margin-top:6px;
+      font-size:10px;
+      color:var(--muted);
+    }
+
+    .tech-grid{
+      margin-top:10px;
       display:grid;
       grid-template-columns:repeat(3,1fr);
-      gap:9px;
+      gap:7px;
     }
-    .skill-item{
-      border-radius:14px;
-      background:rgba(15,23,42,.95);
-      border:1px solid rgba(148,163,184,.4);
+    .tech-item{
+      border-radius:12px;
+      background:rgba(15,23,42,.96);
+      border:1px solid rgba(51,65,85,.95);
+      padding:6px 4px;
       display:flex;
       flex-direction:column;
       align-items:center;
-      justify-content:center;
-      padding:8px 4px;
-      gap:4px;
-      font-size:11px;
+      gap:3px;
+      font-size:10px;
       color:var(--muted);
-      transition:all .16s ease-out;
-      cursor:default;
+      transition:all .18s ease-out;
     }
-    .skill-item span:first-child{
-      font-size:20px;
+    .tech-item span:first-child{
+      font-size:18px;
     }
-    .skill-item:hover{
-      border-color:var(--cyan);
+    .tech-item:hover{
+      border-color:var(--emerald);
       color:var(--fg);
       transform:translateY(-3px);
-      box-shadow:0 14px 32px rgba(15,23,42,.9);
+      box-shadow:0 14px 30px rgba(15,23,42,.95);
     }
 
-    .divider{
-      margin-top:10px;
-      height:1px;
-      border-radius:999px;
-      background:linear-gradient(90deg,transparent,rgba(148,163,184,.8),transparent);
-      opacity:.65;
+    /* EXPERTISE CARD */
+    .card-title{
+      font-size:14px;
+      font-weight:600;
+      margin-bottom:4px;
     }
-
-    .footer-mini{
-      margin-top:10px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+    .card-sub{
       font-size:11px;
       color:var(--muted);
+      margin-bottom:8px;
+    }
+
+    .exp-row{
+      margin-top:7px;
+    }
+
+    .exp-row-label{
+      font-size:11px;
+      font-weight:500;
+      color:#e5e7eb;
+      margin-bottom:4px;
+    }
+
+    .chip-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:5px;
+    }
+    .chip{
+      padding:3px 8px;
+      border-radius:999px;
+      background:rgba(15,23,42,.95);
+      border:1px solid rgba(51,65,85,.95);
+      font-size:10px;
+      color:#e5e7eb;
+      white-space:nowrap;
+    }
+
+    /* CONTACT CARD */
+    .contact-block{
+      margin-top:8px;
+      border-radius:14px;
+      background:rgba(15,23,42,.98);
+      border:1px solid rgba(51,65,85,.9);
+      padding:10px 10px;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      font-size:11px;
+      color:#e5e7eb;
+      transition:all .18s ease-out;
+    }
+    .contact-block:hover{
+      border-color:var(--cyan);
+      transform:translateY(-3px);
+      box-shadow:0 18px 40px rgba(15,23,42,.95);
+    }
+    .contact-icon{
+      width:26px;
+      height:26px;
+      border-radius:999px;
+      background:rgba(6,95,70,.9);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+      color:#bbf7d0;
+      flex-shrink:0;
+    }
+    .contact-label{
+      font-size:10px;
+      color:var(--muted);
+    }
+    .contact-value{
+      font-size:11px;
+      font-weight:500;
+    }
+
+    .contact-cta{
+      margin-top:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(56,189,248,.7);
+      background:linear-gradient(90deg,rgba(6,78,59,.9),rgba(8,47,73,.9));
+      color:#e0f2fe;
+      font-size:11px;
+      font-weight:500;
+      text-align:center;
+      cursor:pointer;
+      transition:all .18s;
+    }
+    .contact-cta:hover{
+      box-shadow:0 18px 40px rgba(8,47,73,.95);
+      transform:translateY(-2px);
+    }
+
+    /* FOOTER MINI */
+    .footer-mini{
+      margin-top:4px;
+      font-size:11px;
+      color:var(--muted);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
     }
     .footer-mini span strong{
-      color:var(--cyan);
+      color:#6ee7b7;
       font-weight:600;
     }
 
-    /* Küçük ekranlarda biraz daha dar */
-    @media (max-width:1024px){
-      .page{padding:16px 20px;}
-      .hero{gap:32px;}
-      .hero-title{font-size:44px;}
-      .card-3d{width:360px;}
+    @media (max-width:1100px){
+      .main-layout{
+        grid-template-columns:1.1fr 1.1fr;
+        grid-template-rows:1.4fr 1.1fr;
+      }
+      .bottom-grid{
+        grid-template-columns:1.4fr 1.2fr 1.1fr;
+      }
+      .hero-title{font-size:46px;}
+    }
+
+    @media (max-width:900px){
+      /* Bu tasarım esasen desktop içindir; mobile'da yine de sığsın diye biraz scale */
+      body{
+        overflow:auto;
+      }
+      .page{
+        height:auto;
+        min-height:100vh;
+        transform:none;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Kod yağmuru -->
-  <canvas id="codeRain"></canvas>
-
-  <!-- Neon orblar -->
+  <!-- ARKAPLAN -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="bg-grid-overlay"></div>
   <div class="orb orb-left"></div>
   <div class="orb orb-right"></div>
 
-  <div class="page" id="page">
-    <!-- NAVBAR -->
-    <header class="nav">
-      <div class="nav-left">
-        <div class="nav-badge">O</div>
+  <!-- SAYFA -->
+  <div class="page">
+    <!-- ÜST BAR -->
+    <header class="top-bar">
+      <div class="tb-left">
+        <div class="tb-badge">O</div>
         <div>
-          <div class="nav-title-main">Onurcan Demir</div>
-          <div class="nav-title-sub">Full-Stack Software Engineer</div>
+          <div class="tb-name">Onurcan Demir</div>
+          <div class="tb-role">Full-Stack Software Engineer</div>
         </div>
       </div>
 
-      <nav class="nav-links">
-        <a href="#products">Products</a>
-        <a href="#skills">Tech Stack</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <div class="tb-centre">
+        <span>Products</span>
+        <span>Skills</span>
+        <span>Experience</span>
+        <span>Contact</span>
+      </div>
 
-      <div class="nav-cta">
-        <div class="nav-availability">
+      <div class="tb-right">
+        <div class="pill-available">
           <div class="dot-live"></div>
-          <span>Available for Projects</span>
+          <span>Available</span>
         </div>
-        <a href="mailto:onurcan@demir.dev" class="nav-button">Email Me</a>
+        <div class="social-links">
+          <a href="https://github.com/onurcandemir" target="_blank" class="social-btn">GH</a>
+          <a href="https://linkedin.com/in/onurcandemir" target="_blank" class="social-btn">in</a>
+          <a href="mailto:onurcan@demir.dev" class="social-btn">@</a>
+        </div>
       </div>
     </header>
 
-    <!-- HERO - TEK EKRAN -->
-    <main class="hero">
-      <!-- Sol taraf -->
-      <section class="hero-left">
-        <div class="hero-pill">
-          <span class="hero-pill-dot"></span>
-          <span>SOFTWARE ENGINEER · PRODUCT BUILDER</span>
+    <!-- ORTA LAYOUT -->
+    <main class="main-layout">
+      <!-- HERO -->
+      <section class="hero-wrapper">
+        <div class="hero-text">
+          <div class="badge-role">
+            <span class="badge-dot"></span>
+            <span>SOFTWARE ENGINEER</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span>ONURCAN</span>
+            <span>DEMIR</span>
+          </h1>
+
+          <p class="hero-sub">
+            Crafting exceptional digital experiences through innovative code and creative design.
+            I build fast, scalable platforms across web, mobile, cloud and blockchain.
+          </p>
+
+          <div class="hero-tags">
+            <div class="hero-tag">🚀 End-to-end product development</div>
+            <div class="hero-tag">☁️ Cloud-native & distributed systems</div>
+            <div class="hero-tag">🧠 AI-powered automation</div>
+            <div class="hero-tag">🧩 DeFi & Web3 integrations</div>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="alert('Buraya projeler sayfasının linkini bağlayabilirsin.');">
+              VIEW WORK <span>➜</span>
+            </button>
+            <button class="btn-ghost" onclick="window.location.href='mailto:onurcan@demir.dev'">
+              CONTACT
+            </button>
+          </div>
         </div>
 
-        <h1 class="hero-title">
-          <span>ONURCAN</span>
-          <span>DEMIR</span>
-        </h1>
-
-        <p class="hero-sub">
-          Full-Stack engineer crafting web, mobile, cloud and blockchain products
-          from idea to production. I design, build and ship experiences that feel
-          fast, polished and futuristic.
-        </p>
-
-        <div class="hero-badges">
-          <div class="hero-badge">🚀 End-to-end development</div>
-          <div class="hero-badge">☁️ Cloud-native architectures</div>
-          <div class="hero-badge">🧠 AI & automation</div>
-          <div class="hero-badge">🧩 Web3 · DeFi · Crypto</div>
-        </div>
-
-        <div class="hero-buttons">
-          <button class="btn-primary">
-            VIEW PRODUCTS
-            <span style="font-size:14px;">➜</span>
-          </button>
-          <button class="btn-ghost" onclick="window.location.href='mailto:onurcan@demir.dev'">
-            CONTACT ME
-          </button>
+        <div class="hero-badge-shell">
+          <div class="hero-badge-outer"></div>
+          <div class="hero-badge-inner-ring"></div>
+          <div class="hero-badge-core">
+            <!-- Buraya kendi hacker logosunu koy: dosya adını istersen değiştir -->
+            <img src="onurcan-logo.png" alt="Onurcan Demir Logo" />
+          </div>
         </div>
       </section>
 
-      <!-- Sağ taraf: hologram kart -->
-      <section class="hero-right">
-        <div class="card-3d-wrapper" id="cardWrapper">
-          <div class="card-3d" id="infoCard">
-            <div class="card-scanlines"></div>
-            <div class="card-inner">
-              <div class="card-header">
-                <div class="card-avatar">
-                  <div class="card-avatar-badge">O</div>
-                  <div>
-                    <div class="card-avatar-text-main">Onurcan Demir</div>
-                    <div class="card-avatar-text-sub">Full-Stack Engineer · Türkiye</div>
-                  </div>
-                </div>
-                <div class="card-available">
-                  <div class="card-availability-dot"></div>
-                  AVAILABLE
-                </div>
-              </div>
-
-              <!-- Kod bloğu -->
-              <div class="code-window">
-                <div class="code-dots">
-                  <div class="code-dot red"></div>
-                  <div class="code-dot yellow"></div>
-                  <div class="code-dot green"></div>
-                </div>
-                <div class="code-line">
-                  <span class="code-keyword">const</span> <span class="code-var">developer</span> = &#123;
-                </div>
-                <div class="code-line">
-                  &nbsp;&nbsp;<span class="code-key">name</span>: <span class="code-string">"Onurcan Demir"</span>,
-                </div>
-                <div class="code-line">
-                  &nbsp;&nbsp;<span class="code-key">role</span>: <span class="code-string">"Full Stack"</span>,
-                </div>
-                <div class="code-line">
-                  &nbsp;&nbsp;<span class="code-key">skills</span>: [
-                </div>
-                <div class="code-line">
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"React"</span>, <span class="code-string">"Node.js"</span>,
-                </div>
-                <div class="code-line">
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Python"</span>, <span class="code-string">"AWS"</span>
-                </div>
-                <div class="code-line">
-                  &nbsp;&nbsp;],
-                </div>
-                <div class="code-line">
-                  &nbsp;&nbsp;<span class="code-key">passion</span>: <span class="code-special">∞</span>
-                </div>
-                <div class="code-line">&#125;;</div>
-
-                <!-- Emoji tech satırı -->
-                <div class="divider"></div>
-                <div class="code-line" style="margin-top:8px;color:var(--muted);font-size:11px;">
-                  ⚛ React &nbsp; · &nbsp; 🚀 Node.js &nbsp; · &nbsp; 🐍 Python &nbsp; · &nbsp; ☁ AWS &nbsp; · &nbsp; 🐳 Docker &nbsp; · &nbsp; ⚡ AI/ML
-                </div>
-              </div>
-
-              <!-- Emoji skill grid -->
-              <div class="skill-grid">
-                <div class="skill-item"><span>⚛️</span><span>React</span></div>
-                <div class="skill-item"><span>🚀</span><span>Node.js</span></div>
-                <div class="skill-item"><span>🐍</span><span>Python</span></div>
-                <div class="skill-item"><span>☁️</span><span>AWS</span></div>
-                <div class="skill-item"><span>🐳</span><span>Docker</span></div>
-                <div class="skill-item"><span>⚡</span><span>Web3 / AI</span></div>
-              </div>
-
-              <div class="footer-mini">
-                <span>Building <strong>products</strong> · not just projects</span>
-                <span>onurcan.dev</span>
-              </div>
+      <!-- ALT GRID: DEV CARD - EXPERTISE - CONTACT  -->
+      <section class="bottom-grid">
+        <!-- Developer Card -->
+        <div class="card">
+          <div class="dev-header">
+            <div>
+              <div class="dev-title">Developer Profile</div>
+              <div class="dev-sub">const developer = &#123; ... &#125;</div>
             </div>
+            <div class="dev-chip">
+              <span style="width:7px;height:7px;border-radius:999px;background:#bbf7d0;box-shadow:0 0 12px #bbf7d0;"></span>
+              ACTIVE
+            </div>
+          </div>
+
+          <div class="code-window">
+            <div class="code-dots">
+              <div class="code-dot red"></div>
+              <div class="code-dot yellow"></div>
+              <div class="code-dot green"></div>
+            </div>
+
+            <div class="code-line">
+              <span class="kw">const</span> <span class="vr">developer</span> = &#123;
+            </div>
+            <div class="code-line">
+              &nbsp;&nbsp;<span class="key">name</span>: <span class="str">"Onurcan Demir"</span>,
+            </div>
+            <div class="code-line">
+              &nbsp;&nbsp;<span class="key">role</span>: <span class="str">"Full Stack"</span>,
+            </div>
+            <div class="code-line">
+              &nbsp;&nbsp;<span class="key">skills</span>: [
+            </div>
+            <div class="code-line">
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"React"</span>, <span class="str">"Node.js"</span>,
+            </div>
+            <div class="code-line">
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"Python"</span>, <span class="str">"AWS"</span>
+            </div>
+            <div class="code-line">
+              &nbsp;&nbsp;],
+            </div>
+            <div class="code-line">
+              &nbsp;&nbsp;<span class="key">passion</span>: <span class="sp">∞</span>
+            </div>
+            <div class="code-line">&#125;;</div>
+
+            <div class="code-footer">
+              Crafting systems that are fast, reliable and fun to use.
+            </div>
+          </div>
+
+          <div class="tech-grid">
+            <div class="tech-item"><span>⚛️</span><span>React</span></div>
+            <div class="tech-item"><span>🚀</span><span>Node.js</span></div>
+            <div class="tech-item"><span>🐍</span><span>Python</span></div>
+            <div class="tech-item"><span>☁️</span><span>AWS</span></div>
+            <div class="tech-item"><span>🐳</span><span>Docker</span></div>
+            <div class="tech-item"><span>⚡</span><span>AI / ML</span></div>
+          </div>
+        </div>
+
+        <!-- Full-Stack Expertise -->
+        <div class="card">
+          <div class="card-title">Full-Stack Expertise</div>
+          <div class="card-sub">Comprehensive knowledge across all layers of modern software development.</div>
+
+          <div class="exp-row">
+            <div class="exp-row-label">Frontend & Mobile</div>
+            <div class="chip-row">
+              <span class="chip">React</span>
+              <span class="chip">Next.js</span>
+              <span class="chip">React Native</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip">Tailwind</span>
+            </div>
+          </div>
+
+          <div class="exp-row">
+            <div class="exp-row-label">Backend & APIs</div>
+            <div class="chip-row">
+              <span class="chip">Node.js</span>
+              <span class="chip">Express</span>
+              <span class="chip">Python</span>
+              <span class="chip">Django</span>
+              <span class="chip">REST</span>
+              <span class="chip">GraphQL</span>
+            </div>
+          </div>
+
+          <div class="exp-row">
+            <div class="exp-row-label">Cloud & DevOps</div>
+            <div class="chip-row">
+              <span class="chip">AWS</span>
+              <span class="chip">Docker</span>
+              <span class="chip">Kubernetes</span>
+              <span class="chip">CI / CD</span>
+              <span class="chip">Monitoring</span>
+            </div>
+          </div>
+
+          <div class="exp-row">
+            <div class="exp-row-label">Blockchain & Web3</div>
+            <div class="chip-row">
+              <span class="chip">Solidity</span>
+              <span class="chip">Smart Contracts</span>
+              <span class="chip">DeFi</span>
+              <span class="chip">Web3.js</span>
+              <span class="chip">Ethers.js</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="card">
+          <div class="card-title">Let’s Build Something Amazing</div>
+          <div class="card-sub">Have a project in mind? Reach out and let's talk.</div>
+
+          <div class="contact-block">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">onurcan@demir.dev</div>
+            </div>
+          </div>
+
+          <div class="contact-block">
+            <div class="contact-icon">🐙</div>
+            <div>
+              <div class="contact-label">GitHub</div>
+              <div class="contact-value">@onurcandemir</div>
+            </div>
+          </div>
+
+          <div class="contact-block">
+            <div class="contact-icon">💼</div>
+            <div>
+              <div class="contact-label">LinkedIn</div>
+              <div class="contact-value">/onurcandemir</div>
+            </div>
+          </div>
+
+          <div class="contact-cta" onclick="window.location.href='mailto:onurcan@demir.dev'">
+            Send a message — I’ll get back with ideas and a plan.
           </div>
         </div>
       </section>
     </main>
+
+    <!-- FOOTER MINI -->
+    <footer class="footer-mini">
+      <span>© 2024 <strong>Onurcan Demir</strong>. All rights reserved.</span>
+      <span>onurcan.dev</span>
+    </footer>
   </div>
 
   <script>
-    // ----- Kod yağmuru -----
+    // ===== BG PARTICLE ANIM (basit point'ler) =====
     (function(){
-      const canvas = document.getElementById('codeRain');
+      const canvas = document.getElementById('bg-canvas');
       const ctx = canvas.getContext('2d');
-      let width, height, columns, drops;
-      const chars = '01<>/{}[]()λ@#&';
+      let width, height, particles = [];
 
       function init(){
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
-        columns = Math.floor(width / 14);
-        drops = Array(columns).fill(0).map(() => ({
-          y: Math.random()*height,
-          speed: 14 + Math.random()*16
-        }));
+        particles = [];
+        const count = 70;
+        for(let i=0;i<count;i++){
+          particles.push({
+            x: Math.random()*width,
+            y: Math.random()*height,
+            vx:(Math.random()-0.5)*0.35,
+            vy:(Math.random()-0.5)*0.35,
+            r: Math.random()*2+0.5
+          });
+        }
       }
 
       function draw(){
-        ctx.fillStyle = 'rgba(2,4,20,0.35)';
+        ctx.fillStyle = 'rgba(0,0,0,0.35)';
         ctx.fillRect(0,0,width,height);
 
-        drops.forEach((drop,i)=>{
-          const char = chars[Math.floor(Math.random()*chars.length)];
-          const x = i*14;
-          const hue = 170 + Math.sin(Date.now()/2000 + i)*40;
-          ctx.fillStyle = `hsl(${hue},100%,60%)`;
-          ctx.font = '14px monospace';
-          ctx.fillText(char,x,drop.y);
-          if(drop.y > height && Math.random()>0.975){
-            drop.y = 0;
-          }else{
-            drop.y += drop.speed*0.5;
+        for(let i=0;i<particles.length;i++){
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          if(p.x<0 || p.x>width) p.vx*=-1;
+          if(p.y<0 || p.y>height) p.vy*=-1;
+
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle = 'rgba(16,185,129,0.65)';
+          ctx.fill();
+        }
+
+        // Yakın partiküller arası çizgi
+        for(let i=0;i<particles.length;i++){
+          for(let j=i+1;j<particles.length;j++){
+            const a=particles[i], b=particles[j];
+            const dx=a.x-b.x, dy=a.y-b.y;
+            const dist=Math.sqrt(dx*dx+dy*dy);
+            if(dist<140){
+              const alpha = 1 - dist/140;
+              ctx.beginPath();
+              ctx.moveTo(a.x,a.y);
+              ctx.lineTo(b.x,b.y);
+              ctx.strokeStyle = 'rgba(16,185,129,'+alpha*0.35+')';
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
           }
-        });
+        }
 
         requestAnimationFrame(draw);
       }
@@ -740,36 +992,6 @@
       init();
       draw();
       window.addEventListener('resize', init);
-    })();
-
-    // ----- Mouse hareketi: orblar + 3D kart -----
-    (function(){
-      const orbL = document.querySelector('.orb-left');
-      const orbR = document.querySelector('.orb-right');
-      const card = document.getElementById('infoCard');
-      const wrapper = document.getElementById('cardWrapper');
-
-      window.addEventListener('mousemove', (e)=>{
-        const x = e.clientX / window.innerWidth - 0.5;
-        const y = e.clientY / window.innerHeight - 0.5;
-
-        if(orbL){
-          orbL.style.transform = `translate(${x*80}px,${y*80}px)`;
-        }
-        if(orbR){
-          orbR.style.transform = `translate(${x*-80}px,${y*-80}px)`;
-        }
-        if(card){
-          const rotY = x*14;
-          const rotX = y*-14;
-          card.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg)`;
-        }
-      });
-
-      // kart ortalanınca biraz tilt efekti
-      if(wrapper){
-        wrapper.style.transformStyle = 'preserve-3d';
-      }
     })();
   </script>
 </body>

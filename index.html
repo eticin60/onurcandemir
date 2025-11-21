@@ -1,998 +1,429 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Onurcan Demir — Full-Stack Engineer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Onurcan Demir — Full-Stack Software Engineer building web, mobile, cloud and blockchain products end-to-end." />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
-  <style>
-    :root{
-      --bg:#020617;
-      --bg-soft:#020817;
-      --fg:#ecfdf5;
-      --muted:#9ca3af;
-      --green:#22c55e;
-      --cyan:#22d3ee;
-      --emerald:#10b981;
-      --card:#020617;
-      --border:rgba(148,163,184,.4);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onurcan Demir - Full Stack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
+        body {
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
 
-    html,body{
-      width:100%;
-      height:100%;
-      overflow:hidden; /* scroll YOK */
-    }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
-    body{
-      font-family:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
-      background:radial-gradient(circle at top,#022c22 0,var(--bg) 45%,#000 100%);
-      color:var(--fg);
-    }
+        @keyframes spin-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
 
-    /* Arkaplan canvas (particle grid) */
-    #bg-canvas{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      opacity:.25;
-      pointer-events:none;
-      z-index:0;
-    }
+        .animate-spin-slow {
+            animation: spin-slow 20s linear infinite;
+        }
 
-    .bg-grid-overlay{
-      position:fixed;
-      inset:0;
-      background-image:
-        linear-gradient(to right, rgba(15,118,110,.35) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(15,118,110,.35) 1px, transparent 1px);
-      background-size:90px 90px;
-      opacity:.18;
-      pointer-events:none;
-      z-index:0;
-    }
+        .animate-spin-reverse {
+            animation: spin-reverse 15s linear infinite;
+        }
 
-    .orb{
-      position:fixed;
-      width:420px;
-      height:420px;
-      border-radius:999px;
-      filter:blur(100px);
-      opacity:.5;
-      pointer-events:none;
-      z-index:0;
-    }
-    .orb-left{
-      left:0;
-      top:0;
-      background:radial-gradient(circle,rgba(16,185,129,.75),transparent 70%);
-    }
-    .orb-right{
-      right:-80px;
-      bottom:-40px;
-      background:radial-gradient(circle,rgba(45,212,191,.7),transparent 70%);
-    }
+        .gradient-text {
+            background: linear-gradient(to right, #10b981, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    .page{
-      position:relative;
-      z-index:1;
-      height:100vh;
-      padding:18px 52px 20px;
-      display:flex;
-      flex-direction:column;
-      gap:20px;
-    }
+        .hologram-scan {
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(16, 185, 129, 0.05) 0px,
+                transparent 2px,
+                transparent 4px
+            );
+        }
 
-    /* Küçük ekranlarda skala */
-    @media (max-height:830px){
-      .page{
-        transform:scale(.92);
-        transform-origin:top center;
-      }
-    }
-    @media (max-height:720px){
-      .page{
-        transform:scale(.85);
-      }
-    }
-    @media (max-width:1000px){
-      .page{
-        padding:14px 24px;
-      }
-    }
+        .tech-badge {
+            transition: all 0.3s ease;
+        }
 
-    /* ÜST BAR */
-    .top-bar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:10px 18px;
-      border-radius:999px;
-      background:rgba(15,23,42,.9);
-      border:1px solid var(--border);
-      backdrop-filter:blur(22px);
-      box-shadow:0 20px 45px rgba(15,23,42,.9);
-    }
-
-    .tb-left{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .tb-badge{
-      width:42px;
-      height:42px;
-      border-radius:15px;
-      background:linear-gradient(135deg,#16a34a,#22d3ee);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      font-size:20px;
-      box-shadow:0 0 26px rgba(16,185,129,.95);
-    }
-
-    .tb-name{
-      font-size:15px;
-      font-weight:600;
-    }
-    .tb-role{
-      font-size:11px;
-      color:var(--muted);
-    }
-
-    .tb-centre{
-      display:flex;
-      align-items:center;
-      gap:18px;
-      font-size:12px;
-      color:var(--muted);
-    }
-    .tb-centre span{
-      position:relative;
-      padding-bottom:2px;
-    }
-    .tb-centre span::after{
-      content:"";
-      position:absolute;
-      left:0;
-      bottom:-3px;
-      width:0;
-      height:2px;
-      background:linear-gradient(90deg,var(--emerald),var(--cyan));
-      transition:width .2s;
-    }
-    .tb-centre span:hover{
-      color:var(--fg);
-    }
-    .tb-centre span:hover::after{
-      width:100%;
-    }
-
-    .tb-right{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .pill-available{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      padding:4px 10px;
-      border-radius:999px;
-      border:1px solid rgba(34,197,94,.8);
-      background:rgba(21,128,61,.25);
-      color:#bbf7d0;
-      font-size:11px;
-      font-weight:500;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-    }
-    .dot-live{
-      width:7px;
-      height:7px;
-      border-radius:999px;
-      background:#22c55e;
-      box-shadow:0 0 16px #22c55e;
-      animation:pulse 1.4s ease-out infinite;
-    }
-    @keyframes pulse{
-      0%{transform:scale(1);opacity:1;}
-      70%{transform:scale(1.8);opacity:0;}
-      100%{transform:scale(1);opacity:0;}
-    }
-
-    .social-links{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .social-btn{
-      width:28px;
-      height:28px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,.55);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:13px;
-      color:var(--muted);
-      text-decoration:none;
-      transition:all .18s ease-out;
-      background:rgba(15,23,42,.8);
-    }
-    .social-btn:hover{
-      color:var(--fg);
-      border-color:var(--emerald);
-      box-shadow:0 0 20px rgba(34,197,94,.55);
-      transform:translateY(-1px);
-    }
-
-    /* ORTA LAYOUT */
-    .main-layout{
-      flex:1;
-      display:grid;
-      grid-template-columns:1.1fr 1.1fr;
-      grid-template-rows:1.5fr 1fr;
-      gap:22px;
-      margin-top:6px;
-    }
-
-    .hero-wrapper{
-      grid-column:1 / 3;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:40px;
-    }
-
-    .hero-text{
-      flex:1;
-    }
-
-    .badge-role{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 14px;
-      border-radius:999px;
-      border:1px solid rgba(16,185,129,.6);
-      background:rgba(6,78,59,.6);
-      color:#6ee7b7;
-      font-size:11px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-weight:600;
-    }
-    .badge-dot{
-      width:7px;
-      height:7px;
-      border-radius:999px;
-      background:#6ee7b7;
-      box-shadow:0 0 18px rgba(52,211,153,.9);
-    }
-
-    .hero-title{
-      margin-top:18px;
-      line-height:1.02;
-      letter-spacing:-.06em;
-      font-size:52px;
-    }
-    .hero-title span:first-child{
-      display:block;
-      font-weight:900;
-    }
-    .hero-title span:last-child{
-      display:block;
-      font-weight:900;
-      background:linear-gradient(90deg,#6ee7b7,#22d3ee);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-
-    .hero-sub{
-      margin-top:18px;
-      color:var(--muted);
-      font-size:15px;
-      max-width:460px;
-    }
-
-    .hero-tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:14px;
-    }
-    .hero-tag{
-      padding:6px 11px;
-      border-radius:999px;
-      background:rgba(15,23,42,.88);
-      border:1px solid rgba(148,163,184,.5);
-      color:#e5e7eb;
-      font-size:11px;
-      display:flex;
-      align-items:center;
-      gap:6px;
-    }
-
-    .hero-actions{
-      display:flex;
-      gap:10px;
-      margin-top:20px;
-    }
-
-    .btn-primary{
-      padding:10px 22px;
-      border-radius:999px;
-      border:none;
-      background:linear-gradient(90deg,#22c55e,#22d3ee);
-      color:#022c22;
-      font-size:13px;
-      font-weight:700;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      cursor:pointer;
-      box-shadow:0 20px 45px rgba(16,185,129,.7);
-      transition:transform .18s, box-shadow .18s;
-    }
-    .btn-primary:hover{
-      transform:translateY(-2px);
-      box-shadow:0 26px 55px rgba(16,185,129,1);
-    }
-
-    .btn-ghost{
-      padding:10px 22px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,.6);
-      background:rgba(15,23,42,.9);
-      color:var(--fg);
-      font-size:13px;
-      font-weight:600;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      cursor:pointer;
-      transition:all .18s ease-out;
-    }
-    .btn-ghost:hover{
-      border-color:var(--cyan);
-      box-shadow:0 0 22px rgba(56,189,248,.5);
-      transform:translateY(-2px);
-    }
-
-    /* HERO BADGE (LOGO) */
-    .hero-badge-shell{
-      width:260px;
-      height:260px;
-      border-radius:999px;
-      position:relative;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .hero-badge-outer{
-      position:absolute;
-      inset:0;
-      border-radius:999px;
-      border:2px solid rgba(52,211,153,.5);
-      box-shadow:0 0 45px rgba(16,185,129,.9);
-      animation:spin-slow 22s linear infinite;
-    }
-
-    .hero-badge-inner-ring{
-      position:absolute;
-      inset:18px;
-      border-radius:999px;
-      border:2px solid rgba(45,212,191,.65);
-      box-shadow:0 0 35px rgba(45,212,191,.8) inset;
-    }
-
-    .hero-badge-core{
-      position:absolute;
-      inset:34px;
-      border-radius:999px;
-      overflow:hidden;
-      background:radial-gradient(circle at top,#059669,#020617 70%);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .hero-badge-core img{
-      width:110%;
-      height:110%;
-      object-fit:cover;
-      filter:drop-shadow(0 0 18px rgba(16,185,129,.9));
-    }
-
-    @keyframes spin-slow{
-      from{transform:rotate(0deg);}
-      to{transform:rotate(360deg);}
-    }
-
-    /* ALT GRID (3 BLOK) */
-    .bottom-grid{
-      grid-column:1 / 3;
-      display:grid;
-      grid-template-columns:1.4fr 1.3fr 1.1fr;
-      gap:18px;
-    }
-
-    .card{
-      background:radial-gradient(circle at top left,rgba(16,185,129,.18),rgba(15,23,42,.96));
-      border-radius:22px;
-      border:1px solid rgba(51,65,85,.9);
-      box-shadow:0 18px 45px rgba(15,23,42,.9);
-      padding:16px 18px;
-      position:relative;
-      overflow:hidden;
-    }
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background:radial-gradient(circle at top,rgba(45,212,191,.12),transparent 60%);
-      opacity:0;
-      transition:opacity .25s;
-    }
-    .card:hover::before{
-      opacity:1;
-    }
-
-    /* DEV CARD */
-    .dev-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:10px;
-    }
-    .dev-title{
-      font-size:14px;
-      font-weight:600;
-    }
-    .dev-sub{
-      font-size:11px;
-      color:var(--muted);
-    }
-
-    .dev-chip{
-      padding:4px 9px;
-      border-radius:999px;
-      border:1px solid rgba(16,185,129,.7);
-      background:rgba(6,95,70,.6);
-      color:#bbf7d0;
-      font-size:11px;
-      display:flex;
-      align-items:center;
-      gap:5px;
-    }
-
-    .code-window{
-      margin-top:8px;
-      border-radius:16px;
-      background:rgba(2,6,23,.98);
-      border:1px solid rgba(56,189,248,.5);
-      font-family:SFMono-Regular,Menlo,Monaco,"Roboto Mono",monospace;
-      font-size:11px;
-      color:#e5e7eb;
-      padding:10px 12px 12px;
-      position:relative;
-    }
-    .code-dots{
-      display:flex;
-      gap:5px;
-      margin-bottom:6px;
-    }
-    .code-dot{
-      width:8px;
-      height:8px;
-      border-radius:999px;
-    }
-    .code-dot.red{background:#f97373;}
-    .code-dot.yellow{background:#facc15;}
-    .code-dot.green{background:#22c55e;}
-
-    .code-line{white-space:pre;}
-    .kw{color:#c4b5fd;}
-    .vr{color:#38bdf8;}
-    .key{color:#22d3ee;}
-    .str{color:#4ade80;}
-    .sp{color:#fb7185;font-weight:700;}
-
-    .code-footer{
-      margin-top:6px;
-      font-size:10px;
-      color:var(--muted);
-    }
-
-    .tech-grid{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:7px;
-    }
-    .tech-item{
-      border-radius:12px;
-      background:rgba(15,23,42,.96);
-      border:1px solid rgba(51,65,85,.95);
-      padding:6px 4px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:3px;
-      font-size:10px;
-      color:var(--muted);
-      transition:all .18s ease-out;
-    }
-    .tech-item span:first-child{
-      font-size:18px;
-    }
-    .tech-item:hover{
-      border-color:var(--emerald);
-      color:var(--fg);
-      transform:translateY(-3px);
-      box-shadow:0 14px 30px rgba(15,23,42,.95);
-    }
-
-    /* EXPERTISE CARD */
-    .card-title{
-      font-size:14px;
-      font-weight:600;
-      margin-bottom:4px;
-    }
-    .card-sub{
-      font-size:11px;
-      color:var(--muted);
-      margin-bottom:8px;
-    }
-
-    .exp-row{
-      margin-top:7px;
-    }
-
-    .exp-row-label{
-      font-size:11px;
-      font-weight:500;
-      color:#e5e7eb;
-      margin-bottom:4px;
-    }
-
-    .chip-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:5px;
-    }
-    .chip{
-      padding:3px 8px;
-      border-radius:999px;
-      background:rgba(15,23,42,.95);
-      border:1px solid rgba(51,65,85,.95);
-      font-size:10px;
-      color:#e5e7eb;
-      white-space:nowrap;
-    }
-
-    /* CONTACT CARD */
-    .contact-block{
-      margin-top:8px;
-      border-radius:14px;
-      background:rgba(15,23,42,.98);
-      border:1px solid rgba(51,65,85,.9);
-      padding:10px 10px;
-      display:flex;
-      align-items:flex-start;
-      gap:10px;
-      font-size:11px;
-      color:#e5e7eb;
-      transition:all .18s ease-out;
-    }
-    .contact-block:hover{
-      border-color:var(--cyan);
-      transform:translateY(-3px);
-      box-shadow:0 18px 40px rgba(15,23,42,.95);
-    }
-    .contact-icon{
-      width:26px;
-      height:26px;
-      border-radius:999px;
-      background:rgba(6,95,70,.9);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:14px;
-      color:#bbf7d0;
-      flex-shrink:0;
-    }
-    .contact-label{
-      font-size:10px;
-      color:var(--muted);
-    }
-    .contact-value{
-      font-size:11px;
-      font-weight:500;
-    }
-
-    .contact-cta{
-      margin-top:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(56,189,248,.7);
-      background:linear-gradient(90deg,rgba(6,78,59,.9),rgba(8,47,73,.9));
-      color:#e0f2fe;
-      font-size:11px;
-      font-weight:500;
-      text-align:center;
-      cursor:pointer;
-      transition:all .18s;
-    }
-    .contact-cta:hover{
-      box-shadow:0 18px 40px rgba(8,47,73,.95);
-      transform:translateY(-2px);
-    }
-
-    /* FOOTER MINI */
-    .footer-mini{
-      margin-top:4px;
-      font-size:11px;
-      color:var(--muted);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .footer-mini span strong{
-      color:#6ee7b7;
-      font-weight:600;
-    }
-
-    @media (max-width:1100px){
-      .main-layout{
-        grid-template-columns:1.1fr 1.1fr;
-        grid-template-rows:1.4fr 1.1fr;
-      }
-      .bottom-grid{
-        grid-template-columns:1.4fr 1.2fr 1.1fr;
-      }
-      .hero-title{font-size:46px;}
-    }
-
-    @media (max-width:900px){
-      /* Bu tasarım esasen desktop içindir; mobile'da yine de sığsın diye biraz scale */
-      body{
-        overflow:auto;
-      }
-      .page{
-        height:auto;
-        min-height:100vh;
-        transform:none;
-      }
-    }
-  </style>
+        .tech-badge:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+    </style>
 </head>
-<body>
-  <!-- ARKAPLAN -->
-  <canvas id="bg-canvas"></canvas>
-  <div class="bg-grid-overlay"></div>
-  <div class="orb orb-left"></div>
-  <div class="orb orb-right"></div>
+<body class="bg-black text-white">
+    <!-- Animated Background Canvas -->
+    <canvas id="particleCanvas" class="fixed inset-0 w-full h-full opacity-40 pointer-events-none"></canvas>
 
-  <!-- SAYFA -->
-  <div class="page">
-    <!-- ÜST BAR -->
-    <header class="top-bar">
-      <div class="tb-left">
-        <div class="tb-badge">O</div>
-        <div>
-          <div class="tb-name">Onurcan Demir</div>
-          <div class="tb-role">Full-Stack Software Engineer</div>
-        </div>
-      </div>
-
-      <div class="tb-centre">
-        <span>Products</span>
-        <span>Skills</span>
-        <span>Experience</span>
-        <span>Contact</span>
-      </div>
-
-      <div class="tb-right">
-        <div class="pill-available">
-          <div class="dot-live"></div>
-          <span>Available</span>
-        </div>
-        <div class="social-links">
-          <a href="https://github.com/onurcandemir" target="_blank" class="social-btn">GH</a>
-          <a href="https://linkedin.com/in/onurcandemir" target="_blank" class="social-btn">in</a>
-          <a href="mailto:onurcan@demir.dev" class="social-btn">@</a>
-        </div>
-      </div>
-    </header>
-
-    <!-- ORTA LAYOUT -->
-    <main class="main-layout">
-      <!-- HERO -->
-      <section class="hero-wrapper">
-        <div class="hero-text">
-          <div class="badge-role">
-            <span class="badge-dot"></span>
-            <span>SOFTWARE ENGINEER</span>
-          </div>
-
-          <h1 class="hero-title">
-            <span>ONURCAN</span>
-            <span>DEMIR</span>
-          </h1>
-
-          <p class="hero-sub">
-            Crafting exceptional digital experiences through innovative code and creative design.
-            I build fast, scalable platforms across web, mobile, cloud and blockchain.
-          </p>
-
-          <div class="hero-tags">
-            <div class="hero-tag">🚀 End-to-end product development</div>
-            <div class="hero-tag">☁️ Cloud-native & distributed systems</div>
-            <div class="hero-tag">🧠 AI-powered automation</div>
-            <div class="hero-tag">🧩 DeFi & Web3 integrations</div>
-          </div>
-
-          <div class="hero-actions">
-            <button class="btn-primary" onclick="alert('Buraya projeler sayfasının linkini bağlayabilirsin.');">
-              VIEW WORK <span>➜</span>
-            </button>
-            <button class="btn-ghost" onclick="window.location.href='mailto:onurcan@demir.dev'">
-              CONTACT
-            </button>
-          </div>
+    <!-- Main Container -->
+    <div class="relative h-screen flex flex-col overflow-hidden">
+        <!-- Background Effects -->
+        <div class="fixed inset-0 pointer-events-none">
+            <div class="absolute inset-0 bg-gradient-to-br from-black via-emerald-950/20 to-black"></div>
+            
+            <!-- Floating Orbs -->
+            <div id="orb1" class="absolute w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" style="top: 10%; left: 10%;"></div>
+            <div id="orb2" class="absolute w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl" style="bottom: 10%; right: 10%;"></div>
         </div>
 
-        <div class="hero-badge-shell">
-          <div class="hero-badge-outer"></div>
-          <div class="hero-badge-inner-ring"></div>
-          <div class="hero-badge-core">
-            <!-- Buraya kendi hacker logosunu koy: dosya adını istersen değiştir -->
-            <img src="onurcan-logo.png" alt="Onurcan Demir Logo" />
-          </div>
+        <!-- Main Content Area -->
+        <div class="relative z-10 flex-1 flex items-center">
+            <div class="w-full max-w-7xl mx-auto px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    
+                    <!-- Left Side - Hero Content -->
+                    <div class="space-y-5">
+                        <!-- Profile Image Badge -->
+                        <div class="flex justify-start mb-6">
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl group-hover:bg-emerald-500/30 transition-all duration-500"></div>
+                                <div class="relative w-32 h-32 flex items-center justify-center">
+                                    <div class="absolute inset-0 border-4 border-emerald-500/30 rounded-full animate-spin-slow"></div>
+                                    <div class="absolute inset-2 border-4 border-cyan-500/30 rounded-full animate-spin-reverse"></div>
+                                    <img src="onurcandemir.png" alt="Onurcan Demir" class="relative z-10 w-28 h-28 rounded-full object-cover border-4 border-black/50">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Badge -->
+                        <div class="inline-block px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full backdrop-blur-xl">
+                            <span class="text-emerald-400 text-sm font-semibold tracking-wider">SOFTWARE ENGINEER</span>
+                        </div>
+
+                        <!-- Main Title -->
+                        <div>
+                            <h1 class="text-6xl md:text-7xl font-black leading-none mb-4">
+                                <span class="block text-white">ONURCAN</span>
+                                <span class="block gradient-text">DEMIR</span>
+                            </h1>
+
+                            <p class="text-lg text-gray-400 leading-relaxed max-w-xl mb-5">
+                                Crafting exceptional digital experiences through innovative code and creative design
+                            </p>
+                        </div>
+
+                        <!-- CTA Buttons -->
+                        <div class="flex gap-4">
+                            <button class="group px-8 py-3 bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-full font-bold hover:scale-105 transition-all">
+                                <span class="flex items-center gap-2">
+                                    VIEW WORK
+                                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                    </svg>
+                                </span>
+                            </button>
+
+                            <button class="px-8 py-3 bg-white/5 backdrop-blur-xl border border-white/20 rounded-full font-bold hover:bg-white/10 hover:border-emerald-500/50 transition-all">
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                    </svg>
+                                    CONTACT
+                                </span>
+                            </button>
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="flex gap-3 pt-4">
+                            <a href="#" class="p-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full hover:border-emerald-500/50 hover:scale-110 transition-all">
+                                <svg class="w-5 h-5 text-gray-400 hover:text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="p-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full hover:border-emerald-500/50 hover:scale-110 transition-all">
+                                <svg class="w-5 h-5 text-gray-400 hover:text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="p-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full hover:border-emerald-500/50 hover:scale-110 transition-all">
+                                <svg class="w-5 h-5 text-gray-400 hover:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Side - Hologram Card -->
+                    <div id="hologramCard" class="relative">
+                        <div class="relative p-6 bg-gradient-to-br from-emerald-500/10 via-transparent to-cyan-500/10 backdrop-blur-3xl border border-emerald-500/30 rounded-3xl">
+                            
+                            <!-- Hologram Scan Effect -->
+                            <div class="absolute inset-0 hologram-scan opacity-30 rounded-3xl"></div>
+
+                            <!-- Content -->
+                            <div class="relative space-y-4">
+                                <!-- Header -->
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <img src="onurcandemir.png" alt="Onurcan Demir" class="w-14 h-14 rounded-2xl object-cover border-2 border-emerald-500/50">
+                                        <div>
+                                            <div class="font-bold">Onurcan Demir</div>
+                                            <div class="text-sm text-gray-400">Full-Stack Engineer</div>
+                                        </div>
+                                    </div>
+                                    <div class="px-3 py-1 bg-green-500/20 border border-green-500/50 rounded-full">
+                                        <span class="text-xs text-green-400 font-semibold flex items-center gap-2">
+                                            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                            AVAILABLE
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Code Window -->
+                                <div class="bg-black/50 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-4 font-mono text-xs">
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                        <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                    </div>
+
+                                    <div class="space-y-1 text-xs">
+                                        <div><span class="text-purple-400">const</span> <span class="text-blue-400">developer</span> = {</div>
+                                        <div class="pl-4"><span class="text-cyan-400">name</span>: <span class="text-green-400">"Onurcan Demir"</span>,</div>
+                                        <div class="pl-4"><span class="text-cyan-400">role</span>: <span class="text-green-400">"Full Stack"</span>,</div>
+                                        <div class="pl-4"><span class="text-cyan-400">skills</span>: [</div>
+                                        <div class="pl-8"><span class="text-green-400">"React"</span>, <span class="text-green-400">"Node.js"</span>,</div>
+                                        <div class="pl-8"><span class="text-green-400">"Python"</span>, <span class="text-green-400">"AWS"</span></div>
+                                        <div class="pl-4">],</div>
+                                        <div class="pl-4"><span class="text-cyan-400">passion</span>: <span class="text-pink-400 font-bold">∞</span></div>
+                                        <div>};</div>
+                                    </div>
+                                </div>
+
+                                <!-- Tech Stack Icons -->
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-1 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <span class="text-2xl">⚛️</span>
+                                        <span class="text-xs font-bold text-gray-400">React</span>
+                                    </div>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-1 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <span class="text-2xl">🚀</span>
+                                        <span class="text-xs font-bold text-gray-400">Node.js</span>
+                                    </div>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-1 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <span class="text-2xl">🐍</span>
+                                        <span class="text-xs font-bold text-gray-400">Python</span>
+                                    </div>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-1 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <span class="text-2xl">☁️</span>
+                                        <span class="text-xs font-bold text-gray-400">AWS</span>
+                                    </div>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-1 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <span class="text-2xl">🐳</span>
+                                        <span class="text-xs font-bold text-gray-400">Docker</span>
+                                    </div>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-1 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <span class="text-2xl">⚡</span>
+                                        <span class="text-xs font-bold text-gray-400">AI/ML</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Corner Accents -->
+                            <div class="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-emerald-500/50 rounded-tl-3xl"></div>
+                            <div class="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-cyan-500/50 rounded-br-3xl"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </section>
 
-      <!-- ALT GRID: DEV CARD - EXPERTISE - CONTACT  -->
-      <section class="bottom-grid">
-        <!-- Developer Card -->
-        <div class="card">
-          <div class="dev-header">
-            <div>
-              <div class="dev-title">Developer Profile</div>
-              <div class="dev-sub">const developer = &#123; ... &#125;</div>
-            </div>
-            <div class="dev-chip">
-              <span style="width:7px;height:7px;border-radius:999px;background:#bbf7d0;box-shadow:0 0 12px #bbf7d0;"></span>
-              ACTIVE
-            </div>
-          </div>
+        <!-- Contact Section - Bottom -->
+        <div class="relative z-10 py-8 border-t border-emerald-500/20">
+            <div class="max-w-7xl mx-auto px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <!-- Left - CTA -->
+                    <div class="text-center lg:text-left">
+                        <div class="inline-block px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full mb-3">
+                            <span class="text-emerald-400 text-xs font-semibold tracking-wider">GET IN TOUCH</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-black mb-2">
+                            <span class="text-white">Let's Work </span>
+                            <span class="gradient-text">Together</span>
+                        </h2>
+                        <p class="text-sm text-gray-400 mb-4">
+                            Have a project in mind? Let's discuss how we can bring your ideas to life.
+                        </p>
+                        
+                        <!-- Send Message Button -->
+                        <a href="mailto:onurcan@demir.dev" class="inline-block px-10 py-4 bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-full font-bold hover:scale-105 transition-all">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                Send Message
+                            </span>
+                        </a>
+                    </div>
 
-          <div class="code-window">
-            <div class="code-dots">
-              <div class="code-dot red"></div>
-              <div class="code-dot yellow"></div>
-              <div class="code-dot green"></div>
-            </div>
+                    <!-- Right - Mini Tech Stack -->
+                    <div class="space-y-3">
+                        <!-- Frontend -->
+                        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-3">
+                            <h3 class="text-xs font-bold text-cyan-400 mb-2">Frontend & Mobile</h3>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">React</span>
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Next.js</span>
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">React Native</span>
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Flutter</span>
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">TypeScript</span>
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Tailwind CSS</span>
+                            </div>
+                        </div>
 
-            <div class="code-line">
-              <span class="kw">const</span> <span class="vr">developer</span> = &#123;
-            </div>
-            <div class="code-line">
-              &nbsp;&nbsp;<span class="key">name</span>: <span class="str">"Onurcan Demir"</span>,
-            </div>
-            <div class="code-line">
-              &nbsp;&nbsp;<span class="key">role</span>: <span class="str">"Full Stack"</span>,
-            </div>
-            <div class="code-line">
-              &nbsp;&nbsp;<span class="key">skills</span>: [
-            </div>
-            <div class="code-line">
-              &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"React"</span>, <span class="str">"Node.js"</span>,
-            </div>
-            <div class="code-line">
-              &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"Python"</span>, <span class="str">"AWS"</span>
-            </div>
-            <div class="code-line">
-              &nbsp;&nbsp;],
-            </div>
-            <div class="code-line">
-              &nbsp;&nbsp;<span class="key">passion</span>: <span class="sp">∞</span>
-            </div>
-            <div class="code-line">&#125;;</div>
+                        <!-- Backend -->
+                        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-3">
+                            <h3 class="text-xs font-bold text-cyan-400 mb-2">Backend & APIs</h3>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Node.js</span>
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Python</span>
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Django</span>
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Express</span>
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">GraphQL</span>
+                                <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">REST APIs</span>
+                            </div>
+                        </div>
 
-            <div class="code-footer">
-              Crafting systems that are fast, reliable and fun to use.
-            </div>
-          </div>
+                        <!-- Two Columns for remaining -->
+                        <div class="grid grid-cols-2 gap-3">
+                            <!-- Cloud -->
+                            <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-3">
+                                <h3 class="text-xs font-bold text-cyan-400 mb-2">Cloud & DevOps</h3>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">AWS</span>
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Docker</span>
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Kubernetes</span>
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">CI/CD</span>
+                                </div>
+                            </div>
 
-          <div class="tech-grid">
-            <div class="tech-item"><span>⚛️</span><span>React</span></div>
-            <div class="tech-item"><span>🚀</span><span>Node.js</span></div>
-            <div class="tech-item"><span>🐍</span><span>Python</span></div>
-            <div class="tech-item"><span>☁️</span><span>AWS</span></div>
-            <div class="tech-item"><span>🐳</span><span>Docker</span></div>
-            <div class="tech-item"><span>⚡</span><span>AI / ML</span></div>
-          </div>
+                            <!-- Databases -->
+                            <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-3">
+                                <h3 class="text-xs font-bold text-cyan-400 mb-2">Databases</h3>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">PostgreSQL</span>
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">MongoDB</span>
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Redis</span>
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">MySQL</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row -->
+                        <div class="grid grid-cols-2 gap-3">
+                            <!-- Blockchain -->
+                            <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-3">
+                                <h3 class="text-xs font-bold text-cyan-400 mb-2">Blockchain & Web3</h3>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Solidity</span>
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Web3.js</span>
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Ethers.js</span>
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">DeFi</span>
+                                </div>
+                            </div>
+
+                            <!-- AI -->
+                            <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-3">
+                                <h3 class="text-xs font-bold text-cyan-400 mb-2">AI & Automation</h3>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">Python</span>
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">TensorFlow</span>
+                                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs">OpenAI API</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer - Bottom -->
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 mt-6 pt-6 border-t border-white/5">
+                    <div class="text-xl font-black gradient-text">
+                        ONURCAN.DEV
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        © 2024 Onurcan Demir. All rights reserved.
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <!-- Full-Stack Expertise -->
-        <div class="card">
-          <div class="card-title">Full-Stack Expertise</div>
-          <div class="card-sub">Comprehensive knowledge across all layers of modern software development.</div>
+    <script>
+        // Particle Animation
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-          <div class="exp-row">
-            <div class="exp-row-label">Frontend & Mobile</div>
-            <div class="chip-row">
-              <span class="chip">React</span>
-              <span class="chip">Next.js</span>
-              <span class="chip">React Native</span>
-              <span class="chip">TypeScript</span>
-              <span class="chip">Tailwind</span>
-            </div>
-          </div>
-
-          <div class="exp-row">
-            <div class="exp-row-label">Backend & APIs</div>
-            <div class="chip-row">
-              <span class="chip">Node.js</span>
-              <span class="chip">Express</span>
-              <span class="chip">Python</span>
-              <span class="chip">Django</span>
-              <span class="chip">REST</span>
-              <span class="chip">GraphQL</span>
-            </div>
-          </div>
-
-          <div class="exp-row">
-            <div class="exp-row-label">Cloud & DevOps</div>
-            <div class="chip-row">
-              <span class="chip">AWS</span>
-              <span class="chip">Docker</span>
-              <span class="chip">Kubernetes</span>
-              <span class="chip">CI / CD</span>
-              <span class="chip">Monitoring</span>
-            </div>
-          </div>
-
-          <div class="exp-row">
-            <div class="exp-row-label">Blockchain & Web3</div>
-            <div class="chip-row">
-              <span class="chip">Solidity</span>
-              <span class="chip">Smart Contracts</span>
-              <span class="chip">DeFi</span>
-              <span class="chip">Web3.js</span>
-              <span class="chip">Ethers.js</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Contact -->
-        <div class="card">
-          <div class="card-title">Let’s Build Something Amazing</div>
-          <div class="card-sub">Have a project in mind? Reach out and let's talk.</div>
-
-          <div class="contact-block">
-            <div class="contact-icon">✉️</div>
-            <div>
-              <div class="contact-label">Email</div>
-              <div class="contact-value">onurcan@demir.dev</div>
-            </div>
-          </div>
-
-          <div class="contact-block">
-            <div class="contact-icon">🐙</div>
-            <div>
-              <div class="contact-label">GitHub</div>
-              <div class="contact-value">@onurcandemir</div>
-            </div>
-          </div>
-
-          <div class="contact-block">
-            <div class="contact-icon">💼</div>
-            <div>
-              <div class="contact-label">LinkedIn</div>
-              <div class="contact-value">/onurcandemir</div>
-            </div>
-          </div>
-
-          <div class="contact-cta" onclick="window.location.href='mailto:onurcan@demir.dev'">
-            Send a message — I’ll get back with ideas and a plan.
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- FOOTER MINI -->
-    <footer class="footer-mini">
-      <span>© 2024 <strong>Onurcan Demir</strong>. All rights reserved.</span>
-      <span>onurcan.dev</span>
-    </footer>
-  </div>
-
-  <script>
-    // ===== BG PARTICLE ANIM (basit point'ler) =====
-    (function(){
-      const canvas = document.getElementById('bg-canvas');
-      const ctx = canvas.getContext('2d');
-      let width, height, particles = [];
-
-      function init(){
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-        particles = [];
-        const count = 70;
-        for(let i=0;i<count;i++){
-          particles.push({
-            x: Math.random()*width,
-            y: Math.random()*height,
-            vx:(Math.random()-0.5)*0.35,
-            vy:(Math.random()-0.5)*0.35,
-            r: Math.random()*2+0.5
-          });
+        const particles = [];
+        for (let i = 0; i < 50; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2 + 1
+            });
         }
-      }
 
-      function draw(){
-        ctx.fillStyle = 'rgba(0,0,0,0.35)';
-        ctx.fillRect(0,0,width,height);
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        for(let i=0;i<particles.length;i++){
-          const p = particles[i];
-          p.x += p.vx;
-          p.y += p.vy;
-          if(p.x<0 || p.x>width) p.vx*=-1;
-          if(p.y<0 || p.y>height) p.vy*=-1;
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-          ctx.beginPath();
-          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-          ctx.fillStyle = 'rgba(16,185,129,0.65)';
-          ctx.fill();
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(16, 185, 129, 0.6)';
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animate);
         }
+        animate();
 
-        // Yakın partiküller arası çizgi
-        for(let i=0;i<particles.length;i++){
-          for(let j=i+1;j<particles.length;j++){
-            const a=particles[i], b=particles[j];
-            const dx=a.x-b.x, dy=a.y-b.y;
-            const dist=Math.sqrt(dx*dx+dy*dy);
-            if(dist<140){
-              const alpha = 1 - dist/140;
-              ctx.beginPath();
-              ctx.moveTo(a.x,a.y);
-              ctx.lineTo(b.x,b.y);
-              ctx.strokeStyle = 'rgba(16,185,129,'+alpha*0.35+')';
-              ctx.lineWidth = 1;
-              ctx.stroke();
-            }
-          }
-        }
+        // Mouse Follow Effect for Orbs
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
 
-        requestAnimationFrame(draw);
-      }
+            const orb1 = document.getElementById('orb1');
+            const orb2 = document.getElementById('orb2');
 
-      init();
-      draw();
-      window.addEventListener('resize', init);
-    })();
-  </script>
+            orb1.style.transform = `translate(${x * 80}px, ${y * 80}px)`;
+            orb2.style.transform = `translate(${-x * 60}px, ${-y * 60}px)`;
+        });
+
+        // 3D Tilt Effect for Hologram Card
+        const card = document.getElementById('hologramCard');
+        document.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+
+            const rotateY = (x - 0.5) * 8;
+            const rotateX = -(y - 0.5) * 8;
+
+            card.style.transform = `perspective(1200px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg)';
+        });
+    </script>
 </body>
 </html>

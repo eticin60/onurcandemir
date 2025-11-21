@@ -95,9 +95,11 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  backdrop-filter: blur(22px) saturate(180%);
-  background: linear-gradient(90deg, rgba(0, 20, 40, 0.55), rgba(40, 0, 60, 0.45));
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(32px) saturate(250%);
+  -webkit-backdrop-filter: blur(32px) saturate(250%);
+  background: rgba(8, 12, 28, 0.35);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
 }
 
 .nav-inner {
@@ -1922,6 +1924,34 @@ header {
       }
     }
 
+    @media (max-width: 720px) {
+  .nav-inner {
+    padding: 0 16px;
+  }
+  .brand {
+    gap: 10px;
+  }
+  .brand-text span:first-child {
+    font-size: 14px;
+  }
+  .brand-text span:last-child {
+    font-size: 10px;
+  }
+  .nav-right {
+    gap: 14px;
+  }
+}
+
+.brand-logo img {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 0 14px rgba(0,255,255,0.45);
+}
+
+
+
 
     /* === RESPONSIVE === */
     @media (max-width: 900px) {
@@ -2378,7 +2408,9 @@ header {
 <header>
   <div class="nav-inner">
     <div class="brand">
-      <div class="brand-logo"></div>
+<div class="brand-logo">
+    <img src="onurcandemir.png" alt="Onurcan Demir Logo">
+</div>
       <div class="brand-text">
         <span data-i18n="brand.name">Onurcan Demir</span>
         <span data-i18n="brand.subtitle">Software Architect & Full-Stack Engineer</span>
@@ -2635,15 +2667,15 @@ header {
           </div>
         </div>
 
-        <!-- Zaman Tuneli -->
+        <!-- Zaman Tüneli -->
         <div class="product-card">
           <div class="product-inner">
             <div class="product-front">
               <div class="product-label">
                 <span class="product-dot"></span>
-                <span>Zaman Tuneli</span>
+                <span>Zaman Tüneli</span>
               </div>
-              <div class="product-title">Zaman Tuneli — playful time-travel app</div>
+              <div class="product-title">Zaman Tüneli — playful time-travel app</div>
               <p class="product-meta">
                 Animated “time machine” experience mixing data, jokes and
                 heavy visual effects for each selected date.
@@ -2671,18 +2703,18 @@ header {
           </div>
         </div>
 
-        <!-- Analytica X -->
+        <!-- Özkan Motors -->
         <div class="product-card">
           <div class="product-inner">
             <div class="product-front">
               <div class="product-label">
                 <span class="product-dot"></span>
-                <span>Analytica X</span>
+                <span>Özkan Motors</span>
               </div>
-              <div class="product-title">Analytica X — AI Trading</div>
+              <div class="product-title">Özkan Motors — automotive website</div>
               <p class="product-meta">
-                AnalyticaX is an advanced AI-powered analysis platform that can read crypto charts like a professional trader.
-Once you upload your chart screenshots (from TradingView, Binance, Bybit, OKX, etc.), AnalyticaX automatically analyzes candlestick patterns, trend direction, liquidity zones, market structure, formations, and risk scenarios.
+                A modern gallery-style experience for a car dealership,
+                focused on clarity, trust and easy contact.
               </p>
               <div class="product-pill-row">
                 <span class="product-pill">Landing design</span>
@@ -2950,7 +2982,7 @@ Once you upload your chart screenshots (from TradingView, Binance, Bybit, OKX, e
 
         <div class="showcase-item">
           <div class="showcase-label">Education · Fun</div>
-          <div class="showcase-title">Zaman Tuneli experience</div>
+          <div class="showcase-title">Zaman Tüneli experience</div>
           <div class="showcase-desc">
             Over-animated but deliberately entertaining way to present
             time-based content and data to users.
@@ -4028,4 +4060,3 @@ sectionElems.forEach(sec => sectionObserver.observe(sec));
   </script>
 </body>
 </html>
-

@@ -1,0 +1,4030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Onurcan Demir — Software Architect & Full-Stack Engineer</title>
+
+  <meta name="description"
+        content="Onurcan Demir — Software Architect & Full-Stack Engineer building high-quality web, mobile and cloud solutions with modern technologies." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --bg1: #020414;
+      --bg2: #050818;
+      --bg3: #050816;
+      --text: #f5f7ff;
+      --muted: #9ca4c6;
+      --accent1: #00f0ff;
+      --accent2: #ff4b9f;
+      --accent3: #ffcc4d;
+      --card: rgba(10, 14, 35, 0.94);
+      --border: rgba(255, 255, 255, 0.08);
+      --radius-xl: 22px;
+      --glass: rgba(10, 14, 35, 0.7);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(0, 240, 255, 0.18), transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(255, 75, 159, 0.22), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(91, 44, 255, 0.28), transparent 60%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      cursor: none; /* cursor trail için */
+    }
+
+    /* === CODE RAIN BACKGROUND === */
+    #code-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.25;
+      mix-blend-mode: screen;
+    }
+
+    /* === CURSOR TRAIL === */
+    .cursor-dot {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, var(--accent1), transparent 70%);
+      mix-blend-mode: screen;
+      opacity: 0.8;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 80px 18px 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+/* ------------------------------------------------------------
+   PERFECT NEON NAVBAR FIX (APPLE VISION PRO STYLE)
+------------------------------------------------------------- */
+
+header {
+  width: 100%;
+  padding: 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(22px) saturate(180%);
+  background: linear-gradient(90deg, rgba(0, 20, 40, 0.55), rgba(40, 0, 60, 0.45));
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.nav-inner {
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 0 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* BRAND ------------------------------------------------------ */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #00f0ff, #5b2cff, #ff4b9f);
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.4);
+}
+
+.brand-text span:first-child {
+  font-weight: 700;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}
+.brand-text span:last-child {
+  font-size: 12px;
+  color: #9fb2d4;
+  margin-top: 2px;
+  display: block;
+}
+
+/* NAV LINKS -------------------------------------------------- */
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 13px;
+  color: #d9e2ff;
+  transition: 0.25s ease;
+  padding: 6px 12px;
+  border-radius: 12px;
+}
+
+.nav-links a:hover {
+  color: #fff;
+  background: rgba(0, 225, 255, 0.08);
+  box-shadow: 0 0 12px rgba(0, 200, 255, 0.15);
+}
+
+/* BADGE (SOLDAKİ YUVARLAK) ---------------------------------- */
+
+.pill-badge {
+  padding: 8px 14px;
+  font-size: 11px;
+  background: rgba(0, 225, 255, 0.12);
+  border-radius: 30px;
+  border: 1px solid rgba(0, 225, 255, 0.25);
+  color: #74f6ff;
+  white-space: nowrap;
+  box-shadow: 0 0 14px rgba(0,225,255,0.15);
+  margin-right: 12px;
+}
+
+/* LANG TOGGLE ------------------------------------------------ */
+
+.lang-toggle {
+  display: flex;
+  gap: 6px;
+  background: rgba(255,255,255,0.05);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+.lang-toggle button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  border: none;
+  cursor: pointer;
+  color: #cbd7f3;
+  transition: 0.25s;
+}
+
+.lang-toggle button.active {
+  background: linear-gradient(135deg, #00eaff, #0077ff);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0,170,255,0.5);
+}
+
+/* SOUND BUTTON ---------------------------------------------- */
+
+.sound-toggle {
+  font-size: 20px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: 0.25s ease;
+}
+
+.sound-toggle:hover {
+  background: rgba(255,255,255,0.08);
+  transform: scale(1.1);
+}
+
+/* CTA ------------------------------------------------------- */
+
+.nav-cta {
+  padding: 10px 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #1d1d29, #38384a);
+  border: 1px solid rgba(255,255,255,0.05);
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+  transition: 0.3s ease;
+  box-shadow: 0 0 20px rgba(0,255,255,0.15);
+}
+
+.nav-cta:hover {
+  background: linear-gradient(135deg, #00ffe7, #0066ff);
+  box-shadow: 0 0 25px rgba(0,200,255,0.4);
+  transform: translateY(-2px);
+}
+
+    /* === LANGUAGE TOGGLE === */
+    .lang-toggle {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(3, 6, 21, 0.9);
+      font-size: 11px;
+    }
+
+    .lang-toggle button {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: 3px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      min-width: 34px;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    .lang-toggle button.active {
+      background: linear-gradient(120deg, var(--accent1), var(--accent2));
+      color: #020414;
+      font-weight: 600;
+    }
+
+    /* === SOUND TOGGLE === */
+    .sound-toggle {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+      background: rgba(3,6,21,0.9);
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .sound-toggle.active {
+      background: radial-gradient(circle, rgba(0,240,255,0.4), rgba(3,6,21,0.9));
+      box-shadow: 0 0 16px rgba(0,240,255,0.7);
+      transform: translateY(-1px);
+    }
+
+    /* === STREET LIGHTS === */
+    .lights-wrapper {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .lights-side {
+      position: absolute;
+      top: 80px;
+      bottom: 40px;
+      width: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      opacity: 0.35;
+    }
+
+    .lights-side.left {
+      left: 0;
+    }
+
+    .lights-side.right {
+      right: 0;
+    }
+
+    .lamp {
+      position: relative;
+      width: 14px;
+      height: 60px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      filter: drop-shadow(0 0 18px rgba(0, 0, 0, 0.7));
+      transform-origin: center bottom;
+      transition: transform 0.3s ease;
+      animation: swing 6s ease-in-out infinite;
+    }
+
+    @keyframes swing {
+      0%,100% { transform: rotate(1.5deg); }
+      50% { transform: rotate(-1.5deg); }
+    }
+
+    .lamp-post {
+      width: 4px;
+      height: 45px;
+      background: linear-gradient(to bottom, #141624, #050717);
+      border-radius: 999px;
+    }
+
+    .lamp-head {
+      position: absolute;
+      top: -6px;
+      width: 24px;
+      height: 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.9), rgba(255, 204, 77, 0.9), rgba(255, 204, 77, 0.05));
+      box-shadow:
+        0 0 12px rgba(255, 204, 77, 0.7),
+        0 0 36px rgba(255, 204, 77, 0.5);
+      opacity: 0.15;
+      transition: opacity 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+    }
+
+    .lamp-glow {
+      position: absolute;
+      top: 10px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 204, 77, 0.2), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .lamp.active .lamp-head {
+      opacity: 1;
+      box-shadow:
+        0 0 16px rgba(255, 204, 77, 1),
+        0 0 52px rgba(255, 204, 77, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .lamp.active .lamp-glow {
+      opacity: 1;
+    }
+
+    .lamp.active {
+      transform: translateY(-3px) scale(1.03);
+    }
+
+    /* === HERO === */
+    section {
+      margin-bottom: 120px;
+      position: relative;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+      margin-top: 80px;
+    }
+
+    .hero-kicker {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .hero-title {
+      font-size: clamp(30px, 4vw, 40px);
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .hero-title span.gradient {
+      background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      background-size: 220%;
+      animation: gradientMove 14s linear infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .hero-typing {
+      font-size: 12px;
+      color: var(--accent1);
+      font-family: "JetBrains Mono", monospace;
+      margin-bottom: 10px;
+      min-height: 18px;
+      white-space: nowrap;
+    }
+
+    .hero-typing::after {
+      content: "▎";
+      margin-left: 4px;
+      animation: caretBlink 1s steps(2) infinite;
+    }
+
+    @keyframes caretBlink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .hero-badge {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(120deg, rgba(0, 240, 255, 0.12), rgba(5, 8, 26, 0.9));
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--accent1), var(--accent2));
+      box-shadow: 0 0 8px rgba(0, 240, 255, 0.9);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: #020414;
+      background: linear-gradient(120deg, var(--accent1), var(--accent2));
+      box-shadow:
+        0 0 16px rgba(0, 240, 255, 0.8),
+        0 0 32px rgba(91, 44, 255, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 0 22px rgba(0, 240, 255, 1),
+        0 0 42px rgba(91, 44, 255, 0.9);
+    }
+
+    .btn-ghost {
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(5, 8, 26, 0.85);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(17, 22, 48, 0.98);
+      transform: translateY(-1px);
+    }
+
+    .hero-right {
+      position: relative;
+    }
+
+    .dev-card {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at 0 0, rgba(0, 240, 255, 0.08), transparent 60%), var(--card);
+      border: 1px solid var(--border);
+      padding: 18px 18px 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 0 30px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(0, 240, 255, 0.15);
+      animation: float 7s ease-in-out infinite;
+      transform-style: preserve-3d;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .dev-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .dev-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: radial-gradient(circle at 0 0, rgba(0, 240, 255, 0.7), rgba(91, 44, 255, 0.9));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dev-avatar::after {
+      content: "O";
+      font-size: 26px;
+      font-weight: 700;
+      color: #020414;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+    }
+
+    .dev-meta h2 {
+      font-size: 16px;
+      margin-bottom: 2px;
+    }
+
+    .dev-meta p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .dev-status {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(22, 209, 138, 0.1);
+      color: #16d18a;
+      border: 1px solid rgba(22, 209, 138, 0.5);
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dev-status span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #16d18a;
+      box-shadow: 0 0 10px rgba(22, 209, 138, 0.9);
+    }
+
+    .dev-code-window {
+      border-radius: 16px;
+      background: #030515;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 10px 12px 12px;
+      font-family: "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 11px;
+      color: #d1d5f0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dev-code-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .dev-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #ff5f57;
+    }
+
+    .dev-dot.yellow {
+      background: #ffbd2e;
+    }
+
+    .dev-dot.green {
+      background: #28c840;
+    }
+
+    .dev-code-body {
+      position: relative;
+    }
+
+    .code-line {
+      opacity: 0.8;
+      line-height: 1.5;
+      white-space: pre;
+    }
+
+    .code-keyword {
+      color: #8be9fd;
+    }
+
+    .code-func {
+      color: #50fa7b;
+    }
+
+    .code-string {
+      color: #ffb86c;
+    }
+
+    .code-comment {
+      color: #6272a4;
+    }
+
+    .dev-orbit {
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(circle at 80% 0%, rgba(0, 240, 255, 0.16), transparent 60%);
+      opacity: 0.4;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    /* === SECTION TITLES === */
+    .section-header {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .section-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .section-kicker {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .section-sub {
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 360px;
+    }
+
+    /* === SKILLS GRID === */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 0 0, rgba(0, 240, 255, 0.12), transparent 60%), var(--card);
+      padding: 14px 14px 16px;
+      position: relative;
+      overflow: hidden;
+      transform-origin: center;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .skill-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.04), transparent 70%);
+      mix-blend-mode: screen;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 0 22px rgba(0, 0, 0, 0.8),
+        0 0 34px rgba(0, 240, 255, 0.2);
+      border-color: rgba(0, 240, 255, 0.6);
+    }
+
+    .skill-card:hover::after {
+      opacity: 1;
+    }
+
+    .skill-label {
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(5, 8, 26, 0.9);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .chip.highlight {
+      border-color: rgba(0, 240, 255, 0.5);
+      color: var(--accent1);
+      background: rgba(0, 240, 255, 0.08);
+    }
+
+    /* === TIMELINE & PROJECTS === */
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .timeline {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 14px 16px 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(0, 240, 255, 0.9), rgba(91, 44, 255, 0.1));
+      opacity: 0.9;
+    }
+
+    .timeline-item {
+      padding-left: 30px;
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 8px;
+      top: 2px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--accent1), var(--accent2));
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.9);
+    }
+
+    .timeline-title {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    .timeline-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .timeline-desc {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .project-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 100% 0, rgba(255, 75, 159, 0.18), transparent 60%), var(--card);
+      padding: 14px 16px 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .project-tag {
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--muted);
+    }
+
+    .project-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .project-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .project-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 10px;
+    }
+
+    /* === CONTACT === */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .contact-card, .contact-side {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 16px 16px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(0, 240, 255, 0.18), transparent 60%);
+      opacity: 0.7;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .contact-form {
+      position: relative;
+      z-index: 1;
+    }
+
+    .field {
+      margin-bottom: 10px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      margin-bottom: 4px;
+      color: var(--muted);
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(5, 8, 26, 0.9);
+      padding: 8px 10px;
+      color: var(--text);
+      font-size: 12px;
+      outline: none;
+      resize: vertical;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: rgba(0, 240, 255, 0.6);
+      box-shadow: 0 0 0 1px rgba(0, 240, 255, 0.4);
+    }
+
+    .contact-side-list {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .contact-side-list li {
+      margin-bottom: 8px;
+    }
+
+    .contact-highlight {
+      font-size: 13px;
+      color: var(--text);
+      margin-top: 6px;
+    }
+
+    .contact-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 10px;
+    }
+
+    .contact-pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(5, 8, 26, 0.9);
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      padding: 18px 12px 26px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at 50% 0, rgba(0, 240, 255, 0.12), transparent 60%), rgba(2, 4, 20, 0.96);
+      position: relative;
+      z-index: 2;
+    }
+
+    footer span.highlight {
+      color: var(--accent1);
+    }
+
+    /* === PRODUCTS SECTION === */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .product-card {
+      perspective: 1100px;
+    }
+
+    .product-inner {
+      position: relative;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 0 0, rgba(0, 240, 255, 0.18), transparent 60%), var(--card);
+      padding: 16px 16px 16px;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease, box-shadow 0.5s ease, border-color 0.3s ease;
+      min-height: 170px;
+      overflow: hidden;
+    }
+
+    .product-front,
+    .product-back {
+      position: absolute;
+      inset: 0;
+      padding: 16px;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-back {
+      transform: rotateY(180deg);
+    }
+
+    .product-inner::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: conic-gradient(from 160deg, rgba(0,240,255,0.12), transparent, rgba(255,75,159,0.14), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .product-card:hover .product-inner {
+      transform: rotateY(180deg);
+      box-shadow:
+        0 0 26px rgba(0, 240, 255, 0.45),
+        0 0 40px rgba(91, 44, 255, 0.45);
+      border-color: rgba(0, 240, 255, 0.7);
+    }
+
+    .product-card:hover .product-inner::before {
+      opacity: 1;
+    }
+
+    .product-tagline {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .product-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .product-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .product-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 10px;
+    }
+
+    .product-pill {
+      padding: 4px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(3,6,21,0.9);
+      color: var(--muted);
+    }
+
+    .product-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .product-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent1), var(--accent2));
+      box-shadow: 0 0 12px rgba(0,240,255,0.85);
+    }
+
+    /* === SERVICES SECTION === */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .service-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 100% 0, rgba(255,75,159,0.12), transparent 60%), var(--card);
+      padding: 14px 14px 16px;
+      position: relative;
+      overflow: hidden;
+      transform-origin: center;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 0 22px rgba(0, 0, 0, 0.8),
+        0 0 36px rgba(255, 75, 159, 0.24);
+      border-color: rgba(255, 75, 159, 0.7);
+    }
+
+    .service-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 0 0, rgba(255,75,159,0.8), rgba(91,44,255,0.8));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .service-title {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .service-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .service-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 10px;
+    }
+
+    /* === SHOWCASE CAROUSEL === */
+    .showcase-track {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .showcase-track::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .showcase-track::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      border-radius: 999px;
+    }
+
+    .showcase-item {
+      min-width: 260px;
+      max-width: 320px;
+      scroll-snap-align: start;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 0 0, rgba(0,240,255,0.13), transparent 60%), var(--card);
+      padding: 12px 14px 14px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .showcase-item::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 50% 0, rgba(255,255,255,0.1), transparent 70%);
+      mix-blend-mode: screen;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .showcase-item:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 0 26px rgba(0,0,0,0.8),
+        0 0 38px rgba(0,240,255,0.28);
+      border-color: rgba(0,240,255,0.75);
+    }
+
+    .showcase-item:hover::after {
+      opacity: 1;
+    }
+
+    .showcase-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .showcase-title {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .showcase-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .showcase-meta {
+      font-size: 10px;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+
+    /* === CASE STUDIES === */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .case-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 100% 0, rgba(0,240,255,0.16), transparent 60%), var(--card);
+      padding: 14px 16px 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .case-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .case-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .case-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .case-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 10px;
+    }
+
+    /* === PRICING === */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .pricing-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(0,240,255,0.45);
+      background: radial-gradient(circle at 0 0, rgba(0,240,255,0.22), transparent 60%), rgba(5,8,30,0.96);
+      padding: 16px 16px 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 26px rgba(0,240,255,0.3);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .pricing-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: conic-gradient(from 180deg, rgba(0,240,255,0.21), transparent, rgba(255,75,159,0.2), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,240,255,0.9);
+      box-shadow: 0 0 34px rgba(0,240,255,0.6);
+    }
+
+    .pricing-card:hover::before {
+      opacity: 1;
+    }
+
+    .pricing-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .pricing-tagline {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .pricing-price {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .pricing-note {
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .pricing-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .pricing-list li {
+      margin-bottom: 6px;
+    }
+
+    .pricing-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(3,6,21,0.95);
+      color: var(--text);
+      font-size: 11px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .pricing-cta:hover {
+      background: rgba(7,14,40,0.98);
+      transform: translateY(-1px);
+      box-shadow: 0 0 16px rgba(0,240,255,0.4);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 0 0, rgba(255,204,77,0.95), rgba(255,148,54,0.95));
+      color: #020414;
+      font-weight: 600;
+    }
+
+    /* === HOLOGRAM PANEL === */
+    .hologram-panel {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 220px;
+      border-radius: 18px;
+      padding: 10px 12px;
+      background: radial-gradient(circle at 0 0, rgba(0,240,255,0.22), transparent 60%), rgba(5,8,30,0.96);
+      border: 1px solid rgba(0,240,255,0.6);
+      box-shadow: 0 0 26px rgba(0,240,255,0.6);
+      font-size: 11px;
+      z-index: 30;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .hologram-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .hologram-title {
+      font-weight: 600;
+      font-size: 11px;
+    }
+    .hologram-close {
+      cursor: pointer;
+      font-size: 13px;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
+    .hologram-close:hover {
+      opacity: 1;
+    }
+    .hologram-body {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .hologram-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      border: 1px solid rgba(0,240,255,0.8);
+      background: radial-gradient(circle at 30% 0, rgba(0,240,255,0.7), rgba(5,8,30,0.9));
+      position: relative;
+      overflow: hidden;
+      animation: holoGlow 3s ease-in-out infinite;
+    }
+    .hologram-avatar::after {
+      content: "O";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #020414;
+      text-shadow: 0 0 15px rgba(255,255,255,0.9);
+    }
+    @keyframes holoGlow {
+      0%,100% { box-shadow: 0 0 16px rgba(0,240,255,0.8); }
+      50% { box-shadow: 0 0 24px rgba(0,240,255,1); }
+    }
+    .hologram-lines {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      color: #b6c7ff;
+      opacity: 0.9;
+    }
+
+    /* Ripple effect for buttons */
+    .btn-ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: rippleAnim 0.6s linear;
+      background: rgba(255,255,255,0.5);
+      pointer-events: none;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* === TERMINAL EASTER EGG === */
+    .terminal-toggle {
+      position: fixed;
+      left: 18px;
+      bottom: 18px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,240,255,0.7);
+      background: radial-gradient(circle at 0 0, rgba(0,240,255,0.3), rgba(3,6,21,1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 32;
+      box-shadow: 0 0 18px rgba(0,240,255,0.6);
+      color: var(--text);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .terminal-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 24px rgba(0,240,255,0.9);
+    }
+
+    .terminal-panel {
+      position: fixed;
+      left: 18px;
+      bottom: 60px;
+      width: min(360px, 90vw);
+      max-height: 260px;
+      border-radius: 16px;
+      border: 1px solid rgba(0,240,255,0.7);
+      background: radial-gradient(circle at 0 0, rgba(0,240,255,0.24), transparent 60%), #050812;
+      box-shadow: 0 0 26px rgba(0,240,255,0.6);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      color: #c3d4ff;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 31;
+    }
+
+    .terminal-header {
+      padding: 6px 10px;
+      background: linear-gradient(90deg, rgba(0,240,255,0.2), rgba(5,8,26,0.9));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .terminal-title {
+      font-size: 11px;
+    }
+
+    .terminal-close {
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+      font-size: 13px;
+    }
+
+    .terminal-close:hover {
+      opacity: 1;
+    }
+
+    .terminal-body {
+      padding: 8px 10px 10px;
+      overflow-y: auto;
+    }
+
+    .terminal-body::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .terminal-body::-webkit-scrollbar-thumb {
+      background: rgba(0,240,255,0.6);
+      border-radius: 999px;
+    }
+
+    .terminal-line {
+      white-space: nowrap;
+    }
+
+    .terminal-line span.prompt {
+      color: #68f4ff;
+    }
+
+    .terminal-line span.info {
+      color: #9ca4ff;
+    }
+
+    .terminal-line span.warn {
+      color: #ffcc4d;
+    }
+
+    .terminal-line span.ok {
+      color: #16d18a;
+    }
+
+        /* === NEON ARKA PLAN VİDEOSU === */
+    .bg-video-wrapper {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.4) contrast(1.1) blur(1px);
+      opacity: 0.38;
+      transform: scale(1.03);
+    }
+
+    .bg-video-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 0 0, rgba(0,240,255,0.18), transparent 60%),
+        radial-gradient(circle at 100% 0, rgba(255,75,159,0.22), transparent 60%),
+        radial-gradient(circle at 50% 100%, rgba(6,8,32,0.9), rgba(2,4,20,0.96));
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    /* === HOLOGRAM SAHNESİ (AI + WALKER + HUD) === */
+    .holo-stage {
+      position: fixed;
+      right: 28px;
+      top: 110px;
+      bottom: 170px; /* altta hologram panel ve terminal için yer bırak */
+      width: 260px;
+      pointer-events: none;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.96;
+    }
+
+    .holo-layer {
+      position: absolute;
+      inset: auto;
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 14px rgba(0,240,255,0.7));
+      mix-blend-mode: screen;
+    }
+
+    /* --- Hologram AI kafa --- */
+    .holo-head {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-origin: center center;
+      animation: holoHeadFloat 7s ease-in-out infinite alternate;
+    }
+
+    .holo-head::before {
+      content: "";
+      width: 130px;
+      height: 160px;
+      border-radius: 60% 60% 48% 48%;
+      background:
+        radial-gradient(circle at 30% 10%, rgba(255,255,255,0.95), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(0,240,255,0.8), transparent 60%),
+        radial-gradient(circle at 20% 80%, rgba(91,44,255,0.9), transparent 65%),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(0,240,255,0.6),
+          rgba(0,240,255,0.6) 1px,
+          transparent 2px,
+          transparent 3px
+        );
+      opacity: 0.95;
+      box-shadow:
+        0 0 30px rgba(0,240,255,0.8),
+        0 0 60px rgba(91,44,255,0.7);
+      border: 1px solid rgba(0,240,255,0.9);
+      position: relative;
+      overflow: hidden;
+      transform: rotateY(18deg) rotateX(6deg);
+      animation: holoHeadRotate 18s linear infinite;
+    }
+
+    .holo-head::after {
+      content: "";
+      position: absolute;
+      inset: 18% 12%;
+      border-radius: inherit;
+      border: 1px dashed rgba(255,255,255,0.25);
+      mix-blend-mode: screen;
+      box-shadow: 0 0 18px rgba(255,255,255,0.45);
+    }
+
+    .holo-scan-line {
+      position: absolute;
+      width: 140px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,240,255,0.0),
+        rgba(0,240,255,0.6),
+        rgba(0,240,255,0.0)
+      );
+      filter: blur(3px);
+      animation: holoScan 3.2s linear infinite;
+      pointer-events: none;
+    }
+
+    /* --- Yürüyen hologram silüet --- */
+    .holo-walker {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      pointer-events: none;
+      transform-origin: center bottom;
+      animation: walkerParallax 9s ease-in-out infinite alternate;
+    }
+
+    .walker-body {
+      width: 70px;
+      height: 130px;
+      border-radius: 40% 40% 30% 30%;
+      background:
+        linear-gradient(to right, rgba(0,240,255,0.3), rgba(91,44,255,0.9)),
+        linear-gradient(to top, rgba(0,0,0,0.2), rgba(0,240,255,0.8));
+      mask-image: radial-gradient(circle at 50% 18%, black 30%, transparent 63%);
+      position: relative;
+      opacity: 0.55;
+      animation: walkerWalk 2.3s steps(4,end) infinite;
+    }
+
+    .walker-body::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: repeating-linear-gradient(
+        to right,
+        rgba(255,255,255,0.2),
+        rgba(255,255,255,0.2) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: screen;
+      opacity: 0.5;
+    }
+
+    .walker-shadow {
+      position: absolute;
+      bottom: -8px;
+      width: 120px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,0,0,0.8), transparent 70%);
+      opacity: 0.75;
+      filter: blur(4px);
+      transform-origin: center;
+      animation: walkerShadow 2.3s ease-in-out infinite;
+    }
+
+    /* --- HUD / radar hologram --- */
+    .holo-hud {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.8;
+      transform: translateY(18px);
+    }
+
+    .hud-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(0,240,255,0.85);
+      box-shadow: 0 0 16px rgba(0,240,255,0.7);
+      mix-blend-mode: screen;
+      animation: hudPulse 3.4s ease-in-out infinite;
+    }
+
+    .hud-ring-1 {
+      width: 200px;
+      height: 200px;
+      opacity: 0.3;
+      animation-delay: 0s;
+    }
+
+    .hud-ring-2 {
+      width: 150px;
+      height: 150px;
+      opacity: 0.55;
+      animation-delay: 0.5s;
+    }
+
+    .hud-ring-3 {
+      width: 100px;
+      height: 100px;
+      opacity: 0.9;
+      animation-delay: 1s;
+    }
+
+    .hud-scan {
+      position: absolute;
+      width: 2px;
+      height: 210px;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,240,255,0.0),
+        rgba(0,240,255,0.8),
+        rgba(0,240,255,0.0)
+      );
+      transform-origin: center center;
+      animation: hudScanRotate 8s linear infinite;
+      filter: blur(0.6px);
+    }
+
+    .hud-dots {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .hud-dots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff, rgba(0,240,255,0.7));
+      box-shadow: 0 0 10px rgba(0,240,255,1);
+      animation: hudDotBlink 2.4s ease-in-out infinite;
+    }
+
+    .hud-dots span:nth-child(2) {
+      animation-delay: 0.4s;
+      transform: translate(40px, -30px);
+    }
+
+    .hud-dots span:nth-child(3) {
+      animation-delay: 0.8s;
+      transform: translate(-30px, 24px);
+    }
+
+    /* --- Animasyonlar --- */
+    @keyframes holoHeadRotate {
+      0% {
+        transform: rotateY(16deg) rotateX(5deg);
+      }
+      50% {
+        transform: rotateY(-18deg) rotateX(7deg);
+      }
+      100% {
+        transform: rotateY(16deg) rotateX(5deg);
+      }
+    }
+
+    @keyframes holoHeadFloat {
+      0%   { transform: translateY(0px); }
+      50%  { transform: translateY(-6px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes holoScan {
+      0%   { transform: translateY(-60px); opacity: 0; }
+      20%  { opacity: 1; }
+      80%  { opacity: 1; }
+      100% { transform: translateY(60px); opacity: 0; }
+    }
+
+    @keyframes walkerWalk {
+      0%   { transform: translateX(-45px); }
+      25%  { transform: translateX(-15px); }
+      50%  { transform: translateX(15px); }
+      75%  { transform: translateX(45px); }
+      100% { transform: translateX(-45px); }
+    }
+
+    @keyframes walkerShadow {
+      0%,100% { transform: scaleX(0.8); opacity: 0.7; }
+      50%     { transform: scaleX(1); opacity: 0.9; }
+    }
+
+    @keyframes walkerParallax {
+      0%   { transform: translateY(10px); opacity: 0.7; }
+      100% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    @keyframes hudPulse {
+      0%,100% { transform: scale(1); opacity: 0.4; }
+      50%     { transform: scale(1.06); opacity: 1; }
+    }
+
+    @keyframes hudScanRotate {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes hudDotBlink {
+      0%, 100% { opacity: 0.35; transform: scale(0.9); }
+      50%      { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* Mobilde aşırı karışmasın diye hologramı gizle */
+    @media (max-width: 900px) {
+      .holo-stage {
+        opacity: 0.6;
+        right: 8px;
+        width: 200px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .holo-stage {
+        display: none;
+      }
+      .bg-video {
+        opacity: 0.22;
+        blur: 1px;
+      }
+    }
+
+
+    /* === RESPONSIVE === */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-right {
+        order: -1;
+      }
+      .lights-side {
+        opacity: 0.25;
+        width: 70px;
+      }
+      main {
+        padding-top: 82px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+      .hero {
+        margin-top: 70px;
+      }
+      section {
+        margin-bottom: 90px;
+      }
+      .contact-grid, .two-col {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hologram-panel {
+        display: none;
+      }
+      .terminal-panel {
+        max-height: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .lights-wrapper {
+        display: none;
+      }
+      main {
+        padding: 70px 14px 70px;
+      }
+      body {
+        cursor: default;
+      }
+    }
+    .ai-holo {
+  position: relative;
+  border-radius: 20px;
+  padding: 12px 14px 14px;
+  border: 1px solid rgba(0,240,255,0.7);
+  background:
+    radial-gradient(circle at 0 0, rgba(0,240,255,0.32), transparent 65%),
+    radial-gradient(circle at 100% 0, rgba(255,75,159,0.2), transparent 70%),
+    rgba(3,6,21,0.98);
+  box-shadow:
+    0 0 30px rgba(0,240,255,0.6),
+    0 0 40px rgba(91,44,255,0.45);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ai-holo::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.08),
+    rgba(255,255,255,0.08) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+/* HEADER */
+.ai-holo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.ai-holo-pill {
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,240,255,0.9);
+  color: var(--accent1);
+  background: radial-gradient(circle at 0 0, rgba(0,240,255,0.28), transparent 70%);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.ai-holo-status {
+  font-size: 10px;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ai-holo-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16d18a;
+  box-shadow: 0 0 12px rgba(22,209,138,0.9);
+}
+
+/* AI MAIN FLEX */
+.ai-holo-main {
+  display: grid;
+  grid-template-columns: minmax(0, 120px) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  position: relative;
+}
+
+/* ORBIT */
+.ai-holo-orbit {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-holo-orbit-ring {
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  border: 1px solid rgba(0,240,255,0.4);
+  box-shadow: 0 0 22px rgba(0,240,255,0.5);
+  mix-blend-mode: screen;
+}
+
+.ai-holo-orbit-ring.ring2 {
+  inset: 18%;
+  border-color: rgba(255,75,159,0.7);
+  box-shadow: 0 0 26px rgba(255,75,159,0.6);
+  transform: rotateX(65deg);
+}
+
+.ai-holo-orbit-ring.ring3 {
+  inset: 26%;
+  border-color: rgba(255,204,77,0.7);
+  box-shadow: 0 0 24px rgba(255,204,77,0.75);
+  transform: rotateY(65deg);
+}
+
+.ai-holo-core {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 20% 0, rgba(255,255,255,0.95), rgba(0,240,255,0.85)),
+    radial-gradient(circle at 100% 100%, rgba(255,75,159,0.8), rgba(5,8,20,1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 24px rgba(0,240,255,0.9),
+    0 0 34px rgba(91,44,255,0.8);
+}
+
+.ai-holo-core span {
+  font-size: 22px;
+  font-weight: 700;
+  color: #020414;
+}
+
+/* Scanline */
+.ai-holo-scan {
+  position: absolute;
+  width: 120%;
+  height: 35%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,240,255,0.6), transparent 65%);
+  opacity: 0.55;
+  filter: blur(6px);
+  transform: translateY(-100%);
+}
+
+/* Text */
+.ai-holo-text-title {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.ai-holo-text-body {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.ai-holo-text-badge-row {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ai-holo-text-badge {
+  padding: 3px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  font-size: 10px;
+  background: rgba(5,8,26,0.95);
+}
+
+/* Grid */
+.ai-holo-grid {
+  position: absolute;
+  inset: 25% 6% 6% 40%;
+  background-image:
+    linear-gradient(to right, rgba(0,240,255,0.24) 1px, transparent 1px),
+    linear-gradient(to top, rgba(0,240,255,0.24) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.35;
+  transform: perspective(400px) rotateX(68deg);
+  pointer-events: none;
+}
+
+/* Base glow */
+.ai-holo-field {
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  bottom: -45px;
+  height: 120px;
+  background: radial-gradient(circle at 50% 0, rgba(0,240,255,0.45), transparent 70%);
+  opacity: 0.6;
+  filter: blur(12px);
+}
+
+/* =========================================================
+   FIX: PRODUCT CARDS RESPONSIVE — NO OVERFLOW, NO CUTTING
+   ========================================================= */
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* KART temel ayar */
+.product-card {
+  perspective: 1200px;
+  height: 100%;
+}
+
+/* İç kart: artık otomatik yükseklik
+   ve overflow tamamen kaldırıldı */
+.product-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+}
+
+/* Ön ve arka yüzler — otomatik yükseklik */
+.product-front,
+.product-back {
+  backface-visibility: hidden;
+  position: absolute;
+  inset: 0;
+  padding: 18px 18px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(8,12,32,0.92);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  overflow: visible !important;
+}
+
+/* Arka yüz */
+.product-back {
+  transform: rotateY(180deg);
+}
+
+/* Hover flip */
+.product-card:hover .product-inner {
+  transform: rotateY(180deg);
+}
+
+/* Taşmayı %100 engelleyen çözüm */
+.product-card,
+.product-front,
+.product-back,
+.product-inner {
+  height: auto;
+}
+
+/* Başlıklar daha kompakt */
+.product-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.product-meta {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Etiket alanı */
+.product-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--accent1);
+}
+
+.product-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent1);
+  box-shadow: 0 0 10px var(--accent1);
+}
+
+/* Pill row taşmasını engelle */
+.product-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Mobil optimizasyon */
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+  .product-inner {
+    min-height: 240px;
+  }
+  .product-title {
+    font-size: 13px;
+  }
+  .product-meta {
+    font-size: 11px;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <!-- Kayan kod arka planı -->
+  <canvas id="code-canvas"></canvas>
+
+    <!-- Neon arka plan video + hologram sahnesi -->
+  <div class="bg-video-wrapper">
+    <video class="bg-video" autoplay muted loop playsinline>
+      <!-- İstersen kendi videonu koy: assets/neon-bg.mp4 -->
+      <source src="assets/neon-bg.mp4" type="video/mp4">
+    </video>
+    <div class="bg-video-overlay"></div>
+  </div>
+
+  <!-- Hologram sahnesi (AI kafa + yürüyen adam + HUD) -->
+  <div class="holo-stage">
+    <!-- Dönen hologram AI kafası -->
+    <div class="holo-layer holo-head">
+      <div class="holo-scan-line"></div>
+    </div>
+
+    <!-- Yürüyen hologram silüeti -->
+    <div class="holo-layer holo-walker">
+      <div class="walker-body"></div>
+      <div class="walker-shadow"></div>
+    </div>
+
+    <!-- HUD / radar hologram katmanı -->
+    <div class="holo-layer holo-hud">
+      <div class="hud-ring hud-ring-1"></div>
+      <div class="hud-ring hud-ring-2"></div>
+      <div class="hud-ring hud-ring-3"></div>
+      <div class="hud-scan"></div>
+      <div class="hud-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sokak lambaları overlay -->
+  <div class="lights-wrapper">
+    <div class="lights-side left">
+      <div class="lamp" data-section="hero">
+        <div class="lamp-post"></div>
+        <div class="lamp-head"></div>
+        <div class="lamp-glow"></div>
+      </div>
+      <div class="lamp" data-section="products">
+        <div class="lamp-post"></div>
+        <div class="lamp-head"></div>
+        <div class="lamp-glow"></div>
+      </div>
+      <div class="lamp" data-section="services">
+        <div class="lamp-post"></div>
+        <div class="lamp-head"></div>
+        <div class="lamp-glow"></div>
+      </div>
+      <div class="lamp" data-section="skills">
+        <div class="lamp-post"></div>
+        <div class="lamp-head"></div>
+        <div class="lamp-glow"></div>
+      </div>
+    </div>
+
+    <div class="lights-side right">
+      <div class="lamp" data-section="projects">
+        <div class="lamp-post"></div>
+        <div class="lamp-head"></div>
+        <div class="lamp-glow"></div>
+      </div>
+      <div class="lamp" data-section="showcase">
+        <div class="lamp-post"></div>
+        <div class="lamp-head"></div>
+        <div class="lamp-glow"></div>
+      </div>
+      <div class="lamp" data-section="pricing">
+        <div class="lamp-post"></div>
+        <div class="lamp-head"></div>
+        <div class="lamp-glow"></div>
+      </div>
+      <div class="lamp" data-section="contact">
+        <div class="lamp-post"></div>
+        <div class="lamp-head"></div>
+        <div class="lamp-glow"></div>
+      </div>
+    </div>
+  </div>
+
+<header>
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="brand-logo"></div>
+      <div class="brand-text">
+        <span data-i18n="brand.name">Onurcan Demir</span>
+        <span data-i18n="brand.subtitle">Software Architect & Full-Stack Engineer</span>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <nav class="nav-links" id="navLinks">
+        <span class="pill-badge" data-i18n="nav.badge">
+          ⚡ Designing reliable software systems
+        </span>
+        <a href="#products">Products</a>
+        <a href="#services" data-i18n="nav.skills">Services</a>
+        <a href="#skills" data-i18n="nav.skills">Tech Universe</a>
+        <a href="#projects" data-i18n="nav.projects">Experience</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+
+      <div class="lang-toggle">
+        <button type="button" data-lang="en" class="active">EN</button>
+        <button type="button" data-lang="tr">TR</button>
+      </div>
+
+      <div class="sound-toggle" id="soundToggle" title="Toggle ambient">
+        🔊
+      </div>
+
+      <a class="nav-cta" href="mailto:hello@onurcandemir.dev" data-i18n="nav.cta">
+        Email Me ↗
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="hero" data-section>
+      <div class="hero-left">
+        <div class="hero-kicker" data-i18n="hero.kicker">SOFTWARE UNIVERSE</div>
+        <h1 class="hero-title" data-i18n-html="hero.title">
+          <span class="gradient">Onurcan Demir</span><br/>
+          Software Architect &amp; Full-Stack Engineer.
+        </h1>
+        <div class="hero-typing" id="heroTyping"></div>
+
+        <p class="hero-sub" data-i18n-html="hero.sub">
+          I design and build production-grade software: web platforms, Android &amp; iOS apps,
+          real-time backends and cloud-native services. From idea to architecture, development
+          and delivery, I focus on <strong>maintainable, scalable and observable systems</strong>.
+        </p>
+
+        <div class="hero-badges">
+          <div class="hero-badge" data-i18n="hero.badge1">
+            <span class="hero-badge-dot"></span>
+            End-to-end product ownership
+          </div>
+          <div class="hero-badge" data-i18n="hero.badge2">
+            ☁ Cloud-native microservices &amp; event-driven systems
+          </div>
+          <div class="hero-badge" data-i18n="hero.badge3">
+            🧠 High-performance, secure &amp; testable codebases
+          </div>
+        </div>
+
+        <div class="hero-cta-row">
+          <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})" data-i18n="hero.ctaPrimary">
+            View Experience ↓
+          </button>
+          <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" data-i18n="hero.ctaSecondary">
+            Start a project together
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-right">
+
+        <!-- === AI HOLOGRAM HERO BLOCK === -->
+<div class="ai-holo">
+  <div class="ai-holo-header">
+    <div class="ai-holo-pill">AI Portfolio Assistant</div>
+    <div class="ai-holo-status">
+      <span class="ai-holo-status-dot"></span>
+      <span>online · v1.0</span>
+    </div>
+  </div>
+
+  <div class="ai-holo-main">
+    <div class="ai-holo-orbit">
+      <div class="ai-holo-orbit-ring ring1"></div>
+      <div class="ai-holo-orbit-ring ring2"></div>
+      <div class="ai-holo-orbit-ring ring3"></div>
+
+      <div class="ai-holo-core">
+        <span>O</span>
+      </div>
+
+      <div class="ai-holo-scan"></div>
+    </div>
+
+    <div class="ai-holo-text">
+      <div class="ai-holo-text-title">Realtime overview of skills & projects</div>
+      <div class="ai-holo-text-body">
+        This hologram summarizes how I combine mobile, web, backend, cloud
+        and blockchain into production-ready systems.
+      </div>
+
+      <div class="ai-holo-text-badge-row">
+        <span class="ai-holo-text-badge">Multi-platform</span>
+        <span class="ai-holo-text-badge">FinTech & realtime</span>
+        <span class="ai-holo-text-badge">Architecture mindset</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-holo-grid"></div>
+  <div class="ai-holo-field"></div>
+</div>
+
+
+        <div class="dev-card" id="devCard">
+          <div class="dev-header">
+            <div class="dev-avatar"></div>
+            <div class="dev-meta">
+              <h2 data-i18n="hero.card.name">Onurcan Demir</h2>
+              <p data-i18n="hero.card.role">Software Architect • Full-Stack</p>
+            </div>
+            <div class="dev-status">
+              <span class="dot"></span>
+              <span data-i18n="hero.card.status">Open to selected collaborations</span>
+            </div>
+          </div>
+
+          <div class="dev-code-window">
+            <div class="dev-code-header">
+              <span class="dev-dot"></span>
+              <span class="dev-dot yellow"></span>
+              <span class="dev-dot green"></span>
+              <span style="font-size:10px; margin-left:8px; color:#8b92c7;">onurcandemir.dev/stack.ts</span>
+            </div>
+            <div class="dev-code-body">
+<span class="code-line code-comment" data-i18n="code.comment1">// multi-platform, multi-language, single architect:</span>
+<span class="code-line"><span class="code-keyword">const</span> <span class="code-func">stack</span> <span class="code-keyword">=</span> [</span>
+<span class="code-line">  <span class="code-string">"Kotlin"</span>, <span class="code-string">"Swift"</span>, <span class="code-string">"Dart/Flutter"</span>,</span>
+<span class="code-line">  <span class="code-string">"React"</span>, <span class="code-string">"Next.js"</span>, <span class="code-string">"Vue"</span>,</span>
+<span class="code-line">  <span class="code-string">"TypeScript"</span>, <span class="code-string">"Node.js"</span>, <span class="code-string">"Python"</span>,</span>
+<span class="code-line">  <span class="code-string">"Go"</span>, <span class="code-string">"C#/.NET"</span>, <span class="code-string">"Java"</span>,</span>
+<span class="code-line">  <span class="code-string">"PostgreSQL"</span>, <span class="code-string">"MongoDB"</span>, <span class="code-string">"Redis"</span>,</span>
+<span class="code-line">  <span class="code-string">"AWS"</span>, <span class="code-string">"GCP"</span>, <span class="code-string">"Kubernetes"</span>,</span>
+<span class="code-line">  <span class="code-string">"Solidity"</span>, <span class="code-string">"Web3"</span>, <span class="code-string">"CI/CD"</span></span>
+<span class="code-line">];</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">function</span> <span class="code-func">ship</span>(idea: <span class="code-keyword">string</span>) {</span>
+<span class="code-line">  <span class="code-keyword">return</span> <span class="code-string">"reliable, observable and easy-to-evolve software"</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line" data-i18n="code.comment2"><span class="code-comment">// as you scroll, the system design unfolds…</span></span>
+            </div>
+          </div>
+
+          <div class="dev-orbit"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="products" data-section>
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-kicker">PRODUCTS & PLATFORMS</div>
+          <div class="section-title">Ecosystem built over the years</div>
+        </div>
+        <div class="section-sub">
+          A selection of platforms and experiments where I combined architecture,
+          UX and real-world constraints into shipping software.
+        </div>
+      </div>
+
+      <div class="products-grid">
+        <!-- Flash USDT -->
+        <div class="product-card">
+          <div class="product-inner">
+            <div class="product-front">
+              <div class="product-label">
+                <span class="product-dot"></span>
+                <span>FLASH USDT</span>
+              </div>
+              <div class="product-title">Flash USDT — multi-chain credit & payment</div>
+              <p class="product-meta">
+                Web + blockchain + dashboards for a USDT-focused ecosystem:
+                credit flows, verification screens, PDF generation and live chains.
+              </p>
+              <div class="product-pill-row">
+                <span class="product-pill">TRC20 • ERC20 • BEP20</span>
+                <span class="product-pill">TXID verification</span>
+                <span class="product-pill">PDF agreements</span>
+              </div>
+            </div>
+            <div class="product-back">
+              <div>
+                <div class="product-title">Stack & responsibilities</div>
+                <p class="product-meta">
+                  Frontend, backend, smart contracts, UI/UX, infrastructure,
+                  SEO and integration with payment providers.
+                </p>
+                <div class="product-pill-row">
+                  <span class="product-pill">HTML/CSS/JS + GSAP</span>
+                  <span class="product-pill">Mock APIs & PHP</span>
+                  <span class="product-pill">Solidity contracts</span>
+                  <span class="product-pill">Cloud hosting</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QuantumCasino -->
+        <div class="product-card">
+          <div class="product-inner">
+            <div class="product-front">
+              <div class="product-label">
+                <span class="product-dot"></span>
+                <span>QuantumCasino</span>
+              </div>
+              <div class="product-title">QuantumCasino — realtime gaming UX</div>
+              <p class="product-meta">
+                Futuristic sports betting & casino concept with animated cards,
+                multi-language UI, and mock game integrations.
+              </p>
+              <div class="product-pill-row">
+                <span class="product-pill">React-like layout</span>
+                <span class="product-pill">Live components</span>
+                <span class="product-pill">Multi-language</span>
+              </div>
+            </div>
+            <div class="product-back">
+              <div>
+                <div class="product-title">Focus</div>
+                <p class="product-meta">
+                  Visual hierarchy, responsive grid, loading states and
+                  structure ready to be wired to real-game APIs.
+                </p>
+                <div class="product-pill-row">
+                  <span class="product-pill">Design systems</span>
+                  <span class="product-pill">Card-based UI</span>
+                  <span class="product-pill">Component contracts</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zaman Tüneli -->
+        <div class="product-card">
+          <div class="product-inner">
+            <div class="product-front">
+              <div class="product-label">
+                <span class="product-dot"></span>
+                <span>Zaman Tüneli</span>
+              </div>
+              <div class="product-title">Zaman Tüneli — playful time-travel app</div>
+              <p class="product-meta">
+                Animated “time machine” experience mixing data, jokes and
+                heavy visual effects for each selected date.
+              </p>
+              <div class="product-pill-row">
+                <span class="product-pill">Front-end animations</span>
+                <span class="product-pill">Dynamic content</span>
+                <span class="product-pill">Mobile first</span>
+              </div>
+            </div>
+            <div class="product-back">
+              <div>
+                <div class="product-title">What I focused on</div>
+                <p class="product-meta">
+                  Micro-interactions, scroll-based reveals and performance while
+                  keeping a fun, over-the-top experience.
+                </p>
+                <div class="product-pill-row">
+                  <span class="product-pill">GSAP timelines</span>
+                  <span class="product-pill">State handling</span>
+                  <span class="product-pill">Storytelling</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Özkan Motors -->
+        <div class="product-card">
+          <div class="product-inner">
+            <div class="product-front">
+              <div class="product-label">
+                <span class="product-dot"></span>
+                <span>Özkan Motors</span>
+              </div>
+              <div class="product-title">Özkan Motors — automotive website</div>
+              <p class="product-meta">
+                A modern gallery-style experience for a car dealership,
+                focused on clarity, trust and easy contact.
+              </p>
+              <div class="product-pill-row">
+                <span class="product-pill">Landing design</span>
+                <span class="product-pill">Responsive layout</span>
+                <span class="product-pill">Call-to-action focus</span>
+              </div>
+            </div>
+            <div class="product-back">
+              <div>
+                <div class="product-title">Highlights</div>
+                <p class="product-meta">
+                  Clean typography, focused flows and car listing structures
+                  that can be powered by any backend.
+                </p>
+                <div class="product-pill-row">
+                  <span class="product-pill">SEO basics</span>
+                  <span class="product-pill">Clean UI</span>
+                  <span class="product-pill">Flexible integration</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Assistant -->
+        <div class="product-card">
+          <div class="product-inner">
+            <div class="product-front">
+              <div class="product-label">
+                <span class="product-dot"></span>
+                <span>AI Assistant</span>
+              </div>
+              <div class="product-title">Custom AI assistant for apps</div>
+              <p class="product-meta">
+                Voice-enabled assistant (“Fikret”) connected with APIs,
+                search, speech recognition and text-to-speech.
+              </p>
+              <div class="product-pill-row">
+                <span class="product-pill">Android integration</span>
+                <span class="product-pill">API orchestration</span>
+                <span class="product-pill">Voice UX</span>
+              </div>
+            </div>
+            <div class="product-back">
+              <div>
+                <div class="product-title">Responsibilities</div>
+                <p class="product-meta">
+                  Prompt design, action routing and connecting multiple APIs
+                  into a consistent in-app “personality”.
+                </p>
+                <div class="product-pill-row">
+                  <span class="product-pill">Gemini / LLMs</span>
+                  <span class="product-pill">Command parsing</span>
+                  <span class="product-pill">Error handling</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Education & Tools -->
+        <div class="product-card">
+          <div class="product-inner">
+            <div class="product-front">
+              <div class="product-label">
+                <span class="product-dot"></span>
+                <span>Tools & Education</span>
+              </div>
+              <div class="product-title">Side tools, dashboards & learning apps</div>
+              <p class="product-meta">
+                Small tools, dashboards and playful apps for learning, practice
+                and experimenting with design & code.
+              </p>
+              <div class="product-pill-row">
+                <span class="product-pill">UI experiments</span>
+                <span class="product-pill">Learning flows</span>
+                <span class="product-pill">Prototyping</span>
+              </div>
+            </div>
+            <div class="product-back">
+              <div>
+                <div class="product-title">Why they matter</div>
+                <p class="product-meta">
+                  A safe space to test ideas quickly and then bring the
+                  successful ones into production projects.
+                </p>
+                <div class="product-pill-row">
+                  <span class="product-pill">Rapid iteration</span>
+                  <span class="product-pill">User feedback</span>
+                  <span class="product-pill">Reusable patterns</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" data-section>
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-kicker">SERVICES</div>
+          <div class="section-title">How I can help your product</div>
+        </div>
+        <div class="section-sub">
+          From idea to launch, I cover architecture, implementation and
+          the invisible details: performance, security and observability.
+        </div>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">📱</div>
+          <div class="service-title">Mobile apps (Android & iOS)</div>
+          <div class="service-desc">
+            Native or cross-platform apps with offline-ready UX,
+            clean architecture and production analytics.
+          </div>
+          <div class="service-pill-row">
+            <span class="chip highlight">Kotlin / Swift</span>
+            <span class="chip">Flutter</span>
+            <span class="chip">React Native</span>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🖥</div>
+          <div class="service-title">Web platforms & dashboards</div>
+          <div class="service-desc">
+            Responsive interfaces, admin panels and realtime dashboards
+            designed for clarity and long-term maintainability.
+          </div>
+          <div class="service-pill-row">
+            <span class="chip highlight">React / Next.js</span>
+            <span class="chip">Vue / Nuxt</span>
+            <span class="chip">Design systems</span>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🔗</div>
+          <div class="service-title">APIs & backend services</div>
+          <div class="service-desc">
+            Well-structured APIs, auth, rate limits and background workers
+            with logging, metrics and error tracking.
+          </div>
+          <div class="service-pill-row">
+            <span class="chip highlight">Node.js</span>
+            <span class="chip">Python</span>
+            <span class="chip">Go / .NET</span>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">⚡</div>
+          <div class="service-title">Realtime & FinTech systems</div>
+          <div class="service-desc">
+            Liquidity dashboards, order books, notifications and other
+            realtime surfaces where latency matters.
+          </div>
+          <div class="service-pill-row">
+            <span class="chip highlight">WebSockets</span>
+            <span class="chip">Streaming data</span>
+            <span class="chip">Critical alerts</span>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">☁</div>
+          <div class="service-title">Cloud architecture & DevOps</div>
+          <div class="service-desc">
+            Structuring services, environments and deployment pipelines
+            so the system can grow safely.
+          </div>
+          <div class="service-pill-row">
+            <span class="chip highlight">AWS / GCP / Azure</span>
+            <span class="chip">Kubernetes</span>
+            <span class="chip">CI/CD</span>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🧠</div>
+          <div class="service-title">AI & automation</div>
+          <div class="service-desc">
+            Connecting LLMs, APIs and workflows into practical assistants,
+            bots and internal tools.
+          </div>
+          <div class="service-pill-row">
+            <span class="chip highlight">Python</span>
+            <span class="chip">LLM integration</span>
+            <span class="chip">Task automation</span>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">⚙</div>
+          <div class="service-title">Blockchain & smart contracts</div>
+          <div class="service-desc">
+            Smart contracts, verification flows and blockchain-aware UX
+            for payments and token-based systems.
+          </div>
+          <div class="service-pill-row">
+            <span class="chip highlight">Solidity</span>
+            <span class="chip">Web3/Ethers</span>
+            <span class="chip">TXID UX</span>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">📐</div>
+          <div class="service-title">Architecture & review</div>
+          <div class="service-desc">
+            Auditing existing codebases, designing new architectures and
+            recommending a realistic roadmap.
+          </div>
+          <div class="service-pill-row">
+            <span class="chip highlight">Reviews & audits</span>
+            <span class="chip">Technical roadmaps</span>
+            <span class="chip">Long-term evolution</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOWCASE -->
+    <section id="showcase" data-section>
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-kicker">SHOWCASE</div>
+          <div class="section-title">Snapshot of different contexts</div>
+        </div>
+        <div class="section-sub">
+          Scroll horizontally to skim through different product types:
+          fintech, gaming, education, content, dashboards and more.
+        </div>
+      </div>
+
+      <div class="showcase-track">
+        <div class="showcase-item">
+          <div class="showcase-label">FinTech · Realtime</div>
+          <div class="showcase-title">Crypto credit dashboard</div>
+          <div class="showcase-desc">
+            Multi-chain credit packages, verification flows and admin
+            tools built on top of Flash USDT interfaces.
+          </div>
+          <div class="showcase-meta">
+            Stack: HTML/CSS/JS, GSAP, mock APIs, Solidity integration options.
+          </div>
+        </div>
+
+        <div class="showcase-item">
+          <div class="showcase-label">Gaming · Concept</div>
+          <div class="showcase-title">QuantumCasino main lobby</div>
+          <div class="showcase-desc">
+            Dynamic cards, sections for sports, casino, live tables,
+            promotions and future integrations with real engines.
+          </div>
+          <div class="showcase-meta">
+            Focus: layout, discoverability and visual hierarchy.
+          </div>
+        </div>
+
+        <div class="showcase-item">
+          <div class="showcase-label">Education · Fun</div>
+          <div class="showcase-title">Zaman Tüneli experience</div>
+          <div class="showcase-desc">
+            Over-animated but deliberately entertaining way to present
+            time-based content and data to users.
+          </div>
+          <div class="showcase-meta">
+            Heavy front-end animation with performance in mind.
+          </div>
+        </div>
+
+        <div class="showcase-item">
+          <div class="showcase-label">Business · Web</div>
+          <div class="showcase-title">Automotive presence</div>
+          <div class="showcase-desc">
+            A focused landing for Özkan Motors: highlighting inventory,
+            contact and trust elements clearly.
+          </div>
+          <div class="showcase-meta">
+            Designed for clear calls-to-action and easy updates.
+          </div>
+        </div>
+
+        <div class="showcase-item">
+          <div class="showcase-label">Internal · Tools</div>
+          <div class="showcase-title">Developer utilities & dashboards</div>
+          <div class="showcase-desc">
+            Small helpers for monitoring, quick checks and workflows
+            that speed up development and operations.
+          </div>
+          <div class="showcase-meta">
+            Created as needed, based on real frustrations and gaps.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section id="cases" data-section>
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-kicker">CASE STUDIES</div>
+          <div class="section-title">From requirement to running system</div>
+        </div>
+        <div class="section-sub">
+          Short summaries of how different problems were approached:
+          constraints, trade-offs and final results.
+        </div>
+      </div>
+
+      <div class="cases-grid">
+        <div class="case-card">
+          <div class="case-label">FinTech</div>
+          <div class="case-title">Designing a verification-first flow</div>
+          <div class="case-desc">
+            For Flash USDT, the challenge was to build a clear, verifiable
+            flow around TXIDs, credit packages and agreements without
+            overwhelming users.
+          </div>
+          <div class="case-pill-row">
+            <span class="chip highlight">Problem framing</span>
+            <span class="chip">UX structure</span>
+            <span class="chip">Live feedback</span>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-label">Realtime UX</div>
+          <div class="case-title">Streaming data without burning the UI</div>
+          <div class="case-desc">
+            Liquidity, order books and alerts require careful decisions on
+            batching, throttling, and how much data to surface at once.
+          </div>
+          <div class="case-pill-row">
+            <span class="chip highlight">WebSockets</span>
+            <span class="chip">Rate limiting</span>
+            <span class="chip">Perceptual performance</span>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="case-label">Mobile</div>
+          <div class="case-title">Balancing animation & performance</div>
+          <div class="case-desc">
+            On Android, I use coroutines, careful state handling and
+            measured animation budgets to keep things smooth.
+          </div>
+          <div class="case-pill-row">
+            <span class="chip highlight">Kotlin</span>
+            <span class="chip">Coroutines</span>
+            <span class="chip">Profiling</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" data-section>
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-kicker">ENGAGEMENT</div>
+          <div class="section-title">Ways to work together</div>
+        </div>
+        <div class="section-sub">
+          Each project is different; these are starting points for how
+          collaboration can be structured.
+        </div>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-name">Starter</div>
+          <div class="pricing-tagline">
+            Focused scope, clear deliverables.
+          </div>
+          <div class="pricing-price">Project-based</div>
+          <div class="pricing-note">
+            Ideal for a landing page, MVP or a well-bounded feature.
+          </div>
+          <ul class="pricing-list">
+            <li>• One main platform (web or mobile)</li>
+            <li>• Defined set of screens & flows</li>
+            <li>• Basic analytics & observability</li>
+          </ul>
+          <button class="pricing-cta" type="button" onclick="window.location.href='mailto:hello@onurcandemir.dev?subject=Starter%20project'">
+            Get in touch <span>↗</span>
+          </button>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-badge">Popular</div>
+          <div class="pricing-name">Product</div>
+          <div class="pricing-tagline">
+            End-to-end product partnership.
+          </div>
+          <div class="pricing-price">Monthly engagement</div>
+          <div class="pricing-note">
+            For products that need continuous evolution, not just a one-time build.
+          </div>
+          <ul class="pricing-list">
+            <li>• Architecture, implementation & reviews</li>
+            <li>• Iterative releases & feedback loops</li>
+            <li>• Performance & reliability focus</li>
+          </ul>
+          <button class="pricing-cta" type="button" onclick="window.location.href='mailto:hello@onurcandemir.dev?subject=Product%20engagement'">
+            Discuss details <span>↗</span>
+          </button>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-name">Advisory</div>
+          <div class="pricing-tagline">
+            Technical guidance & second opinions.
+          </div>
+          <div class="pricing-price">Hourly / retainer</div>
+          <div class="pricing-note">
+            For teams that need architecture input, reviews or decision support.
+          </div>
+          <ul class="pricing-list">
+            <li>• Architecture & codebase reviews</li>
+            <li>• Roadmap & risk assessment</li>
+            <li>• Mentoring and standards</li>
+          </ul>
+          <button class="pricing-cta" type="button" onclick="window.location.href='mailto:hello@onurcandemir.dev?subject=Advisory'">
+            Book a session <span>↗</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS / TECH UNIVERSE -->
+    <section id="skills" data-section>
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-kicker" data-i18n="skills.kicker">TECH UNIVERSE</div>
+          <div class="section-title" data-i18n="skills.title">Depth across the full stack</div>
+        </div>
+        <div class="section-sub" data-i18n-html="skills.sub">
+          I work across all layers of a modern software stack – from mobile and frontend
+          to distributed backends, data, cloud infrastructure and blockchain.
+          The goal: <strong>cohesive and maintainable ecosystems</strong>, not isolated projects.
+        </div>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-label" data-i18n="skills.mobile.title">Mobile &amp; Cross-Platform</div>
+          <div class="chip-row">
+            <span class="chip highlight">Kotlin (Android)</span>
+            <span class="chip highlight">Java</span>
+            <span class="chip highlight">Swift (iOS)</span>
+            <span class="chip">Objective-C</span>
+            <span class="chip">Flutter (Dart)</span>
+            <span class="chip">React Native</span>
+            <span class="chip">Jetpack Compose</span>
+            <span class="chip">Coroutines • Rx</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-label" data-i18n="skills.web.title">Web &amp; Frontend</div>
+          <div class="chip-row">
+            <span class="chip highlight">HTML5 / CSS3</span>
+            <span class="chip highlight">JavaScript / TypeScript</span>
+            <span class="chip">React &amp; Next.js</span>
+            <span class="chip">Vue / Nuxt</span>
+            <span class="chip">Tailwind / SASS</span>
+            <span class="chip">GSAP animations</span>
+            <span class="chip">Design systems</span>
+            <span class="chip">Accessibility (a11y)</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-label" data-i18n="skills.backend.title">Backend &amp; APIs</div>
+          <div class="chip-row">
+            <span class="chip highlight">Node.js (Express, Nest)</span>
+            <span class="chip highlight">Python (Django, FastAPI)</span>
+            <span class="chip">Go services</span>
+            <span class="chip">C# / .NET</span>
+            <span class="chip">Java (Spring)</span>
+            <span class="chip">REST &amp; GraphQL</span>
+            <span class="chip">WebSockets / gRPC</span>
+            <span class="chip">Auth • RBAC • OAuth2</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-label" data-i18n="skills.cloud.title">Cloud, DevOps &amp; Observability</div>
+          <div class="chip-row">
+            <span class="chip highlight">AWS • GCP • Azure</span>
+            <span class="chip">Docker • Kubernetes</span>
+            <span class="chip">CI/CD pipelines</span>
+            <span class="chip">Terraform • IaC</span>
+            <span class="chip">Logging &amp; tracing</span>
+            <span class="chip">Metrics &amp; dashboards</span>
+            <span class="chip">Blue/green &amp; canary</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-label" data-i18n="skills.data.title">Databases &amp; Data</div>
+          <div class="chip-row">
+            <span class="chip highlight">PostgreSQL • MySQL</span>
+            <span class="chip">MongoDB • Firestore</span>
+            <span class="chip">Redis • caching</span>
+            <span class="chip">Elasticsearch</span>
+            <span class="chip">Data modeling</span>
+            <span class="chip">Migrations • tuning</span>
+            <span class="chip">Reporting &amp; analytics</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-label" data-i18n="skills.ai.title">AI, Automation &amp; Tooling</div>
+          <div class="chip-row">
+            <span class="chip highlight">Python</span>
+            <span class="chip">Prompt engineering</span>
+            <span class="chip">SDK integrations</span>
+            <span class="chip">Task automation</span>
+            <span class="chip">ETL &amp; pipelines</span>
+            <span class="chip">Monitoring bots</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-label" data-i18n="skills.blockchain.title">Blockchain &amp; FinTech</div>
+          <div class="chip-row">
+            <span class="chip highlight">Solidity (EVM)</span>
+            <span class="chip">Smart contracts</span>
+            <span class="chip">Web3.js / Ethers.js</span>
+            <span class="chip">Payment flows</span>
+            <span class="chip">Wallet integration</span>
+            <span class="chip">Real-time market data</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-label" data-i18n="skills.arch.title">Architecture &amp; Practices</div>
+          <div class="chip-row">
+            <span class="chip highlight">Clean Architecture</span>
+            <span class="chip">DDD • hexagonal</span>
+            <span class="chip">Event-driven patterns</span>
+            <span class="chip">Code reviews &amp; standards</span>
+            <span class="chip">Testing strategy</span>
+            <span class="chip">Documentation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE & PROJECTS -->
+    <section id="projects" data-section>
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-kicker" data-i18n="exp.kicker">EXPERIENCE</div>
+          <div class="section-title" data-i18n="exp.title">Journey &amp; selected work</div>
+        </div>
+        <div class="section-sub" data-i18n-html="exp.sub">
+          I have worked on products with real users, real traffic and real constraints.
+          My focus is to combine <strong>clear architecture, robust code and measurable impact</strong>
+          instead of chasing trends.
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-title" data-i18n="exp.item1.title">Full-Stack &amp; Mobile Engineer</div>
+            <div class="timeline-meta" data-i18n="exp.item1.meta">End-to-end product development</div>
+            <div class="timeline-desc" data-i18n="exp.item1.desc">
+              Designing and implementing web, Android and iOS applications backed by
+              scalable APIs, monitoring, logging and secure deployments.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-title" data-i18n="exp.item2.title">FinTech &amp; realtime platforms</div>
+            <div class="timeline-meta" data-i18n="exp.item2.meta">High-frequency data &amp; reliability</div>
+            <div class="timeline-desc" data-i18n="exp.item2.desc">
+              Building dashboards, alerts, websockets, live order books and admin tooling
+              where latency, correctness and UX all matter at the same time.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-title" data-i18n="exp.item3.title">Architecture &amp; technical leadership</div>
+            <div class="timeline-meta" data-i18n="exp.item3.meta">From prototype to production</div>
+            <div class="timeline-desc" data-i18n="exp.item3.desc">
+              Translating business goals into architecture, shaping coding standards,
+              mentoring and ensuring systems remain evolvable over time.
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-tag-row">
+            <span class="project-tag" data-i18n="exp.card.tag1">High-impact products</span>
+            <span class="project-tag" data-i18n="exp.card.tag2">Real-time UX</span>
+            <span class="project-tag" data-i18n="exp.card.tag3">Production-ready</span>
+          </div>
+
+          <div class="project-title" data-i18n="exp.card.title">
+            From landing pages to complex platforms
+          </div>
+          <div class="project-desc" data-i18n-html="exp.card.desc">
+            I enjoy building everything from focused landing pages to platforms
+            with complex flows, dashboards, multi-tenant architectures and
+            real-time data. Each project is an opportunity to align <strong>technical
+            quality with product value</strong>.
+          </div>
+
+          <div class="project-pills">
+            <span class="chip highlight" data-i18n="exp.card.pill1">User-centric interfaces</span>
+            <span class="chip" data-i18n="exp.card.pill2">Technical roadmaps</span>
+            <span class="chip" data-i18n="exp.card.pill3">Performance budgets</span>
+            <span class="chip" data-i18n="exp.card.pill4">Monitoring &amp; alerting</span>
+            <span class="chip" data-i18n="exp.card.pill5">Security &amp; compliance</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" data-section>
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-kicker" data-i18n="contact.kicker">LET'S BUILD</div>
+          <div class="section-title" data-i18n="contact.title">What should we build next?</div>
+        </div>
+        <div class="section-sub" data-i18n-html="contact.sub">
+          Whether you need a new product, a second opinion on an existing system,
+          or a partner to turn an idea into a concrete roadmap, feel free to reach out.
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-form">
+            <div class="field">
+              <label data-i18n="contact.form.nameLabel">Name</label>
+              <input type="text" placeholder="Your name &amp; company" data-i18n-placeholder="contact.form.namePlaceholder" />
+            </div>
+            <div class="field">
+              <label data-i18n="contact.form.emailLabel">Email</label>
+              <input type="email" placeholder="you@company.com" data-i18n-placeholder="contact.form.emailPlaceholder" />
+            </div>
+            <div class="field">
+              <label data-i18n="contact.form.typeLabel">Project type</label>
+              <input type="text" placeholder="Mobile app, web platform, SaaS, FinTech, etc." data-i18n-placeholder="contact.form.typePlaceholder" />
+            </div>
+            <div class="field">
+              <label data-i18n="contact.form.descLabel">Short description</label>
+              <textarea rows="3" placeholder="Context, goals and constraints in a few sentences." data-i18n-placeholder="contact.form.descPlaceholder"></textarea>
+            </div>
+            <button class="btn-primary" type="button" onclick="window.location.href='mailto:hello@onurcandemir.dev'" data-i18n="contact.form.button">
+              Draft project email
+            </button>
+          </div>
+        </div>
+
+        <div class="contact-side">
+          <div class="section-kicker" style="font-size:10px;" data-i18n="contact.side.kicker">DIRECT CONTACT</div>
+          <div class="contact-highlight">
+            hello@onurcandemir.dev
+          </div>
+          <ul class="contact-side-list">
+            <li data-i18n="contact.side.item1">• Technical discovery, architecture and roadmap.</li>
+            <li data-i18n="contact.side.item2">• UX, prototyping and implementation strategy.</li>
+            <li data-i18n="contact.side.item3">• Launch, monitoring and continuous improvement.</li>
+          </ul>
+
+          <div class="contact-pill-row">
+            <span class="contact-pill" data-i18n="contact.side.pill1">🔐 Security-aware development</span>
+            <span class="contact-pill" data-i18n="contact.side.pill2">⚡ Performance as a feature</span>
+            <span class="contact-pill" data-i18n="contact.side.pill3">📈 Measurable outcomes</span>
+            <span class="contact-pill" data-i18n="contact.side.pill4">🤝 Long-term partnership</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span class="highlight">Onurcan Demir</span> — Software Architect &amp; Full-Stack Engineer ·
+    <span data-i18n="footer.text">Designing and shipping reliable software systems.</span>
+  </footer>
+
+  <!-- Hologram panel -->
+  <div class="hologram-panel" id="hologramPanel">
+    <div class="hologram-header">
+      <div class="hologram-title">Live System Snapshot</div>
+      <div class="hologram-close" id="hologramClose">×</div>
+    </div>
+    <div class="hologram-body">
+      <div class="hologram-avatar"></div>
+      <div class="hologram-lines">
+        <div>> env: <span style="color:var(--accent1)">production-ready</span></div>
+        <div>> stack: full-stack / mobile / cloud</div>
+        <div>> status: <span style="color:#16d18a">healthy</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terminal Easter Egg -->
+  <div class="terminal-toggle" id="terminalToggle" title="Developer console">▮▮</div>
+  <div class="terminal-panel" id="terminalPanel">
+    <div class="terminal-header">
+      <div class="terminal-title">onurcandemir.dev · console</div>
+      <div class="terminal-close" id="terminalClose">×</div>
+    </div>
+    <div class="terminal-body" id="terminalBody">
+      <div class="terminal-line">
+        <span class="prompt">onurcan@dev</span>:<span class="info">~/portfolio</span>$ boot sequence...
+      </div>
+    </div>
+  </div>
+
+  <!-- Ambient audio: kendi mp3'ünü ekleyebilirsin -->
+  <audio id="ambientAudio" loop>
+    <!-- <source src="ambient_city.mp3" type="audio/mpeg"> -->
+  </audio>
+
+  <script>
+    // === GSAP giriş & scroll animasyonları ===
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.from(".hero-left", {
+        opacity: 0,
+        y: 40,
+        duration: 0.9,
+        ease: "power2.out"
+      });
+      gsap.from(".hero-right", {
+        opacity: 0,
+        y: 40,
+        duration: 0.9,
+        delay: 0.2,
+        ease: "power2.out"
+      });
+      gsap.to(".ai-holo-orbit", {
+  rotation: 360,
+  duration: 18,
+  ease: "none",
+  repeat: -1
+});
+
+gsap.to(".ai-holo-scan", {
+  y: "145%",
+  duration: 3,
+  ease: "sine.inOut",
+  repeat: -1,
+  yoyo: true
+});
+
+gsap.to(".ai-holo-grid", {
+  backgroundPositionY: "-40px",
+  duration: 2.4,
+  ease: "none",
+  repeat: -1
+});
+
+
+      gsap.utils.toArray("section[data-section]").forEach((section) => {
+        if (section.id === "hero") return;
+        gsap.from(section, {
+          opacity: 0,
+          y: 40,
+          duration: 0.9,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%"
+          }
+        });
+      });
+
+      // Skill cards & timeline için hafif scale animasyonu
+      gsap.utils.toArray(".skill-card, .service-card, .case-card, .pricing-card, .product-card, .showcase-item").forEach(card => {
+        gsap.from(card, {
+          opacity: 0,
+          y: 30,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%"
+          }
+        });
+      });
+
+      gsap.utils.toArray(".timeline-item").forEach((item, i) => {
+        gsap.from(item, {
+          opacity: 0,
+          x: -20,
+          duration: 0.5,
+          delay: i * 0.05,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 88%"
+          }
+        });
+      });
+    }
+
+    // Dev-card mouse parallax
+    const devCard = document.getElementById("devCard");
+    if (devCard && window.innerWidth > 720) {
+      devCard.addEventListener("mousemove", (e) => {
+        const rect = devCard.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        devCard.style.transform =
+          "translateY(-4px) rotateX(" + (-y / 60) + "deg) rotateY(" + (x / 60) + "deg)";
+      });
+      devCard.addEventListener("mouseleave", () => {
+        devCard.style.transform = "";
+      });
+    }
+
+    // Scroll'a göre sokak lambaları
+    const sections = document.querySelectorAll("section[data-section]");
+    const lamps = document.querySelectorAll(".lamp");
+
+    const mapSectionIdToLamps = () => {
+      const map = {};
+      lamps.forEach(lamp => {
+        const id = lamp.getAttribute("data-section");
+        if (!map[id]) map[id] = [];
+        map[id].push(lamp);
+      });
+      return map;
+    };
+
+    const lampMap = mapSectionIdToLamps();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.id;
+        if (!id || !lampMap[id]) return;
+
+        if (entry.isIntersecting) {
+          lampMap[id].forEach(l => l.classList.add("active"));
+        } else {
+          lampMap[id].forEach(l => l.classList.remove("active"));
+        }
+      });
+    }, {
+      threshold: 0.5
+    });
+
+    sections.forEach(sec => observer.observe(sec));
+
+    // === CODE RAIN (gelişmiş) ===
+    const canvas = document.getElementById("code-canvas");
+    const ctx = canvas.getContext("2d");
+    let width, height, columns, drops;
+    const symbols = "01<>/{}[]() λ@#&";
+
+    function initCodeRain() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      const fontSize = 14;
+      columns = Math.floor(width / fontSize);
+      drops = Array.from({ length: columns }).map(() => ({
+        y: Math.random() * height,
+        speed: 14 + Math.random() * 16
+      }));
+    }
+
+    function drawCodeRain() {
+      ctx.fillStyle = "rgba(2,4,20,0.35)";
+      ctx.fillRect(0, 0, width, height);
+
+      for (let i = 0; i < drops.length; i++) {
+        const char = symbols[Math.floor(Math.random() * symbols.length)];
+        const x = i * 14;
+        const y = drops[i].y;
+
+        const hue = 170 + Math.sin(Date.now() / 2000 + i) * 40;
+        ctx.fillStyle = "hsl(" + hue + ",100%,60%)";
+        ctx.font = "14px 'JetBrains Mono', monospace";
+        ctx.fillText(char, x, y);
+
+        if (y > height && Math.random() > 0.975) {
+          drops[i].y = 0;
+        } else {
+          drops[i].y = y + drops[i].speed * 0.5;
+        }
+      }
+
+      requestAnimationFrame(drawCodeRain);
+    }
+
+    window.addEventListener("resize", initCodeRain);
+    initCodeRain();
+    drawCodeRain();
+
+    // === Typing effect (EN/TR) ===
+    const heroTypingEl = document.getElementById("heroTyping");
+    const typingPhrases = {
+      en: [
+        "Architecting multi-platform ecosystems.",
+        "Designing APIs, mobile apps and cloud services.",
+        "Focusing on reliability, performance and clarity."
+      ],
+      tr: [
+        "Çoklu platform ekosistemleri tasarlıyorum.",
+        "API, mobil uygulama ve cloud servisleri bir araya getiriyorum.",
+        "Önceliğim güvenilirlik, performans ve okunabilirlik."
+      ]
+    };
+    let currentLang = "en";
+    let typingIndex = 0;
+    let charIndex = 0;
+    let typingInterval;
+
+    function startTyping() {
+      clearInterval(typingInterval);
+      heroTypingEl.textContent = "";
+      typingIndex = 0;
+      charIndex = 0;
+      const phrases = typingPhrases[currentLang];
+
+      typingInterval = setInterval(() => {
+        const phrase = phrases[typingIndex];
+        heroTypingEl.textContent = phrase.slice(0, charIndex);
+        charIndex++;
+
+        if (charIndex > phrase.length + 8) {
+          charIndex = 0;
+          typingIndex = (typingIndex + 1) % phrases.length;
+        }
+      }, 80);
+    }
+
+    // === Ripple effects for primary buttons ===
+    function attachButtonRipples() {
+      document.querySelectorAll(".btn-primary").forEach(btn => {
+        btn.addEventListener("click", function(e) {
+          const rect = this.getBoundingClientRect();
+          const ripple = document.createElement("span");
+          const size = Math.max(rect.width, rect.height);
+          ripple.classList.add("btn-ripple");
+          ripple.style.width = ripple.style.height = size + "px";
+          ripple.style.left = (e.clientX - rect.left - size / 2) + "px";
+          ripple.style.top = (e.clientY - rect.top - size / 2) + "px";
+          this.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 600);
+        });
+      });
+    }
+    attachButtonRipples();
+
+    // === Cursor trail ===
+    if (window.innerWidth > 480) {
+      const trailDots = [];
+      const maxDots = 15;
+
+      window.addEventListener("mousemove", (e) => {
+        const dot = document.createElement("div");
+        dot.className = "cursor-dot";
+        dot.style.left = e.clientX + "px";
+        dot.style.top = e.clientY + "px";
+        document.body.appendChild(dot);
+        trailDots.push(dot);
+
+        if (trailDots.length > maxDots) {
+          const old = trailDots.shift();
+          old.style.opacity = 0;
+          setTimeout(() => old.remove(), 300);
+        }
+      });
+    }
+
+    // === Hologram panel close ===
+    const holoPanel = document.getElementById("hologramPanel");
+    const holoClose = document.getElementById("hologramClose");
+    if (holoClose && holoPanel) {
+      holoClose.addEventListener("click", () => {
+        holoPanel.style.display = "none";
+      });
+    }
+
+    // === Ambient sound toggle ===
+    const soundToggle = document.getElementById("soundToggle");
+    const ambientAudio = document.getElementById("ambientAudio");
+    let soundOn = false;
+
+    if (soundToggle && ambientAudio) {
+      soundToggle.addEventListener("click", () => {
+        soundOn = !soundOn;
+        soundToggle.classList.toggle("active", soundOn);
+        if (soundOn) {
+          ambientAudio.play().catch(() => {});
+        } else {
+          ambientAudio.pause();
+        }
+      });
+    }
+
+    // === Terminal Easter Egg ===
+    const terminalToggle = document.getElementById("terminalToggle");
+    const terminalPanel = document.getElementById("terminalPanel");
+    const terminalClose = document.getElementById("terminalClose");
+    const terminalBody = document.getElementById("terminalBody");
+
+    const terminalLines = [
+      '<span class="prompt">onurcan@dev</span>:<span class="info">~/portfolio</span>$ yarn build',
+      '<span class="info">[info]</span> compiling client & server bundles...',
+      '<span class="ok">[ok]</span> linting passed with strict rules',
+      '<span class="info">[deploy]</span> pushing artifacts to cloud...',
+      '<span class="ok">[ok]</span> all services healthy · latency within budget',
+      '<span class="info">[metrics]</span> p95 latency stable · error rate low',
+      '<span class="ok">[done]</span> onurcandemir.dev is live 🚀'
+    ];
+
+    let terminalInterval = null;
+    let terminalIndex = 0;
+
+    function appendTerminalLine() {
+      if (terminalIndex >= terminalLines.length) {
+        terminalIndex = 0;
+      }
+      const line = document.createElement("div");
+      line.className = "terminal-line";
+      line.innerHTML = terminalLines[terminalIndex++];
+      terminalBody.appendChild(line);
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
+
+    function openTerminal() {
+      if (!terminalPanel) return;
+      terminalPanel.style.display = "flex";
+      if (!terminalInterval) {
+        appendTerminalLine();
+        terminalInterval = setInterval(appendTerminalLine, 1800);
+      }
+    }
+
+    function closeTerminal() {
+      if (!terminalPanel) return;
+      terminalPanel.style.display = "none";
+      if (terminalInterval) {
+        clearInterval(terminalInterval);
+        terminalInterval = null;
+      }
+    }
+
+    if (terminalToggle) {
+      terminalToggle.addEventListener("click", () => {
+        if (terminalPanel.style.display === "flex") {
+          closeTerminal();
+        } else {
+          openTerminal();
+        }
+      });
+    }
+
+    if (terminalClose) {
+      terminalClose.addEventListener("click", closeTerminal);
+    }
+
+    // === Basit i18n sistemi ===
+    const translations = {
+      en: {
+        "brand.name": "Onurcan Demir",
+        "brand.subtitle": "Software Architect & Full-Stack Engineer",
+
+        "nav.badge": "⚡ Designing reliable software systems",
+        "nav.skills": "Tech Universe",
+        "nav.projects": "Experience",
+        "nav.contact": "Contact",
+        "nav.cta": "Email Me ↗",
+
+        "hero.kicker": "SOFTWARE UNIVERSE",
+        "hero.title": '<span class="gradient">Onurcan Demir</span><br/>Software Architect &amp; Full-Stack Engineer.',
+        "hero.sub": "I design and build production-grade software: web platforms, Android &amp; iOS apps, real-time backends and cloud-native services. From idea to architecture, development and delivery, I focus on <strong>maintainable, scalable and observable systems</strong>.",
+        "hero.badge1": "End-to-end product ownership",
+        "hero.badge2": "☁ Cloud-native microservices &amp; event-driven systems",
+        "hero.badge3": "🧠 High-performance, secure &amp; testable codebases",
+        "hero.ctaPrimary": "View Experience ↓",
+        "hero.ctaSecondary": "Start a project together",
+
+        "hero.card.name": "Onurcan Demir",
+        "hero.card.role": "Software Architect • Full-Stack",
+        "hero.card.status": "Open to selected collaborations",
+
+        "code.comment1": "// multi-platform, multi-language, single architect:",
+        "code.comment2": "// as you scroll, the system design unfolds…",
+
+        "skills.kicker": "TECH UNIVERSE",
+        "skills.title": "Depth across the full stack",
+        "skills.sub": "I work across all layers of a modern software stack – from mobile and frontend to distributed backends, data, cloud infrastructure and blockchain. The goal: <strong>cohesive and maintainable ecosystems</strong>, not isolated projects.",
+
+        "skills.mobile.title": "Mobile &amp; Cross-Platform",
+        "skills.web.title": "Web &amp; Frontend",
+        "skills.backend.title": "Backend &amp; APIs",
+        "skills.cloud.title": "Cloud, DevOps &amp; Observability",
+        "skills.data.title": "Databases &amp; Data",
+        "skills.ai.title": "AI, Automation &amp; Tooling",
+        "skills.blockchain.title": "Blockchain &amp; FinTech",
+        "skills.arch.title": "Architecture &amp; Practices",
+
+        "exp.kicker": "EXPERIENCE",
+        "exp.title": "Journey &amp; selected work",
+        "exp.sub": "I have worked on products with real users, real traffic and real constraints. My focus is to combine <strong>clear architecture, robust code and measurable impact</strong> instead of chasing trends.",
+
+        "exp.item1.title": "Full-Stack &amp; Mobile Engineer",
+        "exp.item1.meta": "End-to-end product development",
+        "exp.item1.desc": "Designing and implementing web, Android and iOS applications backed by scalable APIs, monitoring, logging and secure deployments.",
+
+        "exp.item2.title": "FinTech &amp; realtime platforms",
+        "exp.item2.meta": "High-frequency data &amp; reliability",
+        "exp.item2.desc": "Building dashboards, alerts, websockets, live order books and admin tooling where latency, correctness and UX all matter at the same time.",
+
+        "exp.item3.title": "Architecture &amp; technical leadership",
+        "exp.item3.meta": "From prototype to production",
+        "exp.item3.desc": "Translating business goals into architecture, shaping coding standards, mentoring and ensuring systems remain evolvable over time.",
+
+        "exp.card.tag1": "High-impact products",
+        "exp.card.tag2": "Real-time UX",
+        "exp.card.tag3": "Production-ready",
+        "exp.card.title": "From landing pages to complex platforms",
+        "exp.card.desc": "I enjoy building everything from focused landing pages to platforms with complex flows, dashboards, multi-tenant architectures and real-time data. Each project is an opportunity to align <strong>technical quality with product value</strong>.",
+        "exp.card.pill1": "User-centric interfaces",
+        "exp.card.pill2": "Technical roadmaps",
+        "exp.card.pill3": "Performance budgets",
+        "exp.card.pill4": "Monitoring &amp; alerting",
+        "exp.card.pill5": "Security &amp; compliance",
+
+        "contact.kicker": "LET'S BUILD",
+        "contact.title": "What should we build next?",
+        "contact.sub": "Whether you need a new product, a second opinion on an existing system, or a partner to turn an idea into a concrete roadmap, feel free to reach out.",
+
+        "contact.form.nameLabel": "Name",
+        "contact.form.namePlaceholder": "Your name &amp; company",
+        "contact.form.emailLabel": "Email",
+        "contact.form.emailPlaceholder": "you@company.com",
+        "contact.form.typeLabel": "Project type",
+        "contact.form.typePlaceholder": "Mobile app, web platform, SaaS, FinTech, etc.",
+        "contact.form.descLabel": "Short description",
+        "contact.form.descPlaceholder": "Context, goals and constraints in a few sentences.",
+        "contact.form.button": "Draft project email",
+
+        "contact.side.kicker": "DIRECT CONTACT",
+        "contact.side.item1": "• Technical discovery, architecture and roadmap.",
+        "contact.side.item2": "• UX, prototyping and implementation strategy.",
+        "contact.side.item3": "• Launch, monitoring and continuous improvement.",
+        "contact.side.pill1": "🔐 Security-aware development",
+        "contact.side.pill2": "⚡ Performance as a feature",
+        "contact.side.pill3": "📈 Measurable outcomes",
+        "contact.side.pill4": "🤝 Long-term partnership",
+
+        "footer.text": "Designing and shipping reliable software systems."
+      },
+      tr: {
+        "brand.name": "Onurcan Demir",
+        "brand.subtitle": "Yazılım Mimarı & Full-Stack Geliştirici",
+
+        "nav.badge": "⚡ Güvenilir yazılım sistemleri tasarlıyorum",
+        "nav.skills": "Teknoloji Evreni",
+        "nav.projects": "Deneyim",
+        "nav.contact": "İletişim",
+        "nav.cta": "E-posta Gönder ↗",
+
+        "hero.kicker": "YAZILIM EVRENİ",
+        "hero.title": '<span class="gradient">Onurcan Demir</span><br/>Yazılım Mimarı &amp; Full-Stack Geliştirici.',
+        "hero.sub": "Üretim ortamında çalışan yazılımlar tasarlayıp geliştiriyorum: web platformları, Android &amp; iOS uygulamaları, gerçek zamanlı backend servisleri ve cloud-native mimariler. Fikirden mimariye, geliştirme ve canlıya almaya kadar odak noktam <strong>bakımı kolay, ölçeklenebilir ve gözlemlenebilir sistemler</strong>.",
+        "hero.badge1": "Uçtan uca ürün sahipliği",
+        "hero.badge2": "☁ Cloud-native mikro servisler &amp; event-driven yapılar",
+        "hero.badge3": "🧠 Yüksek performanslı, güvenli ve test edilebilir kod tabanları",
+        "hero.ctaPrimary": "Deneyimi incele ↓",
+        "hero.ctaSecondary": "Birlikte proje başlatalım",
+
+        "hero.card.name": "Onurcan Demir",
+        "hero.card.role": "Yazılım Mimarı • Full-Stack",
+        "hero.card.status": "Seçili projelere açık",
+
+        "code.comment1": "// çoklu platform, çoklu dil, tek mimar:",
+        "code.comment2": "// kaydırdıkça mimari katmanlar açılır…",
+
+        "skills.kicker": "TEKNOLOJİ EVRENİ",
+        "skills.title": "Full-stack boyunca derinlik",
+        "skills.sub": "Modern bir yazılım yığınının tüm katmanlarında çalışıyorum: mobil ve frontend'den dağıtık backend'lere, veri katmanına, bulut altyapısına ve blockchain'e kadar. Hedefim: <strong>parça parça projeler değil, bütüncül ve sürdürülebilir ekosistemler</strong> kurmak.",
+
+        "skills.mobile.title": "Mobil &amp; Cross-Platform",
+        "skills.web.title": "Web &amp; Frontend",
+        "skills.backend.title": "Backend &amp; API'ler",
+        "skills.cloud.title": "Cloud, DevOps &amp; Gözlemlenebilirlik",
+        "skills.data.title": "Veritabanları &amp; Veri",
+        "skills.ai.title": "Yapay Zekâ, Otomasyon &amp; Araçlar",
+        "skills.blockchain.title": "Blockchain &amp; FinTech",
+        "skills.arch.title": "Mimari &amp; Pratikler",
+
+        "exp.kicker": "DENEYİM",
+        "exp.title": "Yolculuk &amp; seçili çalışmalar",
+        "exp.sub": "Gerçek kullanıcıları, gerçek trafiği ve gerçek kısıtları olan projelerde çalıştım. Odak noktam, trend kovalamak yerine <strong>net mimari, sağlam kod ve ölçülebilir etkiyi</strong> bir araya getirmek.",
+
+        "exp.item1.title": "Full-Stack &amp; Mobil Geliştirici",
+        "exp.item1.meta": "Uçtan uca ürün geliştirme",
+        "exp.item1.desc": "Ölçeklenebilir API'ler, izleme, loglama ve güvenli deploy süreçleriyle desteklenen web, Android ve iOS uygulamaları tasarlayıp geliştiriyorum.",
+
+        "exp.item2.title": "FinTech &amp; gerçek zamanlı platformlar",
+        "exp.item2.meta": "Yüksek frekanslı veri &amp; güvenilirlik",
+        "exp.item2.desc": "Gecikme, doğruluk ve kullanıcı deneyiminin aynı anda kritik olduğu dashboard'lar, alarmlar, websockets, canlı order book yapıları ve yönetim panelleri geliştiriyorum.",
+
+        "exp.item3.title": "Mimari &amp; teknik liderlik",
+        "exp.item3.meta": "Protottipten canlıya",
+        "exp.item3.desc": "İş hedeflerini mimariye çeviriyor, kod standartlarını şekillendiriyor, ekipleri yönlendiriyor ve sistemlerin uzun vadede evrilebilir kalmasını sağlıyorum.",
+
+        "exp.card.tag1": "Yüksek etki alan ürünler",
+        "exp.card.tag2": "Gerçek zamanlı deneyimler",
+        "exp.card.tag3": "Canlı ortam odaklı",
+        "exp.card.title": "Landing page'den karmaşık platformlara",
+        "exp.card.desc": "Odaklı landing page'lerden çok adımlı akışlara, dashboard'lara, multi-tenant mimarilere ve gerçek zamanlı veri yoğun platformlara kadar farklı tipte projeler geliştiriyorum. Her proje, <strong>teknik kalite ile ürün değerini hizalamak</strong> için bir fırsat.",
+        "exp.card.pill1": "Kullanıcı odaklı arabirimler",
+        "exp.card.pill2": "Teknik yol haritaları",
+        "exp.card.pill3": "Performans bütçeleri",
+        "exp.card.pill4": "İzleme &amp; alarm mekanizmaları",
+        "exp.card.pill5": "Güvenlik &amp; uyumluluk",
+
+        "contact.kicker": "BİRLİKTE ÜRETELİM",
+        "contact.title": "Sıradaki projen ne?",
+        "contact.sub": "Yeni bir ürün, mevcut bir sistem için ikinci bir teknik görüş ya da fikrini somut bir yol haritasına çevirecek bir partner arıyorsan, rahatlıkla iletişime geçebilirsin.",
+
+        "contact.form.nameLabel": "İsim",
+        "contact.form.namePlaceholder": "Adın &amp; şirketin",
+        "contact.form.emailLabel": "E-posta",
+        "contact.form.emailPlaceholder": "sen@sirketin.com",
+        "contact.form.typeLabel": "Proje tipi",
+        "contact.form.typePlaceholder": "Mobil uygulama, web platformu, SaaS, FinTech vb.",
+        "contact.form.descLabel": "Kısa açıklama",
+        "contact.form.descPlaceholder": "Kısa şekilde bağlamı, hedefleri ve kısıtlarını yazabilirsin.",
+        "contact.form.button": "Proje e-postası taslağı oluştur",
+
+        "contact.side.kicker": "DOĞRUDAN İLETİŞİM",
+        "contact.side.item1": "• Teknik keşif, mimari ve yol haritası.",
+        "contact.side.item2": "• UX, prototipleme ve geliştirme stratejisi.",
+        "contact.side.item3": "• Yayına alma, izleme ve sürekli iyileştirme.",
+        "contact.side.pill1": "🔐 Güvenlik odaklı geliştirme",
+        "contact.side.pill2": "⚡ Performans bir özellik olarak",
+        "contact.side.pill3": "📈 Ölçülebilir çıktı",
+        "contact.side.pill4": "🤝 Uzun vadeli iş ortaklığı",
+
+        "footer.text": "Güvenilir yazılım sistemleri tasarlayıp hayata geçiriyorum."
+      }
+    };
+
+    function applyTranslations(lang) {
+      currentLang = lang;
+      const dict = translations[lang];
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        const key = el.getAttribute("data-i18n-html");
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (dict[key]) {
+          el.setAttribute("placeholder", dict[key].replace(/<[^>]*>/g, ""));
+        }
+      });
+
+      document.documentElement.lang = lang === "en" ? "en" : "tr";
+
+      document.querySelectorAll(".lang-toggle button").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+      });
+
+      startTyping(); // dil değişince typing text’i de güncelle
+    }
+
+    document.querySelectorAll(".lang-toggle button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-lang");
+        applyTranslations(lang);
+      });
+    });
+
+    // Başlangıç: EN + typing
+    applyTranslations("en");
+    startTyping();
+    // === NAVBAR: mobile toggle ===
+const navToggle = document.getElementById("navToggle");
+const navLinks = document.getElementById("navLinks");
+
+if (navToggle && navLinks) {
+  navToggle.addEventListener("click", () => {
+    navToggle.classList.toggle("active");
+    navLinks.classList.toggle("open");
+  });
+
+  // Linke tıklayınca mobil menüyü kapat
+  navLinks.querySelectorAll("a").forEach(a => {
+    a.addEventListener("click", () => {
+      navToggle.classList.remove("active");
+      navLinks.classList.remove("open");
+    });
+  });
+}
+
+// === NAVBAR: scroll'da aktif link ===
+const sectionElems = document.querySelectorAll("section[id]");
+const navAnchors = document.querySelectorAll(".nav-links a[href^='#']");
+
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const id = entry.target.id;
+    navAnchors.forEach(a => {
+      const hrefId = a.getAttribute("href").replace("#", "");
+      a.classList.toggle("nav-active", hrefId === id);
+    });
+  });
+}, {
+  threshold: 0.5
+});
+
+sectionElems.forEach(sec => sectionObserver.observe(sec));
+
+  </script>
+</body>
+</html>

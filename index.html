@@ -1,448 +1,776 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Github, Linkedin, Mail, ArrowRight, Code2, Terminal, Cpu, Briefcase, Award, Send } from 'lucide-react';
-
-const Portfolio = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [scrollY, setScrollY] = useState(0);
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight
-      });
-    };
-
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    // Particle animation
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const particles = [];
-      for (let i = 0; i < 50; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3,
-          size: Math.random() * 2 + 1
-        });
-      }
-
-      const animate = () => {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(16, 185, 129, 0.6)';
-          ctx.fill();
-        });
-
-        requestAnimationFrame(animate);
-      };
-      animate();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Onurcan Demir — Full-Stack Engineer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Onurcan Demir — Full-Stack Software Engineer. Building web, mobile, cloud and blockchain products end-to-end." />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#020617;
+      --fg:#ecfdf5;
+      --muted:#94a3b8;
+      --cyan:#22d3ee;
+      --blue:#3b82f6;
+      --purple:#a855f7;
+      --card:#020617;
+      --border:rgba(148,163,184,.45);
     }
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
 
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+    html,body{
+      width:100%;
+      height:100%;
+      overflow:hidden; /* scroll YOK */
+    }
 
-  return (
-    <div className="relative bg-black text-white overflow-x-hidden">
-      {/* Animated Background Canvas */}
-      <canvas ref={canvasRef} className="fixed inset-0 w-full h-full opacity-40" />
+    body{
+      font-family:"Poppins",system-ui,-apple-system, BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:radial-gradient(circle at top,#020617 0,#020617 40%,#000 100%);
+      color:var(--fg);
+    }
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-black via-emerald-950/20 to-black" />
-          
-          {/* Dynamic Grid */}
-          <div 
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage: `
-                linear-gradient(to right, rgba(16, 185, 129, 0.3) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(16, 185, 129, 0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: '100px 100px',
-              transform: `translate(${mousePosition.x * 50}px, ${mousePosition.y * 50}px)`
-            }}
-          />
+    /* Kod yağmuru canvas */
+    #codeRain{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      opacity:.25;
+      mix-blend-mode:screen;
+      pointer-events:none;
+      z-index:0;
+    }
 
-          {/* Floating Orbs */}
-          <div 
-            className="absolute w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
-            style={{
-              top: '20%',
-              left: '10%',
-              transform: `translate(${mousePosition.x * 100}px, ${mousePosition.y * 100}px)`
-            }}
-          />
-          <div 
-            className="absolute w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl"
-            style={{
-              bottom: '20%',
-              right: '10%',
-              transform: `translate(${-mousePosition.x * 80}px, ${-mousePosition.y * 80}px)`
-            }}
-          />
+    /* Neon orblar */
+    .orb{
+      position:fixed;
+      width:420px;
+      height:420px;
+      border-radius:999px;
+      filter:blur(80px);
+      opacity:.35;
+      pointer-events:none;
+      z-index:0;
+    }
+    .orb-left{
+      left:5%;
+      top:10%;
+      background:radial-gradient(circle,rgba(34,211,238,.6),transparent 70%);
+    }
+    .orb-right{
+      right:5%;
+      bottom:5%;
+      background:radial-gradient(circle,rgba(168,85,247,.7),transparent 70%);
+    }
+
+    /* Sayfa iskeleti */
+    .page{
+      position:relative;
+      z-index:1;
+      min-height:100vh;
+      padding:22px 60px;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* Küçük ekranlarda sığdırmak için küçültme */
+    @media (max-height:780px){
+      .page{
+        transform:scale(.9);
+        transform-origin:top center;
+      }
+    }
+    @media (max-height:680px){
+      .page{
+        transform:scale(.8);
+      }
+    }
+
+    /* Navbar */
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 18px;
+      border-radius:999px;
+      background:rgba(15,23,42,.9);
+      border:1px solid rgba(148,163,184,.4);
+      box-shadow:0 18px 40px rgba(15,23,42,.9);
+      backdrop-filter:blur(22px);
+    }
+
+    .nav-left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .nav-badge{
+      width:42px;
+      height:42px;
+      border-radius:16px;
+      background:linear-gradient(135deg,var(--cyan),var(--purple));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:20px;
+    }
+
+    .nav-title-main{
+      font-weight:600;
+      font-size:16px;
+    }
+    .nav-title-sub{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .nav-links a{
+      text-decoration:none;
+      color:inherit;
+      padding:4px 0;
+      position:relative;
+    }
+    .nav-links a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-4px;
+      width:0;
+      height:2px;
+      background:linear-gradient(90deg,var(--cyan),var(--purple));
+      transition:width .22s ease;
+    }
+    .nav-links a:hover{
+      color:var(--fg);
+    }
+    .nav-links a:hover::after{
+      width:100%;
+    }
+
+    .nav-cta{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .nav-availability{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(34,197,94,.7);
+      background:rgba(22,163,74,.12);
+      font-size:11px;
+      font-weight:500;
+      color:#bbf7d0;
+    }
+    .dot-live{
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:#22c55e;
+      box-shadow:0 0 12px #22c55e;
+      animation:pulse 1.4s ease-out infinite;
+    }
+
+    @keyframes pulse{
+      0%{transform:scale(1);opacity:1;}
+      70%{transform:scale(1.7);opacity:0;}
+      100%{transform:scale(1);opacity:0;}
+    }
+
+    .nav-button{
+      padding:7px 16px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.6);
+      background:rgba(15,23,42,.9);
+      color:var(--fg);
+      font-size:11px;
+      font-weight:500;
+      text-decoration:none;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      transition:all .18s ease-out;
+    }
+    .nav-button:hover{
+      border-color:var(--cyan);
+      box-shadow:0 0 22px rgba(34,211,238,.35);
+      transform:translateY(-1px);
+    }
+
+    /* Hero (tek ekran) */
+    .hero{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:52px;
+      margin-top:28px;
+    }
+
+    .hero-left{
+      max-width:520px;
+    }
+
+    .hero-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 14px;
+      border-radius:999px;
+      border:1px solid rgba(56,189,248,.55);
+      background:rgba(8,47,73,.6);
+      color:var(--cyan);
+      font-size:11px;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+      font-weight:600;
+    }
+    .hero-pill-dot{
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--cyan);
+      box-shadow:0 0 16px rgba(34,211,238,.9);
+    }
+
+    .hero-title{
+      margin-top:18px;
+      line-height:1.02;
+      letter-spacing:-.06em;
+      font-size:56px;
+    }
+    .hero-title span:first-child{
+      display:block;
+      font-weight:900;
+    }
+    .hero-title span:last-child{
+      display:block;
+      font-weight:900;
+      background:linear-gradient(90deg,var(--cyan),var(--blue),var(--purple));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hero-sub{
+      margin-top:18px;
+      font-size:16px;
+      color:var(--muted);
+      max-width:460px;
+    }
+
+    .hero-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+    .hero-badge{
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(15,23,42,.9);
+      border:1px solid rgba(148,163,184,.35);
+      font-size:11px;
+      color:#cbd5f5;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      gap:12px;
+      margin-top:22px;
+    }
+
+    .btn-primary{
+      padding:11px 24px;
+      border-radius:999px;
+      border:none;
+      background:linear-gradient(90deg,var(--cyan),var(--blue));
+      color:#0b1220;
+      font-weight:700;
+      font-size:13px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      cursor:pointer;
+      box-shadow:0 18px 40px rgba(56,189,248,.45);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 24px 50px rgba(56,189,248,.75);
+    }
+
+    .btn-ghost{
+      padding:11px 24px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.6);
+      background:rgba(15,23,42,.9);
+      color:var(--fg);
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition:all .18s ease-out;
+    }
+    .btn-ghost:hover{
+      border-color:var(--cyan);
+      box-shadow:0 0 24px rgba(148,163,184,.40);
+      transform:translateY(-2px);
+    }
+
+    /* Sağ taraf hologram kart */
+    .hero-right{
+      flex:1;
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .card-3d-wrapper{
+      perspective:1400px;
+    }
+
+    .card-3d{
+      width:420px;
+      max-width:100%;
+      padding:22px;
+      border-radius:26px;
+      background:linear-gradient(135deg,rgba(15,23,42,.96),rgba(15,23,42,.86));
+      border:1px solid rgba(56,189,248,.5);
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 26px 80px rgba(15,23,42,.95);
+    }
+
+    .card-scanlines{
+      position:absolute;
+      inset:0;
+      opacity:.22;
+      background-image:repeating-linear-gradient(
+        to bottom,
+        rgba(15,23,42,0),
+        rgba(15,23,42,0) 2px,
+        rgba(56,189,248,.18) 3px
+      );
+      pointer-events:none;
+    }
+
+    .card-inner{
+      position:relative;
+      z-index:1;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .card-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+
+    .card-avatar{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .card-avatar-badge{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--cyan),var(--purple));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:26px;
+      box-shadow:0 0 26px rgba(129,230,217,.85);
+    }
+
+    .card-avatar-text-main{
+      font-weight:600;
+      font-size:17px;
+    }
+    .card-avatar-text-sub{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .card-available{
+      padding:6px 11px;
+      border-radius:999px;
+      border:1px solid rgba(22,163,74,.8);
+      background:rgba(21,128,61,.2);
+      font-size:11px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      color:#bbf7d0;
+      text-transform:uppercase;
+      letter-spacing:.10em;
+      font-weight:600;
+    }
+
+    .card-availability-dot{
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:#22c55e;
+      box-shadow:0 0 16px #22c55e;
+    }
+
+    /* Code window */
+    .code-window{
+      border-radius:18px;
+      background:rgba(2,6,23,.95);
+      border:1px solid rgba(56,189,248,.55);
+      padding:14px 16px 16px;
+      font-family:SFMono-Regular,Menlo,Monaco,"Roboto Mono",monospace;
+      font-size:12px;
+      color:#e5e7eb;
+    }
+
+    .code-dots{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      margin-bottom:10px;
+    }
+    .code-dot{
+      width:9px;
+      height:9px;
+      border-radius:999px;
+    }
+    .code-dot.red{background:#f97373;}
+    .code-dot.yellow{background:#facc15;}
+    .code-dot.green{background:#22c55e;}
+
+    .code-line{
+      white-space:pre;
+    }
+    .code-keyword{color:#c4b5fd;}
+    .code-var{color:#38bdf8;}
+    .code-key{color:#22d3ee;}
+    .code-string{color:#4ade80;}
+    .code-special{color:#fb7185;font-weight:700;}
+
+    /* Emoji skill grid */
+    .skill-grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:9px;
+    }
+    .skill-item{
+      border-radius:14px;
+      background:rgba(15,23,42,.95);
+      border:1px solid rgba(148,163,184,.4);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:8px 4px;
+      gap:4px;
+      font-size:11px;
+      color:var(--muted);
+      transition:all .16s ease-out;
+      cursor:default;
+    }
+    .skill-item span:first-child{
+      font-size:20px;
+    }
+    .skill-item:hover{
+      border-color:var(--cyan);
+      color:var(--fg);
+      transform:translateY(-3px);
+      box-shadow:0 14px 32px rgba(15,23,42,.9);
+    }
+
+    .divider{
+      margin-top:10px;
+      height:1px;
+      border-radius:999px;
+      background:linear-gradient(90deg,transparent,rgba(148,163,184,.8),transparent);
+      opacity:.65;
+    }
+
+    .footer-mini{
+      margin-top:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:11px;
+      color:var(--muted);
+    }
+    .footer-mini span strong{
+      color:var(--cyan);
+      font-weight:600;
+    }
+
+    /* Küçük ekranlarda biraz daha dar */
+    @media (max-width:1024px){
+      .page{padding:16px 20px;}
+      .hero{gap:32px;}
+      .hero-title{font-size:44px;}
+      .card-3d{width:360px;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Kod yağmuru -->
+  <canvas id="codeRain"></canvas>
+
+  <!-- Neon orblar -->
+  <div class="orb orb-left"></div>
+  <div class="orb orb-right"></div>
+
+  <div class="page" id="page">
+    <!-- NAVBAR -->
+    <header class="nav">
+      <div class="nav-left">
+        <div class="nav-badge">O</div>
+        <div>
+          <div class="nav-title-main">Onurcan Demir</div>
+          <div class="nav-title-sub">Full-Stack Software Engineer</div>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#skills">Tech Stack</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-cta">
+        <div class="nav-availability">
+          <div class="dot-live"></div>
+          <span>Available for Projects</span>
+        </div>
+        <a href="mailto:onurcan@demir.dev" class="nav-button">Email Me</a>
+      </div>
+    </header>
+
+    <!-- HERO - TEK EKRAN -->
+    <main class="hero">
+      <!-- Sol taraf -->
+      <section class="hero-left">
+        <div class="hero-pill">
+          <span class="hero-pill-dot"></span>
+          <span>SOFTWARE ENGINEER · PRODUCT BUILDER</span>
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-8 py-20">
-          <div className="text-center space-y-8">
-            {/* Logo/Badge */}
-            <div className="flex justify-center mb-12">
-              <div 
-                className="relative group"
-                style={{
-                  transform: `translateY(${scrollY * 0.5}px) scale(${1 - scrollY * 0.0002})`
-                }}
-              >
-                <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl group-hover:bg-emerald-500/30 transition-all duration-500" />
-                <div className="relative w-48 h-48 flex items-center justify-center">
-                  <div className="absolute inset-0 border-4 border-emerald-500/30 rounded-full animate-spin-slow" />
-                  <div className="absolute inset-4 border-4 border-cyan-500/30 rounded-full animate-spin-reverse" />
-                  <div className="text-6xl font-black bg-gradient-to-br from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    OD
+        <h1 class="hero-title">
+          <span>ONURCAN</span>
+          <span>DEMIR</span>
+        </h1>
+
+        <p class="hero-sub">
+          Full-Stack engineer crafting web, mobile, cloud and blockchain products
+          from idea to production. I design, build and ship experiences that feel
+          fast, polished and futuristic.
+        </p>
+
+        <div class="hero-badges">
+          <div class="hero-badge">🚀 End-to-end development</div>
+          <div class="hero-badge">☁️ Cloud-native architectures</div>
+          <div class="hero-badge">🧠 AI & automation</div>
+          <div class="hero-badge">🧩 Web3 · DeFi · Crypto</div>
+        </div>
+
+        <div class="hero-buttons">
+          <button class="btn-primary">
+            VIEW PRODUCTS
+            <span style="font-size:14px;">➜</span>
+          </button>
+          <button class="btn-ghost" onclick="window.location.href='mailto:onurcan@demir.dev'">
+            CONTACT ME
+          </button>
+        </div>
+      </section>
+
+      <!-- Sağ taraf: hologram kart -->
+      <section class="hero-right">
+        <div class="card-3d-wrapper" id="cardWrapper">
+          <div class="card-3d" id="infoCard">
+            <div class="card-scanlines"></div>
+            <div class="card-inner">
+              <div class="card-header">
+                <div class="card-avatar">
+                  <div class="card-avatar-badge">O</div>
+                  <div>
+                    <div class="card-avatar-text-main">Onurcan Demir</div>
+                    <div class="card-avatar-text-sub">Full-Stack Engineer · Türkiye</div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Main Title */}
-            <div className="space-y-6">
-              <div className="inline-block px-6 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
-                <span className="text-emerald-400 text-sm font-semibold tracking-wider">
-                  SOFTWARE ENGINEER
-                </span>
-              </div>
-
-              <h1 
-                className="text-7xl md:text-9xl font-black tracking-tight"
-                style={{
-                  transform: `translateY(${scrollY * 0.3}px)`
-                }}
-              >
-                <span className="block bg-gradient-to-r from-white via-emerald-100 to-cyan-100 bg-clip-text text-transparent">
-                  ONURCAN
-                </span>
-                <span className="block bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                  DEMIR
-                </span>
-              </h1>
-
-              <p className="text-2xl text-gray-400 max-w-3xl mx-auto font-light">
-                Crafting exceptional digital experiences through innovative code and creative design
-              </p>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex gap-6 justify-center pt-8">
-              <button className="group relative px-10 py-5 bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-full font-bold overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <span className="relative flex items-center gap-3 text-lg">
-                  VIEW WORK
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-                </span>
-              </button>
-
-              <button className="group px-10 py-5 bg-white/5 backdrop-blur-xl border border-white/20 rounded-full font-bold hover:bg-white/10 hover:border-emerald-500/50 transition-all duration-300">
-                <span className="flex items-center gap-3 text-lg">
-                  <Send className="w-5 h-5" />
-                  CONTACT
-                </span>
-              </button>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex gap-6 justify-center pt-12">
-              {[
-                { Icon: Github, href: '#' },
-                { Icon: Linkedin, href: '#' },
-                { Icon: Mail, href: '#' }
-              ].map(({ Icon, href }, idx) => (
-                <a
-                  key={idx}
-                  href={href}
-                  className="group p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full hover:border-emerald-500/50 hover:bg-white/10 transition-all duration-300 hover:scale-110"
-                >
-                  <Icon className="w-6 h-6 text-gray-400 group-hover:text-emerald-400 transition-colors" />
-                </a>
-              ))}
-            </div>
-
-            {/* Scroll Indicator */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-              <div className="flex flex-col items-center gap-2 text-gray-500">
-                <span className="text-xs tracking-wider">SCROLL</span>
-                <div className="w-6 h-10 border-2 border-gray-600 rounded-full p-1">
-                  <div className="w-1 h-3 bg-emerald-500 rounded-full mx-auto animate-pulse" />
+                <div class="card-available">
+                  <div class="card-availability-dot"></div>
+                  AVAILABLE
                 </div>
+              </div>
+
+              <!-- Kod bloğu -->
+              <div class="code-window">
+                <div class="code-dots">
+                  <div class="code-dot red"></div>
+                  <div class="code-dot yellow"></div>
+                  <div class="code-dot green"></div>
+                </div>
+                <div class="code-line">
+                  <span class="code-keyword">const</span> <span class="code-var">developer</span> = &#123;
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;<span class="code-key">name</span>: <span class="code-string">"Onurcan Demir"</span>,
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;<span class="code-key">role</span>: <span class="code-string">"Full Stack"</span>,
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;<span class="code-key">skills</span>: [
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"React"</span>, <span class="code-string">"Node.js"</span>,
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Python"</span>, <span class="code-string">"AWS"</span>
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;],
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;<span class="code-key">passion</span>: <span class="code-special">∞</span>
+                </div>
+                <div class="code-line">&#125;;</div>
+
+                <!-- Emoji tech satırı -->
+                <div class="divider"></div>
+                <div class="code-line" style="margin-top:8px;color:var(--muted);font-size:11px;">
+                  ⚛ React &nbsp; · &nbsp; 🚀 Node.js &nbsp; · &nbsp; 🐍 Python &nbsp; · &nbsp; ☁ AWS &nbsp; · &nbsp; 🐳 Docker &nbsp; · &nbsp; ⚡ AI/ML
+                </div>
+              </div>
+
+              <!-- Emoji skill grid -->
+              <div class="skill-grid">
+                <div class="skill-item"><span>⚛️</span><span>React</span></div>
+                <div class="skill-item"><span>🚀</span><span>Node.js</span></div>
+                <div class="skill-item"><span>🐍</span><span>Python</span></div>
+                <div class="skill-item"><span>☁️</span><span>AWS</span></div>
+                <div class="skill-item"><span>🐳</span><span>Docker</span></div>
+                <div class="skill-item"><span>⚡</span><span>Web3 / AI</span></div>
+              </div>
+
+              <div class="footer-mini">
+                <span>Building <strong>products</strong> · not just projects</span>
+                <span>onurcan.dev</span>
               </div>
             </div>
           </div>
         </div>
       </section>
+    </main>
+  </div>
 
-      {/* About Section */}
-      <section className="relative min-h-screen flex items-center py-32 bg-gradient-to-b from-black to-emerald-950/20">
-        <div className="max-w-7xl mx-auto px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            {/* Left Side - Image/Visual */}
-            <div 
-              className="relative group"
-              style={{
-                transform: `translateX(${Math.max(0, 300 - scrollY)}px)`,
-                opacity: Math.min(1, scrollY / 300)
-              }}
-            >
-              <div className="relative aspect-square">
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 rounded-3xl" />
-                <div className="absolute inset-0 border-2 border-emerald-500/30 rounded-3xl group-hover:scale-105 transition-transform duration-500" />
-                
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center space-y-6">
-                    <Code2 className="w-32 h-32 text-emerald-400 mx-auto" />
-                    <div className="space-y-2">
-                      <div className="text-6xl font-black text-white">5+</div>
-                      <div className="text-emerald-400 text-sm tracking-wider">YEARS EXPERIENCE</div>
-                    </div>
-                  </div>
-                </div>
+  <script>
+    // ----- Kod yağmuru -----
+    (function(){
+      const canvas = document.getElementById('codeRain');
+      const ctx = canvas.getContext('2d');
+      let width, height, columns, drops;
+      const chars = '01<>/{}[]()λ@#&';
 
-                {/* Floating Stats */}
-                <div className="absolute -top-6 -left-6 p-6 bg-black/80 backdrop-blur-xl border border-emerald-500/30 rounded-2xl">
-                  <div className="text-3xl font-black text-emerald-400">50+</div>
-                  <div className="text-xs text-gray-400">Projects</div>
-                </div>
+      function init(){
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        columns = Math.floor(width / 14);
+        drops = Array(columns).fill(0).map(() => ({
+          y: Math.random()*height,
+          speed: 14 + Math.random()*16
+        }));
+      }
 
-                <div className="absolute -bottom-6 -right-6 p-6 bg-black/80 backdrop-blur-xl border border-cyan-500/30 rounded-2xl">
-                  <div className="text-3xl font-black text-cyan-400">100%</div>
-                  <div className="text-xs text-gray-400">Success</div>
-                </div>
-              </div>
-            </div>
+      function draw(){
+        ctx.fillStyle = 'rgba(2,4,20,0.35)';
+        ctx.fillRect(0,0,width,height);
 
-            {/* Right Side - Content */}
-            <div 
-              className="space-y-8"
-              style={{
-                transform: `translateX(${Math.max(0, -(300 - scrollY))}px)`,
-                opacity: Math.min(1, scrollY / 300)
-              }}
-            >
-              <div className="space-y-4">
-                <div className="inline-block px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
-                  <span className="text-emerald-400 text-sm font-semibold">ABOUT ME</span>
-                </div>
+        drops.forEach((drop,i)=>{
+          const char = chars[Math.floor(Math.random()*chars.length)];
+          const x = i*14;
+          const hue = 170 + Math.sin(Date.now()/2000 + i)*40;
+          ctx.fillStyle = `hsl(${hue},100%,60%)`;
+          ctx.font = '14px monospace';
+          ctx.fillText(char,x,drop.y);
+          if(drop.y > height && Math.random()>0.975){
+            drop.y = 0;
+          }else{
+            drop.y += drop.speed*0.5;
+          }
+        });
 
-                <h2 className="text-5xl font-black">
-                  Building The
-                  <span className="block bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    Future of Web
-                  </span>
-                </h2>
+        requestAnimationFrame(draw);
+      }
 
-                <p className="text-xl text-gray-400 leading-relaxed">
-                  I'm a passionate software engineer specializing in creating innovative digital solutions. 
-                  With expertise in full-stack development, cloud architecture, and modern web technologies, 
-                  I transform complex problems into elegant, scalable applications.
-                </p>
-              </div>
+      init();
+      draw();
+      window.addEventListener('resize', init);
+    })();
 
-              {/* Skills Grid */}
-              <div className="grid grid-cols-2 gap-4 pt-8">
-                {[
-                  { icon: '⚛️', name: 'React/Next.js', level: 95 },
-                  { icon: '🚀', name: 'Node.js', level: 90 },
-                  { icon: '☁️', name: 'AWS/Cloud', level: 88 },
-                  { icon: '🐳', name: 'Docker/K8s', level: 85 }
-                ].map((skill, idx) => (
-                  <div key={idx} className="group p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:border-emerald-500/50 transition-all duration-300 hover:scale-105">
-                    <div className="flex items-center gap-4 mb-3">
-                      <span className="text-4xl">{skill.icon}</span>
-                      <div className="flex-1">
-                        <div className="text-sm font-semibold text-white">{skill.name}</div>
-                        <div className="text-xs text-emerald-400">{skill.level}%</div>
-                      </div>
-                    </div>
-                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full transition-all duration-1000"
-                        style={{ width: `${skill.level}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    // ----- Mouse hareketi: orblar + 3D kart -----
+    (function(){
+      const orbL = document.querySelector('.orb-left');
+      const orbR = document.querySelector('.orb-right');
+      const card = document.getElementById('infoCard');
+      const wrapper = document.getElementById('cardWrapper');
 
-      {/* Projects Section */}
-      <section className="relative min-h-screen py-32 bg-black">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="text-center mb-20">
-            <div className="inline-block px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full mb-6">
-              <span className="text-emerald-400 text-sm font-semibold">PORTFOLIO</span>
-            </div>
-            <h2 className="text-6xl font-black mb-6">
-              <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                Featured Projects
-              </span>
-            </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Showcasing my best work in web development, cloud solutions, and AI integration
-            </p>
-          </div>
+      window.addEventListener('mousemove', (e)=>{
+        const x = e.clientX / window.innerWidth - 0.5;
+        const y = e.clientY / window.innerHeight - 0.5;
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              { title: 'AI Platform', tech: 'Python • TensorFlow • React', color: 'from-cyan-600 to-blue-600', icon: Cpu },
-              { title: 'Cloud Dashboard', tech: 'AWS • Docker • K8s', color: 'from-purple-600 to-pink-600', icon: Terminal },
-              { title: 'E-Commerce', tech: 'Next.js • Node.js • Stripe', color: 'from-emerald-600 to-green-600', icon: Briefcase },
-              { title: 'Mobile App', tech: 'React Native • Firebase', color: 'from-orange-600 to-red-600', icon: Award }
-            ].map((project, idx) => (
-              <div
-                key={idx}
-                className="group relative aspect-[4/3] bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
-                
-                <div className="relative h-full p-8 flex flex-col justify-between">
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-4">
-                      <project.icon className="w-12 h-12 text-emerald-400" />
-                      <div>
-                        <h3 className="text-3xl font-bold text-white mb-2">{project.title}</h3>
-                        <p className="text-gray-400 text-sm font-mono">{project.tech}</p>
-                      </div>
-                    </div>
-                    <ArrowRight className="w-8 h-8 text-gray-400 group-hover:text-emerald-400 group-hover:translate-x-2 group-hover:-translate-y-2 transition-all" />
-                  </div>
-
-                  <div className="flex gap-4">
-                    <button className="px-6 py-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-sm font-semibold hover:bg-white/20 transition-all">
-                      View Project
-                    </button>
-                  </div>
-                </div>
-
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-emerald-500/30 rounded-3xl transition-all duration-500" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section className="relative min-h-screen flex items-center py-32 bg-gradient-to-b from-black to-emerald-950/20">
-        <div className="max-w-4xl mx-auto px-8 w-full text-center">
-          <div className="space-y-8">
-            <div className="inline-block px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
-              <span className="text-emerald-400 text-sm font-semibold">GET IN TOUCH</span>
-            </div>
-
-            <h2 className="text-6xl md:text-7xl font-black">
-              <span className="block text-white">Let's Work</span>
-              <span className="block bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                Together
-              </span>
-            </h2>
-
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Have a project in mind? Let's discuss how we can bring your ideas to life.
-            </p>
-
-            <div className="flex gap-6 justify-center pt-8">
-              <button className="group px-12 py-6 bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-full font-bold text-lg hover:scale-110 transition-all duration-300">
-                <span className="flex items-center gap-3">
-                  <Mail className="w-6 h-6" />
-                  Send Message
-                </span>
-              </button>
-            </div>
-
-            {/* Contact Info */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16">
-              {[
-                { icon: Mail, label: 'Email', value: 'onurcan@demir.dev' },
-                { icon: Github, label: 'GitHub', value: '@onurcandemir' },
-                { icon: Linkedin, label: 'LinkedIn', value: '/onurcandemir' }
-              ].map((contact, idx) => (
-                <div key={idx} className="p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:border-emerald-500/50 transition-all duration-300">
-                  <contact.icon className="w-8 h-8 text-emerald-400 mx-auto mb-3" />
-                  <div className="text-xs text-gray-500 mb-1">{contact.label}</div>
-                  <div className="text-sm font-semibold text-white">{contact.value}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="relative py-12 bg-black border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-2xl font-black bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-              ONURCAN.DEV
-            </div>
-            <div className="text-sm text-gray-500">
-              © 2024 Onurcan Demir. All rights reserved.
-            </div>
-            <div className="flex gap-4">
-              {[Github, Linkedin, Mail].map((Icon, idx) => (
-                <a key={idx} href="#" className="p-2 text-gray-400 hover:text-emerald-400 transition-colors">
-                  <Icon className="w-5 h-5" />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </footer>
-
-      <style jsx>{`
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+        if(orbL){
+          orbL.style.transform = `translate(${x*80}px,${y*80}px)`;
         }
-        @keyframes spin-reverse {
-          from { transform: rotate(360deg); }
-          to { transform: rotate(0deg); }
+        if(orbR){
+          orbR.style.transform = `translate(${x*-80}px,${y*-80}px)`;
         }
-        .animate-spin-slow {
-          animation: spin-slow 20s linear infinite;
+        if(card){
+          const rotY = x*14;
+          const rotX = y*-14;
+          card.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg)`;
         }
-        .animate-spin-reverse {
-          animation: spin-reverse 15s linear infinite;
-        }
-      `}</style>
-    </div>
-  );
-};
+      });
 
-export default Portfolio;
+      // kart ortalanınca biraz tilt efekti
+      if(wrapper){
+        wrapper.style.transformStyle = 'preserve-3d';
+      }
+    })();
+  </script>
+</body>
+</html>

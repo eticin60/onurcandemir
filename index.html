@@ -89,18 +89,20 @@
    PERFECT NEON NAVBAR FIX (APPLE VISION PRO STYLE)
 ------------------------------------------------------------- */
 
-header {
-  width: 100%;
-  padding: 18px 0;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  backdrop-filter: blur(32px) saturate(250%);
-  -webkit-backdrop-filter: blur(32px) saturate(250%);
-  background: rgba(8, 12, 28, 0.35);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-}
+    header {
+      width: 100%;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(32px) saturate(260%);
+      -webkit-backdrop-filter: blur(32px) saturate(260%);
+      background: radial-gradient(circle at 0 0, rgba(0, 240, 255, 0.10), transparent 55%)
+                  ,rgba(3, 6, 21, 0.30);
+      border-bottom: 1px solid rgba(0, 240, 255, 0.20);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    }
+
 
 .nav-inner {
   max-width: 1350px;
@@ -399,6 +401,73 @@ header {
       align-items: center;
       margin-top: 80px;
     }
+
+        .hero-left {
+      position: relative;
+    }
+
+    /* SOLDANKİ HOLOGRAM LOGO */
+    .hero-holo-logo {
+      position: absolute;
+      left: -40px;
+      top: -40px;
+      width: 260px;
+      height: 260px;
+      background-image: url("onurcandemir.png"); /* Hoodie logo PNG */
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      opacity: 0.22;
+      filter: drop-shadow(0 0 26px rgba(0, 240, 255, 0.85));
+      mix-blend-mode: screen;
+      pointer-events: none;
+      animation:
+        holoPulse 4.8s ease-in-out infinite,
+        holoFlicker 7.6s steps(1, end) infinite;
+    }
+
+    /* Hafif nefes alır gibi büyüyüp küçülen hologram */
+    @keyframes holoPulse {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.16;
+      }
+      35% {
+        transform: translateY(-4px) scale(1.04);
+        opacity: 0.30;
+      }
+      60% {
+        transform: translateY(1px) scale(0.99);
+        opacity: 0.20;
+      }
+    }
+
+    /* Elektrik gidip geliyormuş gibi hafif flicker */
+    @keyframes holoFlicker {
+      0%, 8%, 12%, 100% {
+        filter: drop-shadow(0 0 26px rgba(0, 240, 255, 0.85));
+      }
+      9%, 11% {
+        filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.15));
+        opacity: 0.05;
+      }
+    }
+
+    /* Mobil için pozisyonu düzeltelim */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+      }
+
+      .hero-holo-logo {
+        left: 50%;
+        top: -30px;
+        transform: translateX(-50%) scale(0.8);
+        opacity: 0.20;
+      }
+    }
+
 
     .hero-kicker {
       font-size: 12px;
@@ -1950,6 +2019,54 @@ header {
   box-shadow: 0 0 14px rgba(0,255,255,0.45);
 }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: nowrap;
+    }
+
+
+        /* Navbar sıkışmasın diye tablet breakpoint’i */
+    @media (max-width: 1100px) {
+      .nav-inner {
+        padding: 0 16px;
+      }
+
+      .pill-badge {
+        display: none; /* uzun badge'i gizle, nav derli toplu dursun */
+      }
+
+      .nav-right {
+        gap: 12px;
+      }
+
+      .nav-cta {
+        padding: 8px 16px;
+        font-size: 12px;
+      }
+    }
+
+    /* Mobil navbar: daha sade cam bar */
+    @media (max-width: 720px) {
+      header {
+        padding: 12px 0;
+        background: rgba(3, 6, 21, 0.65);
+        border-bottom: 1px solid rgba(0, 240, 255, 0.22);
+      }
+
+      .nav-inner {
+        padding: 0 12px;
+      }
+
+      .brand-text span:first-child {
+        font-size: 15px;
+      }
+
+      .brand-text span:last-child {
+        display: none; /* alt başlığı gizle, kalabalık azalır */
+      }
+    }
 
 
 
@@ -2454,6 +2571,8 @@ header {
     <!-- HERO -->
     <section class="hero" id="hero" data-section>
       <div class="hero-left">
+            <div class="hero-holo-logo"></div>
+
         <div class="hero-kicker" data-i18n="hero.kicker">SOFTWARE UNIVERSE</div>
         <h1 class="hero-title" data-i18n-html="hero.title">
           <span class="gradient">Onurcan Demir</span><br/>

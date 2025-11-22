@@ -609,7 +609,7 @@
 
     </script>
 
-    <!-- 3D GLB FULLSCREEN BACKGROUND -->
+<!-- GLB FULL SCREEN BACKGROUND -->
 <script type="module">
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
@@ -629,47 +629,49 @@ bgCanvas.style.top = "0";
 bgCanvas.style.left = "0";
 bgCanvas.style.width = "100vw";
 bgCanvas.style.height = "100vh";
-bgCanvas.style.zIndex = "0";  
+bgCanvas.style.zIndex = "0";
 bgCanvas.style.pointerEvents = "none";
+
 document.body.prepend(bgCanvas);
 
-// Lights
+// lights
 scene.add(new THREE.AmbientLight(0xffffff, 1.4));
-const d = new THREE.DirectionalLight(0xffffff, 1.2);
-d.position.set(3, 5, 4);
-scene.add(d);
+const dl = new THREE.DirectionalLight(0xffffff, 1.2);
+dl.position.set(3,5,4);
+scene.add(dl);
 
-// Model
 let model = null;
 const loader = new GLTFLoader();
 
 loader.load(
   "/motion_trails.glb",
-  (gltf) => {
+  (gltf)=>{
     model = gltf.scene;
-    model.position.set(0, 0, 0);
+    model.position.set(0,0,0);
     scene.add(model);
   },
   undefined,
-  (err) => console.error("GLB yükleme hatası:", err)
+  (err)=>console.error("GLB Load Error:",err)
 );
 
-function animate() {
+function animate(){
   requestAnimationFrame(animate);
-  if (model) model.rotation.y += 0.002;
-  renderer.render(scene, camera);
+  if(model) model.rotation.y += 0.002;
+  renderer.render(scene,camera);
 }
 animate();
 
-window.addEventListener("resize", () => {
+window.addEventListener("resize",()=>{
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 </script>
 
+
 </body>
 </html>
+
 
 
 

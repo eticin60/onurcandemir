@@ -214,84 +214,77 @@
                                     </div>
                                 </div>
 
-                                <div class="bg-black/50 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-2.5 font-mono overflow-y-auto" style="max-height: 200px;">
+                                <div class="bg-black/50 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-2 font-mono overflow-hidden">
                                     <div class="flex items-center gap-2 mb-2">
-                                        <div class="w-2.5 h-2.5 bg-red-500 rounded-full"></div>
-                                        <div class="w-2.5 h-2.5 bg-yellow-500 rounded-full"></div>
-                                        <div class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></div>
+                                        <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                                        <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                                     </div>
 
-                                    <div class="space-y-0.5 text-xs leading-relaxed">
-                                        <div><span class="text-purple-400">const</span> <span class="text-blue-400">developer</span> = {</div>
-                                        <div class="pl-2"><span class="text-cyan-400">name</span>: <span class="text-green-400">"Onurcan Demir"</span>,</div>
+                                    <div class="space-y-0 text-xs leading-tight">
+                                        <div><span class="text-purple-400">const</span> <span class="text-blue-400">dev</span> = {</div>
+                                        <div class="pl-2"><span class="text-cyan-400">name</span>: <span class="text-green-400">"Onurcan"</span>,</div>
                                         <div class="pl-2"><span class="text-cyan-400">role</span>: <span class="text-green-400">"Full Stack"</span>,</div>
-                                        
-                                        <div class="pl-2"><span class="text-cyan-400">languages</span>: [</div>
-                                        <div class="pl-4"><span class="text-green-400">"JavaScript"</span>, <span class="text-green-400">"TypeScript"</span>, <span class="text-green-400">"Python"</span>,</div>
-                                        <div class="pl-4"><span class="text-green-400">"Go"</span>, <span class="text-green-400">"Rust"</span>, <span class="text-green-400">"Java"</span>, <span class="text-green-400">"C++"</span>,</div>
-                                        <div class="pl-4"><span class="text-green-400">"PHP"</span>, <span class="text-green-400">"Ruby"</span>, <span class="text-green-400">"Solidity"</span></div>
-                                        <div class="pl-2">],</div>
-                                        
-                                        <div class="pl-2"><span class="text-cyan-400">frontend</span>: [</div>
-                                        <div class="pl-4"><span class="text-green-400">"React"</span>, <span class="text-green-400">"Next.js"</span>, <span class="text-green-400">"Vue"</span>, <span class="text-green-400">"Angular"</span>,</div>
-                                        <div class="pl-4"><span class="text-green-400">"Svelte"</span>, <span class="text-green-400">"Tailwind"</span>, <span class="text-green-400">"Flutter"</span></div>
-                                        <div class="pl-2">],</div>
-                                        
-                                        <div class="pl-2"><span class="text-cyan-400">backend</span>: [</div>
-                                        <div class="pl-4"><span class="text-green-400">"Node.js"</span>, <span class="text-green-400">"Express"</span>, <span class="text-green-400">"Django"</span>,</div>
-                                        <div class="pl-4"><span class="text-green-400">"FastAPI"</span>, <span class="text-green-400">"GraphQL"</span>, <span class="text-green-400">"REST"</span></div>
-                                        <div class="pl-2">],</div>
-                                        
-                                        <div class="pl-2"><span class="text-cyan-400">blockchain</span>: [</div>
-                                        <div class="pl-4"><span class="text-green-400">"Solidity"</span>, <span class="text-green-400">"Web3.js"</span>, <span class="text-green-400">"Ethers.js"</span>,</div>
-                                        <div class="pl-4"><span class="text-green-400">"Smart Contracts"</span>, <span class="text-green-400">"DeFi"</span>, <span class="text-green-400">"NFTs"</span>,</div>
-                                        <div class="pl-4"><span class="text-green-400">"Hardhat"</span>, <span class="text-green-400">"Truffle"</span>, <span class="text-green-400">"OpenZeppelin"</span></div>
-                                        <div class="pl-2">],</div>
-                                        
-                                        <div class="pl-2"><span class="text-cyan-400">cloud</span>: [</div>
-                                        <div class="pl-4"><span class="text-green-400">"AWS"</span>, <span class="text-green-400">"Docker"</span>, <span class="text-green-400">"Kubernetes"</span>,</div>
-                                        <div class="pl-4"><span class="text-green-400">"Azure"</span>, <span class="text-green-400">"GCP"</span>, <span class="text-green-400">"Terraform"</span></div>
-                                        <div class="pl-2">],</div>
-                                        
-                                        <div class="pl-2"><span class="text-cyan-400">databases</span>: [</div>
-                                        <div class="pl-4"><span class="text-green-400">"PostgreSQL"</span>, <span class="text-green-400">"MongoDB"</span>, <span class="text-green-400">"Redis"</span>,</div>
-                                        <div class="pl-4"><span class="text-green-400">"MySQL"</span>, <span class="text-green-400">"Firestore"</span>, <span class="text-green-400">"DynamoDB"</span></div>
-                                        <div class="pl-2">],</div>
-                                        
-                                        <div class="pl-2"><span class="text-cyan-400">aiml</span>: [</div>
-                                        <div class="pl-4"><span class="text-green-400">"TensorFlow"</span>, <span class="text-green-400">"PyTorch"</span>, <span class="text-green-400">"OpenAI"</span>,</div>
-                                        <div class="pl-4"><span class="text-green-400">"LangChain"</span>, <span class="text-green-400">"Hugging Face"</span></div>
-                                        <div class="pl-2">],</div>
-                                        
+                                        <div class="pl-2"><span class="text-cyan-400">langs</span>: [<span class="text-green-400">"JS"</span>, <span class="text-green-400">"TS"</span>, <span class="text-green-400">"Py"</span>, <span class="text-green-400">"Go"</span>, <span class="text-green-400">"Rust"</span>, <span class="text-green-400">"Java"</span>, <span class="text-green-400">"C++"</span>, <span class="text-green-400">"PHP"</span>, <span class="text-green-400">"Ruby"</span>, <span class="text-green-400">"Sol"</span>],</div>
+                                        <div class="pl-2"><span class="text-cyan-400">front</span>: [<span class="text-green-400">"React"</span>, <span class="text-green-400">"Next"</span>, <span class="text-green-400">"Vue"</span>, <span class="text-green-400">"Angular"</span>, <span class="text-green-400">"Svelte"</span>, <span class="text-green-400">"Tailwind"</span>],</div>
+                                        <div class="pl-2"><span class="text-cyan-400">back</span>: [<span class="text-green-400">"Node"</span>, <span class="text-green-400">"Express"</span>, <span class="text-green-400">"Django"</span>, <span class="text-green-400">"FastAPI"</span>, <span class="text-green-400">"GraphQL"</span>],</div>
+                                        <div class="pl-2"><span class="text-cyan-400">web3</span>: [<span class="text-green-400">"Solidity"</span>, <span class="text-green-400">"Web3"</span>, <span class="text-green-400">"Ethers"</span>, <span class="text-green-400">"DeFi"</span>, <span class="text-green-400">"NFT"</span>],</div>
+                                        <div class="pl-2"><span class="text-cyan-400">cloud</span>: [<span class="text-green-400">"AWS"</span>, <span class="text-green-400">"Docker"</span>, <span class="text-green-400">"K8s"</span>, <span class="text-green-400">"Azure"</span>, <span class="text-green-400">"GCP"</span>],</div>
+                                        <div class="pl-2"><span class="text-cyan-400">db</span>: [<span class="text-green-400">"PostgreSQL"</span>, <span class="text-green-400">"MongoDB"</span>, <span class="text-green-400">"Redis"</span>],</div>
+                                        <div class="pl-2"><span class="text-cyan-400">ai</span>: [<span class="text-green-400">"TensorFlow"</span>, <span class="text-green-400">"PyTorch"</span>, <span class="text-green-400">"OpenAI"</span>],</div>
                                         <div class="pl-2"><span class="text-cyan-400">passion</span>: <span class="text-pink-400 font-bold">∞</span></div>
                                         <div>};</div>
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-3 gap-1.5">
-                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl flex flex-col items-center justify-center gap-0.5 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
-                                        <span class="text-lg sm:text-xl">⚛️</span>
-                                        <span class="text-xs font-bold text-gray-400">React</span>
+                                <div class="grid grid-cols-4 gap-1">
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" class="w-5 h-5 sm:w-6 sm:h-6">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">React</span>
                                     </div>
-                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl flex flex-col items-center justify-center gap-0.5 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
-                                        <span class="text-lg sm:text-xl">🚀</span>
-                                        <span class="text-xs font-bold text-gray-400">Node.js</span>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" class="w-5 h-5 sm:w-6 sm:h-6">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">Node</span>
                                     </div>
-                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl flex flex-col items-center justify-center gap-0.5 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
-                                        <span class="text-lg sm:text-xl">🐍</span>
-                                        <span class="text-xs font-bold text-gray-400">Python</span>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="w-5 h-5 sm:w-6 sm:h-6">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">Python</span>
                                     </div>
-                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl flex flex-col items-center justify-center gap-0.5 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
-                                        <span class="text-lg sm:text-xl">☁️</span>
-                                        <span class="text-xs font-bold text-gray-400">AWS</span>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" class="w-5 h-5 sm:w-6 sm:h-6">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">TS</span>
                                     </div>
-                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl flex flex-col items-center justify-center gap-0.5 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
-                                        <span class="text-lg sm:text-xl">🐳</span>
-                                        <span class="text-xs font-bold text-gray-400">Docker</span>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS" class="w-5 h-5 sm:w-6 sm:h-6">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">AWS</span>
                                     </div>
-                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl flex flex-col items-center justify-center gap-0.5 hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
-                                        <span class="text-lg sm:text-xl">⚡</span>
-                                        <span class="text-xs font-bold text-gray-400">AI/ML</span>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" class="w-5 h-5 sm:w-6 sm:h-6">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">Docker</span>
+                                    </div>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes" class="w-5 h-5 sm:w-6 sm:h-6">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">K8s</span>
+                                    </div>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" class="w-5 h-5 sm:w-6 sm:h-6">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">Mongo</span>
+                                    </div>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" class="w-5 h-5 sm:w-6 sm:h-6">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">Postgres</span>
+                                    </div>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js" class="w-5 h-5 sm:w-6 sm:h-6 invert">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">Next</span>
+                                    </div>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/solidity/solidity-original.svg" alt="Solidity" class="w-5 h-5 sm:w-6 sm:h-6">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">Solidity</span>
+                                    </div>
+                                    <div class="tech-badge aspect-square bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg flex flex-col items-center justify-center hover:bg-white/10 hover:border-emerald-500/50 cursor-pointer">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow" class="w-5 h-5 sm:w-6 sm:h-6">
+                                        <span class="text-xs font-bold text-gray-400 mt-1">AI/ML</span>
                                     </div>
                                 </div>
                             </div>

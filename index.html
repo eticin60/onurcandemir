@@ -143,28 +143,6 @@
             scrollbar-color: #10b981 rgba(0, 0, 0, 0.3);
         }
 
-        #animated-bg {
-    position: fixed;
-    inset: 0;
-    background: url("/animation.jpg") center/cover no-repeat;
-    filter: brightness(1.4) saturate(1.6) blur(0px);
-    pointer-events: none;
-    z-index: 0;
-    animation: bgFlow 6s ease-in-out infinite, bgPulse 4s ease-in-out infinite;
-}
-
-@keyframes bgFlow {
-    0% { transform: translateY(0px) scale(1.02); filter: blur(0px); }
-    50% { transform: translateY(-12px) scale(1.05); filter: blur(1px); }
-    100% { transform: translateY(0px) scale(1.02); filter: blur(0px); }
-}
-
-@keyframes bgPulse {
-    0%, 100% { opacity: 0.85; }
-    50% { opacity: 1; }
-}
-
-        /* FULLSCREEN ANIMATED BACKGROUND */
 #animated-bg {
     position: fixed;
     inset: 0;
@@ -189,8 +167,6 @@
     50%  { filter: brightness(1.25) blur(1px); }
     100% { filter: brightness(1.15) blur(0px); }
 }
-
-
 
         @media (max-width: 768px) {
             .electric-line,
@@ -664,6 +640,7 @@
     </script>
 </body>
 </html>
+
 
 
 

@@ -452,6 +452,14 @@ if ("serviceWorker" in navigator) {
 }
 </script>
 
+  <script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js")
+        .then(() => console.log("SW active"))
+        .catch(err => console.error(err));
+}
+</script>
+
 
 <!-- =============================== -->
 <!-- 📌 PRELOADER                    -->
@@ -470,4 +478,5 @@ window.addEventListener("load", () => {
   </div>
 </body>
 </html>
+
 

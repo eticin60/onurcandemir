@@ -113,7 +113,6 @@
             pointer-events: none;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -140,7 +139,6 @@
             scrollbar-color: #10b981 rgba(0, 0, 0, 0.3);
         }
 
-        /* Mobilde performans için */
         @media (max-width: 768px) {
             .electric-line,
             .spark {
@@ -503,7 +501,7 @@
 
                 <div class="text-center pt-3 border-t border-white/5">
                     <div class="text-xl lg:text-2xl font-black gradient-text mb-2">
-                        ONURCAN.DEV
+                        ONURCAN.DEMIR
                     </div>
                     <div class="text-xs text-gray-500 mb-3">
                         © 2024 Onurcan Demir. All rights reserved.
@@ -573,7 +571,6 @@
         }
         animate();
 
-        // Mouse efektlerini sadece desktop'ta etkinleştir
         if (!isMobile) {
             document.addEventListener('mousemove', (e) => {
                 const x = e.clientX / window.innerWidth;
@@ -603,7 +600,6 @@
             });
         }
 
-        // PWA Service Worker
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("/pwa-sw.js")
                 .then(() => console.log("PWA Active"))
@@ -612,3 +608,4 @@
     </script>
 </body>
 </html>
+

@@ -606,89 +606,74 @@
                 .then(() => console.log("PWA Active"))
                 .catch(err => console.error("SW error:", err));
         }
-        <!-- 3D GLB FULLSCREEN BACKGROUND -->
+<!-- 3D GLB FULLSCREEN BACKGROUND -->
 <script type="module">
-  // İstersen mobilde kapat (performans için)
-  if (window.innerWidth >= 768) {
+  import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+  import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
 
-    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-    import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.set(0, 1, 4);
 
-    const scene = new THREE.Scene();
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setClearColor(0x000000, 0);
 
-    const camera = new THREE.PerspectiveCamera(
-      45,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      100
-    );
-    camera.position.set(0, 1, 4);
+  const bgCanvas = renderer.domElement;
+  bgCanvas.style.position = "fixed";
+  bgCanvas.style.top = "0";
+  bgCanvas.style.left = "0";
+  bgCanvas.style.width = "100vw";
+  bgCanvas.style.height = "100vh";
+  bgCanvas.style.zIndex = "0";      // ⚠️ ÖNEMLİ: -1 yapma, yoksa görünmez
+  bgCanvas.style.pointerEvents = "none";
+  document.body.prepend(bgCanvas);
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true       // arkayı şeffaf yap
-    });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0); // tamamen şeffaf
+  // Işıklar
+  scene.add(new THREE.AmbientLight(0xffffff, 1.4));
+  const d = new THREE.DirectionalLight(0xffffff, 1.2);
+  d.position.set(3, 5, 4);
+  scene.add(d);
 
-    // Canvas'ı tüm sayfanın arka planına sabitle
-    const canvas = renderer.domElement;
-    canvas.style.position = "fixed";
-    canvas.style.inset = "0";
-    canvas.style.width = "100vw";
-    canvas.style.height = "100vh";
-    canvas.style.zIndex = "-1";
-    canvas.style.pointerEvents = "none";
-    document.body.prepend(canvas);
+  // Model
+  let model = null;
+  const loader = new GLTFLoader();
 
-    // Işıklar
-    const ambient = new THREE.AmbientLight(0xffffff, 1.4);
-    scene.add(ambient);
-
-    const dir = new THREE.DirectionalLight(0xffffff, 1.2);
-    dir.position.set(2, 3, 4);
-    scene.add(dir);
-
-    // MODEL
-    let model;
-    const loader = new GLTFLoader();
-
-    // 🔥 GLB DOSYANIN YOLU
-    // index.html ile AYNI klasöre koyarsan bu yol yeter:
-    loader.load("motion_trails.glb", (gltf) => {
+  loader.load(
+    "/motion_trails.glb",    // ✔ doğru yol çünkü root dizine upload etmişsin
+    (gltf) => {
       model = gltf.scene;
       model.position.set(0, 0, 0);
       scene.add(model);
-    }, undefined, (error) => {
-      console.error("GLB yükleme hatası:", error);
-    });
+    },
+    undefined,
+    (err) => console.error("GLB yükleme hatası:", err)
+  );
 
-    // ANİMASYON
-    function animate() {
-      requestAnimationFrame(animate);
+  function animate() {
+    requestAnimationFrame(animate);
 
-      if (model) {
-        // yavaş yavaş döndür
-        model.rotation.y += 0.002;
-      }
-
-      renderer.render(scene, camera);
+    if (model) {
+      model.rotation.y += 0.002;
     }
-    animate();
 
-    // Resize
-    window.addEventListener("resize", () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+    renderer.render(scene, camera);
   }
+
+  animate();
+
+  window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
 </script>
 
     </script>
 </body>
 </html>
+
 
 
 

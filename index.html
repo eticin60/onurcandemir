@@ -606,73 +606,71 @@
                 .then(() => console.log("PWA Active"))
                 .catch(err => console.error("SW error:", err));
         }
-<!-- 3D GLB FULLSCREEN BACKGROUND -->
-<script type="module">
-  import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
-  import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera.position.set(0, 1, 4);
-
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setClearColor(0x000000, 0);
-
-  const bgCanvas = renderer.domElement;
-  bgCanvas.style.position = "fixed";
-  bgCanvas.style.top = "0";
-  bgCanvas.style.left = "0";
-  bgCanvas.style.width = "100vw";
-  bgCanvas.style.height = "100vh";
-  bgCanvas.style.zIndex = "0";      // ⚠️ ÖNEMLİ: -1 yapma, yoksa görünmez
-  bgCanvas.style.pointerEvents = "none";
-  document.body.prepend(bgCanvas);
-
-  // Işıklar
-  scene.add(new THREE.AmbientLight(0xffffff, 1.4));
-  const d = new THREE.DirectionalLight(0xffffff, 1.2);
-  d.position.set(3, 5, 4);
-  scene.add(d);
-
-  // Model
-  let model = null;
-  const loader = new GLTFLoader();
-
-  loader.load(
-    "/motion_trails.glb",    // ✔ doğru yol çünkü root dizine upload etmişsin
-    (gltf) => {
-      model = gltf.scene;
-      model.position.set(0, 0, 0);
-      scene.add(model);
-    },
-    undefined,
-    (err) => console.error("GLB yükleme hatası:", err)
-  );
-
-  function animate() {
-    requestAnimationFrame(animate);
-
-    if (model) {
-      model.rotation.y += 0.002;
-    }
-
-    renderer.render(scene, camera);
-  }
-
-  animate();
-
-  window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-</script>
 
     </script>
+
+    <!-- 3D GLB FULLSCREEN BACKGROUND -->
+<script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(0, 1, 4);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setClearColor(0x000000, 0);
+
+const bgCanvas = renderer.domElement;
+bgCanvas.style.position = "fixed";
+bgCanvas.style.top = "0";
+bgCanvas.style.left = "0";
+bgCanvas.style.width = "100vw";
+bgCanvas.style.height = "100vh";
+bgCanvas.style.zIndex = "0";  
+bgCanvas.style.pointerEvents = "none";
+document.body.prepend(bgCanvas);
+
+// Lights
+scene.add(new THREE.AmbientLight(0xffffff, 1.4));
+const d = new THREE.DirectionalLight(0xffffff, 1.2);
+d.position.set(3, 5, 4);
+scene.add(d);
+
+// Model
+let model = null;
+const loader = new GLTFLoader();
+
+loader.load(
+  "/motion_trails.glb",
+  (gltf) => {
+    model = gltf.scene;
+    model.position.set(0, 0, 0);
+    scene.add(model);
+  },
+  undefined,
+  (err) => console.error("GLB yükleme hatası:", err)
+);
+
+function animate() {
+  requestAnimationFrame(animate);
+  if (model) model.rotation.y += 0.002;
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+
 </body>
 </html>
+
 
 
 

@@ -69,6 +69,33 @@
         .tech-badge:hover {
             transform: scale(1.1);
         }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #10b981, #06b6d4);
+            border-radius: 10px;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #059669, #0891b2);
+        }
+
+        /* Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #10b981 rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 <body class="bg-black text-white">
@@ -214,24 +241,55 @@
                                     </div>
                                 </div>
 
-                                <div class="bg-black/50 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-2 font-mono overflow-hidden">
+                                <div class="bg-black/50 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-2 font-mono overflow-y-auto" style="max-height: 200px;">
                                     <div class="flex items-center gap-2 mb-2">
                                         <div class="w-2 h-2 bg-red-500 rounded-full"></div>
                                         <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
                                         <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                                     </div>
 
-                                    <div class="space-y-0 text-xs leading-tight">
-                                        <div><span class="text-purple-400">const</span> <span class="text-blue-400">dev</span> = {</div>
-                                        <div class="pl-2"><span class="text-cyan-400">name</span>: <span class="text-green-400">"Onurcan"</span>,</div>
+                                    <div class="space-y-0.5 text-xs leading-relaxed">
+                                        <div><span class="text-purple-400">const</span> <span class="text-blue-400">developer</span> = {</div>
+                                        <div class="pl-2"><span class="text-cyan-400">name</span>: <span class="text-green-400">"Onurcan Demir"</span>,</div>
                                         <div class="pl-2"><span class="text-cyan-400">role</span>: <span class="text-green-400">"Full Stack"</span>,</div>
-                                        <div class="pl-2"><span class="text-cyan-400">langs</span>: [<span class="text-green-400">"JS"</span>, <span class="text-green-400">"TS"</span>, <span class="text-green-400">"Py"</span>, <span class="text-green-400">"Go"</span>, <span class="text-green-400">"Rust"</span>, <span class="text-green-400">"Java"</span>, <span class="text-green-400">"C++"</span>, <span class="text-green-400">"PHP"</span>, <span class="text-green-400">"Ruby"</span>, <span class="text-green-400">"Sol"</span>],</div>
-                                        <div class="pl-2"><span class="text-cyan-400">front</span>: [<span class="text-green-400">"React"</span>, <span class="text-green-400">"Next"</span>, <span class="text-green-400">"Vue"</span>, <span class="text-green-400">"Angular"</span>, <span class="text-green-400">"Svelte"</span>, <span class="text-green-400">"Tailwind"</span>],</div>
-                                        <div class="pl-2"><span class="text-cyan-400">back</span>: [<span class="text-green-400">"Node"</span>, <span class="text-green-400">"Express"</span>, <span class="text-green-400">"Django"</span>, <span class="text-green-400">"FastAPI"</span>, <span class="text-green-400">"GraphQL"</span>],</div>
-                                        <div class="pl-2"><span class="text-cyan-400">web3</span>: [<span class="text-green-400">"Solidity"</span>, <span class="text-green-400">"Web3"</span>, <span class="text-green-400">"Ethers"</span>, <span class="text-green-400">"DeFi"</span>, <span class="text-green-400">"NFT"</span>],</div>
-                                        <div class="pl-2"><span class="text-cyan-400">cloud</span>: [<span class="text-green-400">"AWS"</span>, <span class="text-green-400">"Docker"</span>, <span class="text-green-400">"K8s"</span>, <span class="text-green-400">"Azure"</span>, <span class="text-green-400">"GCP"</span>],</div>
-                                        <div class="pl-2"><span class="text-cyan-400">db</span>: [<span class="text-green-400">"PostgreSQL"</span>, <span class="text-green-400">"MongoDB"</span>, <span class="text-green-400">"Redis"</span>],</div>
-                                        <div class="pl-2"><span class="text-cyan-400">ai</span>: [<span class="text-green-400">"TensorFlow"</span>, <span class="text-green-400">"PyTorch"</span>, <span class="text-green-400">"OpenAI"</span>],</div>
+                                        
+                                        <div class="pl-2"><span class="text-cyan-400">languages</span>: [</div>
+                                        <div class="pl-4"><span class="text-green-400">"JavaScript"</span>, <span class="text-green-400">"TypeScript"</span>, <span class="text-green-400">"Python"</span>,</div>
+                                        <div class="pl-4"><span class="text-green-400">"Go"</span>, <span class="text-green-400">"Rust"</span>, <span class="text-green-400">"Java"</span>, <span class="text-green-400">"C++"</span>,</div>
+                                        <div class="pl-4"><span class="text-green-400">"PHP"</span>, <span class="text-green-400">"Ruby"</span>, <span class="text-green-400">"Solidity"</span></div>
+                                        <div class="pl-2">],</div>
+                                        
+                                        <div class="pl-2"><span class="text-cyan-400">frontend</span>: [</div>
+                                        <div class="pl-4"><span class="text-green-400">"React"</span>, <span class="text-green-400">"Next.js"</span>, <span class="text-green-400">"Vue"</span>, <span class="text-green-400">"Angular"</span>,</div>
+                                        <div class="pl-4"><span class="text-green-400">"Svelte"</span>, <span class="text-green-400">"Tailwind"</span>, <span class="text-green-400">"Flutter"</span></div>
+                                        <div class="pl-2">],</div>
+                                        
+                                        <div class="pl-2"><span class="text-cyan-400">backend</span>: [</div>
+                                        <div class="pl-4"><span class="text-green-400">"Node.js"</span>, <span class="text-green-400">"Express"</span>, <span class="text-green-400">"Django"</span>,</div>
+                                        <div class="pl-4"><span class="text-green-400">"FastAPI"</span>, <span class="text-green-400">"GraphQL"</span>, <span class="text-green-400">"REST"</span></div>
+                                        <div class="pl-2">],</div>
+                                        
+                                        <div class="pl-2"><span class="text-cyan-400">blockchain</span>: [</div>
+                                        <div class="pl-4"><span class="text-green-400">"Solidity"</span>, <span class="text-green-400">"Web3.js"</span>, <span class="text-green-400">"Ethers.js"</span>,</div>
+                                        <div class="pl-4"><span class="text-green-400">"Smart Contracts"</span>, <span class="text-green-400">"DeFi"</span>, <span class="text-green-400">"NFTs"</span>,</div>
+                                        <div class="pl-4"><span class="text-green-400">"Hardhat"</span>, <span class="text-green-400">"Truffle"</span>, <span class="text-green-400">"OpenZeppelin"</span></div>
+                                        <div class="pl-2">],</div>
+                                        
+                                        <div class="pl-2"><span class="text-cyan-400">cloud</span>: [</div>
+                                        <div class="pl-4"><span class="text-green-400">"AWS"</span>, <span class="text-green-400">"Docker"</span>, <span class="text-green-400">"Kubernetes"</span>,</div>
+                                        <div class="pl-4"><span class="text-green-400">"Azure"</span>, <span class="text-green-400">"GCP"</span>, <span class="text-green-400">"Terraform"</span></div>
+                                        <div class="pl-2">],</div>
+                                        
+                                        <div class="pl-2"><span class="text-cyan-400">databases</span>: [</div>
+                                        <div class="pl-4"><span class="text-green-400">"PostgreSQL"</span>, <span class="text-green-400">"MongoDB"</span>, <span class="text-green-400">"Redis"</span>,</div>
+                                        <div class="pl-4"><span class="text-green-400">"MySQL"</span>, <span class="text-green-400">"Firestore"</span>, <span class="text-green-400">"DynamoDB"</span></div>
+                                        <div class="pl-2">],</div>
+                                        
+                                        <div class="pl-2"><span class="text-cyan-400">aiml</span>: [</div>
+                                        <div class="pl-4"><span class="text-green-400">"TensorFlow"</span>, <span class="text-green-400">"PyTorch"</span>, <span class="text-green-400">"OpenAI"</span>,</div>
+                                        <div class="pl-4"><span class="text-green-400">"LangChain"</span>, <span class="text-green-400">"Hugging Face"</span></div>
+                                        <div class="pl-2">],</div>
+                                        
                                         <div class="pl-2"><span class="text-cyan-400">passion</span>: <span class="text-pink-400 font-bold">∞</span></div>
                                         <div>};</div>
                                     </div>

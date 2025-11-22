@@ -146,24 +146,25 @@
 #animated-bg {
     position: fixed;
     inset: 0;
-    background: url("animation.jpg") repeat-x center;
-    background-size: cover;
+    background: url("animation.jpg") center/cover no-repeat;
     opacity: 0.9;
     filter: drop-shadow(0 0 6px #00eaff) brightness(1.1);
     pointer-events: none;
     z-index: 0;
 
-    animation: bgScroll 20s linear infinite;
+    /* DÖNME ANİMASYONU */
+    animation: spinBG 35s linear infinite;
 }
 
-@keyframes bgScroll {
+@keyframes spinBG {
     0% {
-        background-position: 0 0;
+        transform: rotate(0deg) scale(1.05);
     }
     100% {
-        background-position: 2000px 0; /* sağa doğru akış */
+        transform: rotate(360deg) scale(1.05);
     }
 }
+
 
 
         @media (max-width: 768px) {
@@ -638,6 +639,7 @@
     </script>
 </body>
 </html>
+
 
 
 

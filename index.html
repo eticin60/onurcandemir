@@ -539,7 +539,15 @@
                 card.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg)';
             });
         }
+        <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/pwa-sw.js")
+    .then(() => console.log("PWA Active"))
+    .catch(err => console.error("SW error:", err));
+}
+</script>
     </script>
 </body>
 </html>
+
 

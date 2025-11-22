@@ -224,16 +224,6 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
                     
                     <div class="space-y-3 lg:space-y-4 text-center lg:text-left">
-                        <div class="absolute inset-0 flex justify-center items-center opacity-20 pointer-events-none">
-    <lottie-player 
-        src="/welcome.json"
-        background="transparent"
-        speed="1"
-        style="width: 420px;"
-        loop
-        autoplay>
-    </lottie-player>
-</div>
                         <div class="flex justify-center lg:justify-start mb-3">
                             <div class="relative group">
                                 <div class="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl group-hover:bg-emerald-500/30 transition-all duration-500"></div>
@@ -250,6 +240,18 @@
                         </div>
 
                         <div>
+                            <!-- Welcome Animation Between Logo and Card -->
+<div class="absolute left-1/2 -translate-x-1/2 top-20 lg:top-24 opacity-30 pointer-events-none z-0">
+    <lottie-player 
+        src="/welcome.json"
+        background="transparent"
+        speed="1"
+        style="width:260px; height:auto;"
+        loop
+        autoplay>
+    </lottie-player>
+</div>
+
                             <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black leading-none mb-2 lg:mb-3">
                                 <span class="block text-white">ONURCAN</span>
                                 <span class="block gradient-text text-3xl sm:text-4xl lg:text-6xl">DEMIR</span>

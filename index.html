@@ -634,8 +634,92 @@
         }
 
     </script>
+    <script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+
+const scene = new THREE.Scene();
+
+// CAMERA
+const camera = new THREE.PerspectiveCamera(
+    55,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+);
+camera.position.set(0, 0, 3.5);
+
+// RENDERER
+const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.domElement.style.position = "fixed";
+renderer.domElement.style.top = "0";
+renderer.domElement.style.left = "0";
+renderer.domElement.style.width = "100%";
+renderer.domElement.style.height = "100%";
+renderer.domElement.style.zIndex = "-1";  
+renderer.domElement.style.pointerEvents = "none"; 
+document.body.prepend(renderer.domElement);
+
+// LIGHTS (CYBER GREEN + BLUE)
+const light1 = new THREE.PointLight(0x00ffcc, 2);
+light1.position.set(3, 2, 5);
+scene.add(light1);
+
+const light2 = new THREE.PointLight(0x0099ff, 2);
+light2.position.set(-3, -2, -5);
+scene.add(light2);
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+
+// MODEL LOAD
+let model = null;
+const loader = new GLTFLoader();
+
+loader.load(
+    "http://onurcandemir.online/scene.glb",
+    (gltf) => {
+        model = gltf.scene;
+
+        // MODEL SCALE / POSITION
+        model.scale.set(1.4, 1.4, 1.4);
+        model.position.set(0, 0, 0);
+
+        scene.add(model);
+    },
+    undefined,
+    (err) => {
+        console.error("MODEL LOAD ERROR:", err);
+    }
+);
+
+// ANIMATION LOOP
+function animate() {
+    requestAnimationFrame(animate);
+
+    if (model) {
+        model.rotation.y += 0.004;   // dönüş hızı
+    }
+
+    renderer.render(scene, camera);
+}
+animate();
+
+// RESIZE FIX
+window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+
 </body>
 </html>
+
 
 
 

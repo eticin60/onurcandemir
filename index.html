@@ -464,16 +464,21 @@
     <script>
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
+        
+        // Mobilde daha az partikül
+        const isMobile = window.innerWidth < 768;
+        const particleCount = isMobile ? 20 : 50;
+        
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         const particles = [];
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
                 size: Math.random() * 2 + 1
             });
         }
@@ -499,32 +504,35 @@
         }
         animate();
 
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
+        // Mouse efektlerini sadece desktop'ta etkinleştir
+        if (!isMobile) {
+            document.addEventListener('mousemove', (e) => {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
 
-            const orb1 = document.getElementById('orb1');
-            const orb2 = document.getElementById('orb2');
+                const orb1 = document.getElementById('orb1');
+                const orb2 = document.getElementById('orb2');
 
-            orb1.style.transform = `translate(${x * 80}px, ${y * 80}px)`;
-            orb2.style.transform = `translate(${-x * 60}px, ${-y * 60}px)`;
-        });
+                orb1.style.transform = `translate(${x * 80}px, ${y * 80}px)`;
+                orb2.style.transform = `translate(${-x * 60}px, ${-y * 60}px)`;
+            });
 
-        const card = document.getElementById('hologramCard');
-        document.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width;
-            const y = (e.clientY - rect.top) / rect.height;
+            const card = document.getElementById('hologramCard');
+            document.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
 
-            const rotateY = (x - 0.5) * 8;
-            const rotateX = -(y - 0.5) * 8;
+                const rotateY = (x - 0.5) * 8;
+                const rotateX = -(y - 0.5) * 8;
 
-            card.style.transform = `perspective(1200px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
-        });
+                card.style.transform = `perspective(1200px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+            });
 
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg)';
-        });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg)';
+            });
+        }
     </script>
 </body>
 </html>

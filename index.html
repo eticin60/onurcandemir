@@ -143,6 +143,28 @@
             scrollbar-color: #10b981 rgba(0, 0, 0, 0.3);
         }
 
+        #animated-bg {
+    position: fixed;
+    inset: 0;
+    background: url("/animation.jpg") center/cover no-repeat;
+    filter: brightness(1.4) saturate(1.6) blur(0px);
+    pointer-events: none;
+    z-index: 0;
+    animation: bgFlow 6s ease-in-out infinite, bgPulse 4s ease-in-out infinite;
+}
+
+@keyframes bgFlow {
+    0% { transform: translateY(0px) scale(1.02); filter: blur(0px); }
+    50% { transform: translateY(-12px) scale(1.05); filter: blur(1px); }
+    100% { transform: translateY(0px) scale(1.02); filter: blur(0px); }
+}
+
+@keyframes bgPulse {
+    0%, 100% { opacity: 0.85; }
+    50% { opacity: 1; }
+}
+
+
         @media (max-width: 768px) {
             .electric-line,
             .spark {
@@ -152,6 +174,7 @@
     </style>
 </head>
 <body class="bg-black text-white">
+        <div id="animated-bg"></div>
         <canvas id="particleCanvas" class="fixed inset-0 w-full h-full opacity-40 pointer-events-none"></canvas>
 
 
@@ -612,73 +635,9 @@
         }
 
     </script>
-
-<!-- GLB FULLSCREEN BACKGROUND -->
-<script type="module">
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
-import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.set(0, 1, 4);
-
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setClearColor(0x000000, 0);
-
-const bgCanvas = renderer.domElement;
-bgCanvas.style.position = "fixed";
-bgCanvas.style.top = "0";
-bgCanvas.style.left = "0";
-bgCanvas.style.width = "100vw";
-bgCanvas.style.height = "100vh";
-bgCanvas.style.zIndex = "0";
-bgCanvas.style.pointerEvents = "none";
-
-document.body.prepend(bgCanvas);
-
-scene.add(new THREE.AmbientLight(0xffffff, 1.4));
-const dl = new THREE.DirectionalLight(0xffffff, 1.2);
-dl.position.set(3, 5, 4);
-scene.add(dl);
-
-let model = null;
-const loader = new GLTFLoader();
-
-loader.load(
-  "http://eticin60.github.io/onurcandemir/motion_trails.glb",
-  (gltf) => {
-    model = gltf.scene;
-
-    model.scale.set(10, 10, 10);
-    model.position.set(0, -1, 0);
-
-    scene.add(model);
-  },
-  undefined,
-  (err) => console.error("GLB Load Error:", err)
-);
-
-
-function animate() {
-  requestAnimationFrame(animate);
-  if (model) {
-    model.rotation.y += 0.002;
-  }
-  renderer.render(scene, camera);
-}
-animate();
-
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-</script>
-
 </body>
 </html>
+
 
 
 

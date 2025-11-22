@@ -650,12 +650,16 @@ loader.load(
   "https://onurcandemir.online/motion_trails.glb",
   (gltf) => {
     model = gltf.scene;
-    model.position.set(0, 0, 0);
+
+    model.scale.set(10, 10, 10);
+    model.position.set(0, -1, 0);
+
     scene.add(model);
   },
   undefined,
   (err) => console.error("GLB Load Error:", err)
 );
+
 
 function animate() {
   requestAnimationFrame(animate);
@@ -675,6 +679,7 @@ window.addEventListener("resize", () => {
 
 </body>
 </html>
+
 
 
 

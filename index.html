@@ -609,7 +609,7 @@
 
     </script>
 
-<!-- GLB FULL SCREEN BACKGROUND -->
+<!-- GLB FULLSCREEN BACKGROUND -->
 <script type="module">
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
@@ -634,43 +634,44 @@ bgCanvas.style.pointerEvents = "none";
 
 document.body.prepend(bgCanvas);
 
-// lights
 scene.add(new THREE.AmbientLight(0xffffff, 1.4));
 const dl = new THREE.DirectionalLight(0xffffff, 1.2);
-dl.position.set(3,5,4);
+dl.position.set(3, 5, 4);
 scene.add(dl);
 
 let model = null;
 const loader = new GLTFLoader();
 
 loader.load(
-  "/motion_trails.glb",
-  (gltf)=>{
+  "https://onurcandemir.online/motion_trails.glb",
+  (gltf) => {
     model = gltf.scene;
-    model.position.set(0,0,0);
+    model.position.set(0, 0, 0);
     scene.add(model);
   },
   undefined,
-  (err)=>console.error("GLB Load Error:",err)
+  (err) => console.error("GLB Load Error:", err)
 );
 
-function animate(){
+function animate() {
   requestAnimationFrame(animate);
-  if(model) model.rotation.y += 0.002;
-  renderer.render(scene,camera);
+  if (model) {
+    model.rotation.y += 0.002;
+  }
+  renderer.render(scene, camera);
 }
 animate();
 
-window.addEventListener("resize",()=>{
+window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 </script>
 
-
 </body>
 </html>
+
 
 
 

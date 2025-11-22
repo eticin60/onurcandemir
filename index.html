@@ -146,27 +146,25 @@
 #animated-bg {
     position: fixed;
     inset: 0;
-    background: url("animation.jpg") center/cover no-repeat;
+    background: url("animation.png") repeat-x center;
+    background-size: cover;
     opacity: 0.9;
     filter: drop-shadow(0 0 6px #00eaff) brightness(1.1);
     pointer-events: none;
     z-index: 0;
 
-    animation: bgMove 11s ease-in-out infinite alternate,
-               bgWave 6s ease-in-out infinite alternate;
+    animation: bgScroll 20s linear infinite;
 }
 
-@keyframes bgMove {
-    0%   { transform: translate3d(-8px, -6px, 0) scale(1.03); }
-    50%  { transform: translate3d( 8px, 10px, 0) scale(1.05); }
-    100% { transform: translate3d(-8px, -6px, 0) scale(1.03); }
+@keyframes bgScroll {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 2000px 0; /* sağa doğru akış */
+    }
 }
 
-@keyframes bgWave {
-    0%   { filter: brightness(1.15) blur(0px); }
-    50%  { filter: brightness(1.25) blur(1px); }
-    100% { filter: brightness(1.15) blur(0px); }
-}
 
         @media (max-width: 768px) {
             .electric-line,
@@ -640,6 +638,7 @@
     </script>
 </body>
 </html>
+
 
 
 

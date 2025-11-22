@@ -377,102 +377,97 @@
     </div>
   </div>
 
-  <script>
-    const canvas = document.getElementById('particleCanvas');
-    const ctx = canvas.getContext('2d');
-    const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 20 : 50;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const particles = [];
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 2 + 1
-      });
-    }
-    function animate() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(16, 185, 129, 0.6)';
-        ctx.fill();
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
+<!-- =============================== -->
+<!-- 📌 PARTICLE ANİMASYON KODUN     -->
+<!-- =============================== -->
+<script>
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+const isMobile = window.innerWidth < 768;
+const particleCount = isMobile ? 20 : 50;
 
-    if (!isMobile) {
-      document.addEventListener('mousemove', (e) => {
-        const x = e.clientX / window.innerWidth;
-        const y = e.clientY / window.innerHeight;
-        const orb1 = document.getElementById('orb1');
-        const orb2 = document.getElementById('orb2');
-        orb1.style.transform = `translate(${x * 80}px, ${y * 80}px)`;
-        orb2.style.transform = `translate(${-x * 60}px, ${-y * 60}px)`;
-      });
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-      const card = document.getElementById('hologramCard');
-      document.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;
-        const y = (e.clientY - rect.top) / rect.height;
-        const rotateY = (x - 0.5) * 8;
-        const rotateX = -(y - 0.5) * 8;
-        card.style.transform = `perspective(1200px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg)';
-      });
+const particles = [];
+for (let i = 0; i < particleCount; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: (Math.random() - 0.5) * 0.3,
+    size: Math.random() * 2 + 1
+  });
+}
+
+function animate() {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(16, 185, 129, 0.6)';
+    ctx.fill();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+
+<!-- =============================== -->
+<!-- 📌 PWA INSTALL EVENT KODU       -->
+<!-- =============================== -->
+<script>
+let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    console.log("📲 PWA yükleme hazır!");
+});
+
+// Eğer bir buton ile çağırmak istersen:
+function showInstallPrompt() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt = null;
     }
+}
+</script>
 
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/pwa-sw.js")
-        .then(() => console.log("PWA Active"))
+
+<!-- =============================== -->
+<!-- 📌 SERVICE WORKER REGISTER      -->
+<!-- =============================== -->
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/pwa-sw.js")
+        .then(() => console.log("✔️ Service Worker aktif"))
         .catch(err => console.error("SW error:", err));
-    }
+}
+</script>
 
-    window.addEventListener("load", () => {
-      const preloader = document.getElementById("preloader");
-      preloader.style.opacity = "0";
-      preloader.style.transition = "0.6s ease";
-      setTimeout(() => preloader.remove(), 600);
-    });
-  </script>
+
+<!-- =============================== -->
+<!-- 📌 PRELOADER                    -->
+<!-- =============================== -->
+<script>
+window.addEventListener("load", () => {
+  const preloader = document.getElementById("preloader");
+  preloader.style.opacity = "0";
+  preloader.style.transition = "0.6s ease";
+  setTimeout(() => preloader.remove(), 600);
+});
+</script>
 
   <div class="fixed bottom-6 right-6 opacity-80 z-40 pointer-events-none">
     <lottie-player src="/cryptobitcoin.json" background="transparent" speed="1" style="width:120px;" loop autoplay></lottie-player>
   </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -44,12 +44,32 @@
             to { transform: rotate(0deg); }
         }
 
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes electricFlow {
+            0% { height: 0; top: 0; opacity: 0; }
+            50% { height: 100%; opacity: 1; }
+            100% { height: 0; top: 100%; opacity: 0; }
+        }
+
+        @keyframes electricSpark {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+
         .animate-spin-slow {
             animation: spin-slow 20s linear infinite;
         }
 
         .animate-spin-reverse {
             animation: spin-reverse 15s linear infinite;
+        }
+
+        .animate-fade {
+            animation: fadeInOut 4s ease-in-out infinite;
         }
 
         .gradient-text {
@@ -74,6 +94,23 @@
 
         .tech-badge:hover {
             transform: scale(1.1);
+        }
+
+        .electric-line {
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(180deg, transparent, #10b981, transparent);
+            animation: electricFlow 2s ease-in-out infinite;
+        }
+
+        .spark {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #10b981, transparent);
+            border-radius: 50%;
+            animation: electricSpark 2s ease-in-out infinite;
+            pointer-events: none;
         }
 
         /* Custom Scrollbar */
@@ -102,6 +139,14 @@
             scrollbar-width: thin;
             scrollbar-color: #10b981 rgba(0, 0, 0, 0.3);
         }
+
+        /* Mobilde performans için */
+        @media (max-width: 768px) {
+            .electric-line,
+            .spark {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="bg-black text-white">
@@ -110,8 +155,27 @@
     <div class="relative min-h-screen lg:h-screen flex flex-col overflow-x-hidden">
         <div class="fixed inset-0 pointer-events-none">
             <div class="absolute inset-0 bg-gradient-to-br from-black via-emerald-950/20 to-black"></div>
-            <div id="orb1" class="absolute w-64 lg:w-96 h-64 lg:h-96 bg-emerald-500/20 rounded-full blur-3xl" style="top: 10%; left: 10%;"></div>
-            <div id="orb2" class="absolute w-64 lg:w-96 h-64 lg:h-96 bg-cyan-500/20 rounded-full blur-3xl" style="bottom: 10%; right: 10%;"></div>
+            <div id="orb1" class="absolute w-64 lg:w-96 h-64 lg:h-96 bg-emerald-500/20 rounded-full blur-3xl animate-fade" style="top: 10%; left: 10%;"></div>
+            <div id="orb2" class="absolute w-64 lg:w-96 h-64 lg:h-96 bg-cyan-500/20 rounded-full blur-3xl animate-fade" style="bottom: 10%; right: 10%; animation-delay: 1.5s;"></div>
+            
+            <!-- Electric lines on sides -->
+            <div class="hidden lg:block">
+                <!-- Left side -->
+                <div class="electric-line" style="left: 5%; animation-delay: 0s;"></div>
+                <div class="electric-line" style="left: 8%; animation-delay: 0.5s;"></div>
+                <div class="electric-line" style="left: 3%; animation-delay: 1s;"></div>
+                <div class="spark" style="left: 6%; top: 20%; animation-delay: 0.3s;"></div>
+                <div class="spark" style="left: 7%; top: 60%; animation-delay: 1s;"></div>
+                <div class="spark" style="left: 4%; top: 40%; animation-delay: 1.8s;"></div>
+                
+                <!-- Right side -->
+                <div class="electric-line" style="right: 5%; animation-delay: 0.7s;"></div>
+                <div class="electric-line" style="right: 8%; animation-delay: 1.2s;"></div>
+                <div class="electric-line" style="right: 3%; animation-delay: 0.3s;"></div>
+                <div class="spark" style="right: 6%; top: 30%; animation-delay: 0.8s;"></div>
+                <div class="spark" style="right: 7%; top: 70%; animation-delay: 1.5s;"></div>
+                <div class="spark" style="right: 4%; top: 50%; animation-delay: 2s;"></div>
+            </div>
         </div>
 
         <div class="relative z-10 flex-1 flex items-center py-6 lg:py-0">
@@ -471,7 +535,6 @@
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         
-        // Mobilde daha az partikül
         const isMobile = window.innerWidth < 768;
         const particleCount = isMobile ? 20 : 50;
         
@@ -539,15 +602,13 @@
                 card.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg)';
             });
         }
-        <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/pwa-sw.js")
-    .then(() => console.log("PWA Active"))
-    .catch(err => console.error("SW error:", err));
-}
-</script>
+
+        // PWA Service Worker
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/pwa-sw.js")
+                .then(() => console.log("PWA Active"))
+                .catch(err => console.error("SW error:", err));
+        }
     </script>
 </body>
 </html>
-
-

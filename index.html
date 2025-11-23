@@ -48,10 +48,11 @@
   
   <meta name="application-name" content="Onurcan Demir">
   <meta name="apple-mobile-web-app-title" content="Onurcan Demir">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" id="apple-status-bar">
+  <meta name="color-scheme" content="dark" id="color-scheme-meta">
   <meta name="format-detection" content="telephone=yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="msapplication-TileColor" content="#10b981">
+  <meta name="msapplication-TileColor" content="#000000">
   <meta name="msapplication-TileImage" content="/onurcandemir.png">
   <meta name="msapplication-config" content="/browserconfig.xml">
   
@@ -113,7 +114,8 @@
   <meta name="twitter:label2" content="Expertise Areas | Uzmanlık Alanları">
   <meta name="twitter:data2" content="Blockchain, Web3, DeFi, NFT, Smart Contracts">
   
-  <meta name="theme-color" content="#10b981">
+  <meta name="theme-color" content="#000000" id="theme-color-meta">
+  <meta name="msapplication-navbutton-color" content="#000000" id="ms-navbutton-color">
   <link rel="manifest" href="/manifest.json">
   
   <link rel="icon" type="image/png" sizes="32x32" href="/onurcandemir.png">
@@ -955,6 +957,82 @@ if ('IntersectionObserver' in window) {
     observer.observe(el);
   });
 }
+  </script>
+
+  <script>
+(function() {
+  function updateThemeColor() {
+    const body = document.body;
+    const computedStyle = window.getComputedStyle(body);
+    const bgColor = computedStyle.backgroundColor;
+    
+    const rgbMatch = bgColor.match(/\d+/g);
+    if (!rgbMatch || rgbMatch.length < 3) return;
+    
+    const r = parseInt(rgbMatch[0]);
+    const g = parseInt(rgbMatch[1]);
+    const b = parseInt(rgbMatch[2]);
+    
+    function rgbToHex(r, g, b) {
+      return "#" + [r, g, b].map(x => {
+        const hex = x.toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+      }).join("");
+    }
+    
+    const hexColor = rgbToHex(r, g, b);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    const isDark = brightness < 128;
+    
+    const themeColorMeta = document.getElementById('theme-color-meta');
+    const msNavButton = document.getElementById('ms-navbutton-color');
+    const appleStatusBar = document.getElementById('apple-status-bar');
+    const colorScheme = document.getElementById('color-scheme-meta');
+    
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', hexColor);
+    }
+    if (msNavButton) {
+      msNavButton.setAttribute('content', hexColor);
+    }
+    if (appleStatusBar) {
+      appleStatusBar.setAttribute('content', isDark ? 'black-translucent' : 'default');
+    }
+    if (colorScheme) {
+      colorScheme.setAttribute('content', isDark ? 'dark' : 'light');
+    }
+    
+    if (document.querySelector('meta[name="theme-color"]')) {
+      const manifestLink = document.querySelector('link[rel="manifest"]');
+      if (manifestLink && manifestLink.href) {
+        fetch(manifestLink.href)
+          .then(res => res.json())
+          .then(manifest => {
+            manifest.theme_color = hexColor;
+          })
+          .catch(() => {});
+      }
+    }
+  }
+  
+  updateThemeColor();
+  
+  const observer = new MutationObserver(() => {
+    updateThemeColor();
+  });
+  
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ['style', 'class']
+  });
+  
+  window.addEventListener('resize', updateThemeColor);
+  
+  if (window.matchMedia) {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', updateThemeColor);
+  }
+})();
   </script>
 
 </body>

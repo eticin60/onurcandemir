@@ -1,11 +1,11 @@
 {
-  "name": "Onurcan Demir - Full Stack Developer | Yazılım Geliştirici | Web3 & Blockchain Uzmanı",
+  "name": "Onurcan Demir - Full Stack Developer | Software Developer | Web3 & Blockchain Expert | Yazılım Geliştirici | Web3 & Blockchain Uzmanı",
   "short_name": "Onurcan Demir",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#10b981",
-  "description": "Onurcan Demir - Full Stack Developer. Yazılım geliştirme, web sitesi tasarımı, mobil uygulama geliştirme, kripto para cüzdanları, blockchain teknolojileri, Web3, DeFi, NFT, smart contracts uzmanı.",
+  "description": "Onurcan Demir - Full Stack Developer. Yazılım geliştirme, web sitesi tasarımı, mobil uygulama geliştirme, kripto para cüzdanları, blockchain teknolojileri, Web3, DeFi, NFT, smart contracts uzmanı. Software development, website design, mobile app development, cryptocurrency wallets, blockchain technologies, Web3, DeFi, NFT, smart contracts expert.",
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "tr",
@@ -28,9 +28,9 @@
   "screenshots": [],
   "shortcuts": [
     {
-      "name": "İletişim",
+      "name": "İletişim | Contact",
       "short_name": "Contact",
-      "description": "Bana ulaşın",
+      "description": "Bana ulaşın | Get in touch",
       "url": "/#contact",
       "icons": [
         {

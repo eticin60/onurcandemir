@@ -270,7 +270,16 @@
     ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #10b981, #06b6d4); border-radius: 10px; border: 2px solid rgba(0, 0, 0, 0.3); }
     ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #059669, #0891b2); }
     * { scrollbar-width: thin; scrollbar-color: #10b981 rgba(0, 0, 0, 0.3); }
-    @media (max-width: 768px) { .electric-line, .spark { display: none; } }
+    @media (max-width: 768px) { 
+      .electric-line, .spark { display: block; }
+      .electric-line { width: 1px; opacity: 0.6; }
+      .spark { width: 12px; height: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
+    .will-change-transform { will-change: transform; }
+    .gpu-accelerated { transform: translateZ(0); backface-visibility: hidden; }
   </style>
 </head>
 <body class="bg-black text-white">
@@ -283,28 +292,35 @@
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.0/build/spline-viewer.js"></script>
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
-  <spline-viewer url="https://prod.spline.design/6JZ1b3rFUYDyaQ6N/scene.splinecode" show-credits="false" background="transparent" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;"></spline-viewer>
-  <canvas id="particleCanvas" class="fixed inset-0 w-full h-full opacity-40 pointer-events-none"></canvas>
+  <spline-viewer 
+    url="https://prod.spline.design/6JZ1b3rFUYDyaQ6N/scene.splinecode" 
+    show-credits="false" 
+    background="transparent" 
+    loading="lazy"
+    style="position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;opacity:0.6;" 
+    class="gpu-accelerated"
+    id="splineViewer"></spline-viewer>
+  <canvas id="particleCanvas" class="fixed inset-0 w-full h-full opacity-40 pointer-events-none gpu-accelerated"></canvas>
 
   <div class="relative min-h-screen lg:h-screen flex flex-col overflow-x-hidden">
     <div class="fixed inset-0 pointer-events-none">
       <div class="absolute inset-0 bg-gradient-to-br from-black via-emerald-950/20 to-black"></div>
-      <div id="orb1" class="absolute w-64 lg:w-96 h-64 lg:h-96 bg-emerald-500/20 rounded-full blur-3xl animate-fade" style="top:10%;left:10%;"></div>
-      <div id="orb2" class="absolute w-64 lg:w-96 h-64 lg:h-96 bg-cyan-500/20 rounded-full blur-3xl animate-fade" style="bottom:10%;right:10%;animation-delay:1.5s;"></div>
+      <div id="orb1" class="absolute w-64 lg:w-96 h-64 lg:h-96 bg-emerald-500/20 rounded-full blur-3xl animate-fade gpu-accelerated will-change-transform" style="top:10%;left:10%;"></div>
+      <div id="orb2" class="absolute w-64 lg:w-96 h-64 lg:h-96 bg-cyan-500/20 rounded-full blur-3xl animate-fade gpu-accelerated will-change-transform" style="bottom:10%;right:10%;animation-delay:1.5s;"></div>
 
-      <div class="hidden lg:block">
-        <div class="electric-line" style="left:5%;animation-delay:0s;"></div>
-        <div class="electric-line" style="left:8%;animation-delay:0.5s;"></div>
-        <div class="electric-line" style="left:3%;animation-delay:1s;"></div>
-        <div class="spark" style="left:6%;top:20%;animation-delay:0.3s;"></div>
-        <div class="spark" style="left:7%;top:60%;animation-delay:1s;"></div>
-        <div class="spark" style="left:4%;top:40%;animation-delay:1.8s;"></div>
-        <div class="electric-line" style="right:5%;animation-delay:0.7s;"></div>
-        <div class="electric-line" style="right:8%;animation-delay:1.2s;"></div>
-        <div class="electric-line" style="right:3%;animation-delay:0.3s;"></div>
-        <div class="spark" style="right:6%;top:30%;animation-delay:0.8s;"></div>
-        <div class="spark" style="right:7%;top:70%;animation-delay:1.5s;"></div>
-        <div class="spark" style="right:4%;top:50%;animation-delay:2s;"></div>
+      <div>
+        <div class="electric-line gpu-accelerated" style="left:5%;animation-delay:0s;"></div>
+        <div class="electric-line gpu-accelerated hidden lg:block" style="left:8%;animation-delay:0.5s;"></div>
+        <div class="electric-line gpu-accelerated" style="left:3%;animation-delay:1s;"></div>
+        <div class="spark gpu-accelerated" style="left:6%;top:20%;animation-delay:0.3s;"></div>
+        <div class="spark gpu-accelerated hidden lg:block" style="left:7%;top:60%;animation-delay:1s;"></div>
+        <div class="spark gpu-accelerated" style="left:4%;top:40%;animation-delay:1.8s;"></div>
+        <div class="electric-line gpu-accelerated" style="right:5%;animation-delay:0.7s;"></div>
+        <div class="electric-line gpu-accelerated hidden lg:block" style="right:8%;animation-delay:1.2s;"></div>
+        <div class="electric-line gpu-accelerated" style="right:3%;animation-delay:0.3s;"></div>
+        <div class="spark gpu-accelerated" style="right:6%;top:30%;animation-delay:0.8s;"></div>
+        <div class="spark gpu-accelerated hidden lg:block" style="right:7%;top:70%;animation-delay:1.5s;"></div>
+        <div class="spark gpu-accelerated" style="right:4%;top:50%;animation-delay:2s;"></div>
       </div>
     </div>
 
@@ -316,8 +332,8 @@
               <div class="relative group">
                 <div class="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl group-hover:bg-emerald-500/30 transition-all duration-500"></div>
                 <div class="relative w-20 h-20 lg:w-28 lg:h-28 flex items-center justify-center">
-                  <div class="absolute inset-0 border-4 border-emerald-500/30 rounded-full animate-spin-slow"></div>
-                  <div class="absolute inset-2 border-4 border-cyan-500/30 rounded-full animate-spin-reverse"></div>
+                  <div class="absolute inset-0 border-4 border-emerald-500/30 rounded-full animate-spin-slow gpu-accelerated will-change-transform"></div>
+                  <div class="absolute inset-2 border-4 border-cyan-500/30 rounded-full animate-spin-reverse gpu-accelerated will-change-transform"></div>
                   <img src="onurcandemir.png" class="relative z-10 w-16 h-16 lg:w-24 lg:h-24 rounded-full object-cover border-4 border-black/50">
                 </div>
               </div>
@@ -802,38 +818,78 @@ hover:border-emerald-500/50 cursor-pointer">
   </div>
 
   <script>
-const canvas = document.getElementById('particleCanvas');
-const ctx = canvas.getContext('2d');
-const isMobile = window.innerWidth < 768;
-const particleCount = isMobile ? 20 : 50;
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const particles = [];
-for (let i = 0; i < particleCount; i++) {
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3,
-    size: Math.random() * 2 + 1
+(function() {
+  const canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
+  const isMobile = window.innerWidth < 768;
+  const isLowEnd = navigator.hardwareConcurrency <= 4 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const particleCount = isLowEnd ? 15 : (isMobile ? 25 : 50);
+  
+  let animationId = null;
+  let lastTime = 0;
+  const targetFPS = isMobile ? 30 : 60;
+  const frameInterval = 1000 / targetFPS;
+  
+  function resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    ctx.scale(dpr, dpr);
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+  }
+  
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+  
+  const particles = [];
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      vx: (Math.random() - 0.5) * (isMobile ? 0.2 : 0.3),
+      vy: (Math.random() - 0.5) * (isMobile ? 0.2 : 0.3),
+      size: Math.random() * (isMobile ? 1.5 : 2) + 1
+    });
+  }
+  
+  function animate(currentTime) {
+    if (currentTime - lastTime >= frameInterval) {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
+        if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(16, 185, 129, ' + (isMobile ? '0.4' : '0.6') + ')';
+        ctx.fill();
+      });
+      
+      lastTime = currentTime;
+    }
+    animationId = requestAnimationFrame(animate);
+  }
+  
+  if (document.visibilityState === 'visible') {
+    animate(0);
+  }
+  
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      if (!animationId) animate(0);
+    } else {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+    }
   });
-}
-function animate() {
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(16, 185, 129, 0.6)';
-    ctx.fill();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
+})();
   </script>
 
   <script>
@@ -873,7 +929,32 @@ window.addEventListener("load", () => {
   preloader.style.opacity = "0";
   preloader.style.transition = "0.6s ease";
   setTimeout(() => preloader.remove(), 600);
+  
+  const splineViewer = document.getElementById("splineViewer");
+  if (splineViewer && window.innerWidth < 768) {
+    setTimeout(() => {
+      if (splineViewer.loaded) {
+        splineViewer.style.opacity = "0.5";
+      }
+    }, 2000);
+  }
 });
+
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.willChange = 'transform';
+      } else {
+        entry.target.style.willChange = 'auto';
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  document.querySelectorAll('.animate-spin-slow, .animate-spin-reverse, .animate-fade').forEach(el => {
+    observer.observe(el);
+  });
+}
   </script>
 
 </body>

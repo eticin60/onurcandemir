@@ -251,8 +251,7 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    @media (min-width: 1024px) { body { overflow: hidden; } }
-    @media (max-width: 1023px) { body { overflow-y: auto; } }
+    body { overflow: hidden; }
     @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     @keyframes spin-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
     @keyframes fadeInOut { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
@@ -474,15 +473,6 @@
 </div>
 
     <div class="project-card group p-2 w-40 bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg cursor-pointer">
-  <div class="flex items-center gap-1.5 mb-0.5">
-    <svg class="project-icon w-3 h-3 text-emerald-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"/>
-    </svg>
-    <span class="project-title text-xs font-bold transition-colors duration-300">CyberEx Exchange</span>
-  </div>
-  <p class="text-xs text-gray-500">Web3 • Solidity</p>
-</div>
-<div class="project-card group p-2 w-40 bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg cursor-pointer">
   <div class="flex items-center gap-1.5 mb-0.5">
     <svg class="project-icon w-3 h-3 text-emerald-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-width="2" d="M12 11c-1.1 0-2 .9-2 2v1h4v-1c0-1.1-.9-2-2-2z"/>
@@ -850,7 +840,26 @@ hover:border-emerald-500/50 cursor-pointer">
             <lottie-player src="/bitcoincryptocurrencycity.json" background="transparent" speed="1" style="width:100%;height:100%;" loop autoplay></lottie-player>
           </div>
           <div class="text-xl lg:text-2xl font-black gradient-text mb-2">ONURCAN DEMIR</div>
-          <div class="text-xs text-gray-500 mb-3">© 2024 Onurcan Demir. All rights reserved.</div>
+          <div class="text-xs text-gray-500 mb-2">© 2025 Onurcan Demir. All rights reserved.</div>
+          <div class="text-xs text-gray-600 mb-3 space-y-1">
+            <div>Full Stack Developer | Software Developer | Web3 & Blockchain Expert</div>
+            <div class="flex flex-wrap justify-center gap-3 mt-2">
+              <a href="https://analyticax.com.tr" target="_blank" class="hover:text-cyan-400 transition-colors">AnalyticaX</a>
+              <span class="text-gray-700">•</span>
+              <a href="https://cyberex.com.tr" target="_blank" class="hover:text-cyan-400 transition-colors">CyberEx</a>
+              <span class="text-gray-700">•</span>
+              <a href="https://cyberex.com.tr/web3wallet" target="_blank" class="hover:text-cyan-400 transition-colors">Web3 Wallet</a>
+            </div>
+          </div>
+          <div class="text-xs text-gray-600 mb-3">
+            <div class="mb-1">This website and its content are proprietary and confidential.</div>
+            <div>Unauthorized copying, modification, distribution, or use is strictly prohibited.</div>
+            <div class="mt-2">
+              <a href="/LICENSE" target="_blank" class="hover:text-emerald-400 transition-colors underline">View License</a>
+              <span class="text-gray-700 mx-2">•</span>
+              <a href="https://github.com/eticin60" target="_blank" class="hover:text-emerald-400 transition-colors underline">GitHub</a>
+            </div>
+          </div>
           <div class="flex gap-3 justify-center">
             <a href="https://github.com/eticin60" target="_blank" class="p-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full hover:border-emerald-500/50 hover:scale-110 transition-all">
               <svg class="w-4 h-4 text-gray-400 hover:text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>

@@ -35,6 +35,7 @@
 **Cryptocurrency Exchange Platform**
 
 * **Website**: [cyberex.com.tr](https://cyberex.com.tr)
+* **GitHub**: [github.com/eticin60/CyberEx](https://github.com/eticin60/CyberEx)
 * **Description**: Comprehensive cryptocurrency trading and analysis platform
 * **Tech Stack**: Web3, Solidity, Blockchain
 

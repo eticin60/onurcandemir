@@ -2,8 +2,8 @@
 .stats-section {
     padding: 60px 0;
     background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9));
-    border-top: 1px solid rgba(0, 224, 255, 0.1);
-    border-bottom: 1px solid rgba(0, 224, 255, 0.1);
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
 }
 
 .stats-grid {
@@ -237,7 +237,7 @@
 }
 
 .pwa-install-btn {
-    background: linear-gradient(45deg, var(--primary), #00A8CC);
+    background: linear-gradient(45deg, var(--primary), var(--primary-dark));
     color: #000;
     border: none;
     padding: 10px 20px;

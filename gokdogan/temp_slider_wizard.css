@@ -110,7 +110,7 @@
 .progress-step.active {
     border-color: var(--primary);
     color: var(--primary);
-    box-shadow: 0 0 10px rgba(0, 224, 255, 0.2);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
 }
 
 .wizard-step {
@@ -143,7 +143,7 @@
 }
 
 .option-card:hover {
-    background: rgba(0, 224, 255, 0.05);
+    background: rgba(212, 175, 55, 0.05);
     border-color: var(--primary);
     transform: translateY(-5px);
 }
@@ -166,7 +166,7 @@
 /* Highlight checked card (requires JS or simpler CSS hack, keeping simple here) */
 .option-card:has(input:checked) {
     border-color: var(--primary);
-    box-shadow: 0 0 15px rgba(0, 224, 255, 0.2);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
 }
 
 .opt-icon {
@@ -198,7 +198,7 @@
 }
 
 .btn-submit {
-    background: linear-gradient(45deg, #00A8CC, #25D366);
+    background: linear-gradient(45deg, var(--primary), var(--accent));
     /* Success vibe */
     color: #fff;
     width: 100%;

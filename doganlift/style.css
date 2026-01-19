@@ -1374,29 +1374,27 @@ transition: 0.3s;
     }
 }
 
-/* --- PWA INSTALL BANNER --- */
+/* --- PWA INSTALL BANNER (Bottom Positioned) --- */
 .pwa-banner {
     position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-100px);
-    background: rgba(10, 20, 30, 0.95);
-    border: 1px solid var(--primary);
-    backdrop-filter: blur(15px);
-    padding: 15px 25px;
-    border-radius: 50px;
+    bottom: -100px;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, rgba(0, 10, 20, 0.98), rgba(10, 20, 30, 0.98));
+    backdrop-filter: blur(20px);
+    padding: 15px 20px;
     display: flex;
     align-items: center;
-    gap: 20px;
-    z-index: 2000;
-    transition: 0.5s;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    width: 90%;
-    max-width: 450px;
+    justify-content: space-between;
+    gap: 15px;
+    box-shadow: 0 -10px 40px rgba(0, 224, 255, 0.1);
+    border-top: 1px solid var(--primary);
+    z-index: 9999;
+    transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .pwa-banner.visible {
-    transform: translateX(-50%) translateY(0);
+    bottom: 0;
 }
 
 .pwa-content {
@@ -1463,7 +1461,9 @@ transition: 0.3s;
 
 .info-card:hover .card-icon svg {
     fill: #000000 !important;
-}/* --- BEFORE / AFTER SLIDER --- */
+}
+
+/* --- BEFORE / AFTER SLIDER --- */
 .comparison-section {
     padding: 80px 0;
 }

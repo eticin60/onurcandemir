@@ -224,15 +224,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- PWA Install Banner (Simulation) ---
+    // --- REAL PWA INSTALL BANNER (Not Simulation) ---
+    let deferredPrompt;
     const pwaBanner = document.getElementById('pwa-banner');
     const pwaClose = document.getElementById('pwa-close-btn');
     const pwaInstall = document.getElementById('pwa-install-btn');
 
-    // Show banner after 3 seconds
-    setTimeout(() => {
-        if (pwaBanner) pwaBanner.classList.add('visible');
-    }, 3000);
+    // Listen for the beforeinstallprompt event
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later
+        deferredPrompt = e;
+        // Show our custom install banner after 3 seconds
+        setTimeout(() => {
+            if (pwaBanner) pwaBanner.classList.add('visible');
+        }, 3000);
+    });
 
     if (pwaClose) {
         pwaClose.addEventListener('click', () => {
@@ -241,8 +249,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (pwaInstall) {
-        pwaInstall.addEventListener('click', () => {
-            alert('Uygulama yükleniyor... (Simülasyon)');
+        pwaInstall.addEventListener('click', async () => {
+            if (!deferredPrompt) {
+                // PWA is already installed or not supported
+                alert('Uygulama zaten yüklü veya tarayıcınız desteklemiyor.');
+                return;
+            }
+            // Show the install prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+            // Clear the deferredPrompt
+            deferredPrompt = null;
+            // Hide the banner
             pwaBanner.classList.remove('visible');
         });
     }

@@ -1454,6 +1454,62 @@ transition: 0.3s;
     padding: 0 5px;
 }
 
+/* Mobile Responsive for PWA Banner */
+@media (max-width: 768px) {
+    .pwa-banner {
+        padding: 12px 15px;
+        gap: 10px;
+    }
+
+    .pwa-logo {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+
+    .pwa-text h5 {
+        font-size: 0.9rem;
+    }
+
+    .pwa-text p {
+        font-size: 0.7rem;
+    }
+
+    .pwa-install-btn {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+
+    /* Quote Wizard Mobile */
+    .wizard-container {
+        padding: 25px;
+    }
+
+    .step-options {
+        grid-template-columns: 1fr;
+    }
+
+    .wizard-progress {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .progress-step {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+    }
+
+    /* Before/After Slider Mobile */
+    .comparison-container {
+        height: 300px;
+    }
+
+    .comparison-slider {
+        width: 35px;
+        height: 35px;
+    }
+}
+
 /* FINAL FORCE FIX for Contact Icons */
 .card-icon svg {
     fill: #ffffff !important;

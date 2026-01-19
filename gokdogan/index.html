@@ -573,6 +573,32 @@
             </div>
         </section>
 
+        <!-- MODERNIZATION COMPARISON SLIDER -->
+
+
+        <!-- MODERNIZATION COMPARISON SLIDER -->
+        <section class="comparison-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="subtitle">REVİZYON</span>
+                    <h2>Modernizasyon Öncesi & Sonrası</h2>
+                    <p style="font-size: 1.1rem; max-width: 800px; margin: 0 auto 30px;">Eski asansörlerinizi, en son
+                        teknoloji ve estetikle buluşturarak değer katıyoruz. İşte bir dönüşüm hikayesi.</p>
+                </div>
+
+                <div class="comparison-static reveal delay-1">
+                    <div class="comp-card">
+                        <div class="comp-badge after">ÖRNEK PROJE 1</div>
+                        <img src="modernization_before.png" alt="Asansör Modernizasyon Örneği">
+                    </div>
+                    <div class="comp-card">
+                        <div class="comp-badge after">ÖRNEK PROJE 2</div>
+                        <img src="modernization_after.png" alt="Yürüyen Merdiven/Bina Modernizasyon Örneği">
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- FAQ Section -->
         <section class="faq-section">
             <div class="container">
@@ -769,30 +795,6 @@
         </section>
     </main>
 
-    <!-- Before/After Modernization Slider -->
-    <section class="comparison-section" style="padding: 80px 0;">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="subtitle">REVİZYON</span>
-                <h2>Modernizasyon Öncesi & Sonrası</h2>
-            </div>
-            <div class="comparison-container reveal delay-1">
-                <div class="img-comp-container">
-                    <div class="img-comp-img">
-                        <img src="https://loremflickr.com/800/500/modern,elevator/all" alt="Sonra">
-                    </div>
-                    <div class="img-comp-img img-comp-overlay">
-                        <img src="https://loremflickr.com/800/500/old,rustic/all" alt="Önce">
-                    </div>
-                </div>
-                <div class="comparison-slider">
-                    <div class="slider-icon">
-                        <>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Smart Quote Wizard -->
     <section class="quote-wizard-section">
@@ -1128,8 +1130,16 @@
         <button id="pwa-close-btn" class="pwa-close">×</button>
     </div>
 
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="caption"></div>
+    </div>
+
     <!-- Script -->
     <script src="script.js"></script>
+    <script src="slider.js"></script>
 </body>
 
 </html>

@@ -377,4 +377,61 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- LIGHTBOX LOGIC ---
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const captionText = document.getElementById('caption');
+    const closeBtn = document.querySelector('.lightbox-close');
+
+    if (lightbox) {
+        // Function to open lightbox
+        function openLightbox(src, alt) {
+            lightbox.style.display = "flex";
+            lightbox.style.alignItems = "center";
+            lightbox.style.justifyContent = "center";
+            lightboxImg.src = src;
+            captionText.innerHTML = alt || "";
+            document.body.style.overflow = "hidden"; // Prevent scrolling
+        }
+
+        // Attach to Comparison Cards
+        document.querySelectorAll('.comp-card img').forEach(img => {
+            img.addEventListener('click', function () {
+                // Get the badge text for context
+                const badge = this.parentElement.querySelector('.comp-badge').innerText;
+                openLightbox(this.src, badge + " - " + this.alt);
+            });
+        });
+
+        // Attach to Gallery Items (Bonus)
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.addEventListener('click', function () {
+                const overlayTitle = this.parentElement.querySelector('h4') ? this.parentElement.querySelector('h4').innerText : "";
+                openLightbox(this.src, overlayTitle || this.alt);
+            });
+        });
+
+        // Close Logic
+        function closeLightbox() {
+            lightbox.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        if (closeBtn) closeBtn.onclick = closeLightbox;
+
+        // Close on outside click
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape" && lightbox.style.display === "flex") {
+                closeLightbox();
+            }
+        });
+    }
+
 });

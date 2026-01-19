@@ -1620,7 +1620,26 @@ h2 span {
     .footer-grid {
         text-align: center;
     }
+
+    /* Mobile Compactness & Elegance */
+    .section-header {
+        margin-bottom: 40px;
+    }
+
+    .gallery-item {
+        min-width: 100%;
+        height: 300px;
+    }
+
+    .stat-item h3 {
+        font-size: 2.5rem;
+    }
+
+    .wizard-container {
+        padding: 30px 20px;
+    }
 }
+
 
 @media (max-width: 480px) {
     .hero h1 {
@@ -2016,8 +2035,8 @@ h2 span {
 .comparison-container {
     position: relative;
     width: 100%;
-    max-width: 800px;
-    height: 500px;
+    max-width: 1100px;
+    height: 650px;
     margin: 0 auto;
     border-radius: 20px;
     overflow: hidden;
@@ -2070,6 +2089,77 @@ h2 span {
     font-weight: bold;
     color: #000;
     box-shadow: 0 0 15px var(--glow);
+}
+
+/* --- STATIC COMPARISON (New Simple Layout) --- */
+.comparison-static {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 40px auto 0;
+}
+
+.comp-card {
+    position: relative;
+    flex: 1;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    transition: 0.4s;
+    height: 500px;
+}
+
+.comp-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(212, 175, 55, 0.1);
+    border-color: var(--primary);
+}
+
+.comp-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.comp-card:hover img {
+    transform: scale(1.05);
+}
+
+.comp-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    z-index: 2;
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.comp-badge.before {
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+}
+
+.comp-badge.after {
+    background: var(--primary);
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .comparison-static {
+        flex-direction: column;
+    }
+
+    .comp-card {
+        height: 350px;
+    }
 }
 
 /* --- SMART QUOTE WIZARD --- */
@@ -2306,4 +2396,81 @@ h2 span {
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+}
+
+/* --- LIGHTBOX (Image Zoom) --- */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 1200px;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+    animation: zoomIn 0.4s;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 45px;
+    color: #f1f1f1;
+    font-size: 50px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 10001;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+    color: var(--primary);
+    transform: scale(1.2);
+    text-decoration: none;
+}
+
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+/* Ensure images indicate they are clickable */
+.comp-card img,
+.gallery-item img {
+    cursor: zoom-in;
 }

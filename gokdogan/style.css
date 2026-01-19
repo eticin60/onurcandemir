@@ -910,14 +910,17 @@ h2 span {
 }
 
 .cert-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 40px;
     border-radius: 25px;
     transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
 }
+
 
 .cert-card:hover {
     border-color: var(--primary);
@@ -1042,13 +1045,15 @@ h2 span {
 }
 
 .product-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 35px;
     overflow: hidden;
     transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }
+
 
 .product-card:hover {
     border-color: var(--primary);
@@ -1111,14 +1116,17 @@ h2 span {
 }
 
 .step {
-    background: var(--bg-card);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     padding: 60px 40px;
     border-radius: 35px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     position: relative;
     transition: 0.5s;
     overflow: hidden;
 }
+
 
 .step:hover {
     background: rgba(255, 255, 255, 0.04);

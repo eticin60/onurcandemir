@@ -1,11 +1,3 @@
-self.addEventListener("install", () => {
-  self.skipWaiting();
-});
-
-self.addEventListener("activate", () => {
-  clients.claim();
-});
-
-self.addEventListener("fetch", (event) => {
-  event.respondWith(fetch(event.request));
-});
+// This file is deprecated. Please use service-worker.js instead.
+self.addEventListener("install", () => self.skipWaiting());
+self.addEventListener("activate", () => self.registration.unregister().then(() => self.clients.claim()));

@@ -1421,6 +1421,28 @@ hover:border-emerald-500/50 cursor-pointer">
 
   <script>
     (function () {
+      // Sağ tık engelleme
+      document.addEventListener('contextmenu', e => e.preventDefault());
+
+      // Klavye kısayolları (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
+      document.addEventListener('keydown', e => {
+        if (
+          e.key === 'F12' ||
+          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+          (e.ctrlKey && e.key === 'U')
+        ) {
+          e.preventDefault();
+        }
+      });
+
+      // Mobil uzun basım engelleme
+      document.documentElement.style.webkitTouchCallout = 'none';
+      document.documentElement.style.webkitUserSelect = 'none';
+    })();
+  </script>
+
+  <script>
+    (function () {
       function updateThemeColor() {
         const body = document.body;
         const computedStyle = window.getComputedStyle(body);

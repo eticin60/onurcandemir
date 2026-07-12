@@ -3154,7 +3154,234 @@ img {
         width: 42px;
         height: 42px;
     }
+}/* ============================================================
+   27. COMPREHENSIVE MOBILE IMPROVEMENTS
+   ============================================================ */
+
+/* Admin tablosu mobilede yatay kaydırma */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-md);
 }
 
+/* Admin tablo min genişlik — kesilmesin */
+.data-table {
+    min-width: 640px;
+}
 
+/* Admin istatistik kartları */
+@media (max-width: 600px) {
+    .stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.75rem;
+    }
+    .stat-card {
+        padding: 1rem !important;
+    }
+    .stat-value {
+        font-size: 1.6rem !important;
+    }
+}
+
+/* Admin actions — tüm butonlar küçük mobilede tam genişlik değil, wrap olsun */
+@media (max-width: 520px) {
+    .admin-actions {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 0.4rem !important;
+    }
+    .admin-actions .btn {
+        font-size: 0.72rem !important;
+        padding: 0.38rem 0.6rem !important;
+    }
+    .admin-actions .btn i {
+        font-size: 0.78rem;
+    }
+    .admin-dashboard-header {
+        gap: 0.75rem;
+    }
+}
+
+/* Planner tablosu mobilede yatay kaydırma */
+@media (max-width: 600px) {
+    .planner-output-card {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .planner-table {
+        min-width: 480px;
+    }
+    .planner-output-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    .planner-output-header #btn-print-plan {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* LGS Hesap kutucukları — dar ekran */
+@media (max-width: 400px) {
+    .calc-inputs-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .calc-input-group input {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Kurs kartları — çok dar ekranlar */
+@media (max-width: 360px) {
+    .courses-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .course-card {
+        margin: 0 !important;
+    }
+}
+
+/* Galeri - çok dar */
+@media (max-width: 360px) {
+    .gallery-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Modal — tam ekran mobilede */
+@media (max-width: 480px) {
+    .modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+    .modal-card {
+        max-height: 92dvh;
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        overflow-y: auto;
+    }
+    .modal-body {
+        padding: 1rem !important;
+    }
+    .modal-header {
+        padding: 1rem 1rem 0 !important;
+        position: sticky;
+        top: 0;
+        background: var(--bg-white);
+        z-index: 10;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.75rem !important;
+    }
+}
+
+/* Form input / select — mobilde tam genişlik */
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column !important;
+    }
+    .form-group select,
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px !important; /* iOS zoom engellemek için */
+    }
+}
+
+/* Hero buton - mobilede tam genişlik */
+@media (max-width: 480px) {
+    .hero-actions {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+    .hero-actions .btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+}
+
+/* Kayıt formu mobilede tek sütun */
+@media (max-width: 768px) {
+    .register-grid,
+    .form-double-col {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Footer marka logosu — çok küçük ekran */
+@media (max-width: 360px) {
+    .footer-info h3 {
+        font-size: 1rem !important;
+    }
+    .footer-info p {
+        font-size: 0.8rem !important;
+    }
+}
+
+/* Öğretmen kartları — ortalansın tek sütunda */
+@media (max-width: 768px) {
+    .teachers-grid {
+        grid-template-columns: 1fr !important;
+        max-width: 380px;
+        margin: 0 auto;
+    }
+}
+
+/* Login ekranı mobilede düzgün görünüm */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 2rem 1.25rem !important;
+        margin: 1rem !important;
+    }
+}
+
+/* Admin dashboard sidebar & table — mobil */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 1rem !important;
+    }
+    .sidebar-cards-wrapper {
+        grid-template-columns: 1fr !important;
+    }
+    .admin-registrations-section {
+        overflow-x: auto;
+    }
+}
+
+/* WhatsApp balonu + scroll-to-top — çakışmasın */
+@media (max-width: 480px) {
+    .scroll-to-top {
+        bottom: 90px !important;
+        right: 14px !important;
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 0.9rem !important;
+    }
+    .wa-bubble {
+        bottom: 18px !important;
+        right: 14px !important;
+    }
+}
+
+/* Touch hedefleri minimum 44px olsun */
+@media (hover: none) and (pointer: coarse) {
+    .btn-icon {
+        min-width: 44px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .filter-btn {
+        padding: 0.55rem 1rem !important;
+    }
+    input[type="range"] {
+        height: 44px;
+    }
+}
 

@@ -244,17 +244,27 @@ class BehzatApp {
       this.$header.classList.toggle("scrolled", window.scrollY > 50);
     });
 
-    // Mobile nav
+    // Mobile nav — CSS override sorununu önlemek için direkt style kullan
     this.$mobileToggle?.addEventListener("click", () => {
-      this.$navMenu.classList.toggle("mobile-open");
-      this.$mobileToggle.classList.toggle("open");
-      document.body.classList.toggle("mobile-nav-active");
+      const isOpen = this.$navMenu.style.display === "block";
+      if (isOpen) {
+        this.$navMenu.style.display = "none";
+        this.$navMenu.classList.remove("mobile-open");
+        this.$mobileToggle.classList.remove("open");
+        document.body.classList.remove("mobile-nav-active");
+      } else {
+        this.$navMenu.style.display = "block";
+        this.$navMenu.classList.add("mobile-open");
+        this.$mobileToggle.classList.add("open");
+        document.body.classList.add("mobile-nav-active");
+      }
     });
 
-    // Nav links smooth scroll
+    // Nav links smooth scroll — menüyü kapat
     this.$navLinks.forEach(l => l.addEventListener("click", e => {
       e.preventDefault();
       const hash = l.getAttribute("href");
+      this.$navMenu.style.display = "none";
       this.$navMenu.classList.remove("mobile-open");
       this.$mobileToggle?.classList.remove("open");
       document.body.classList.remove("mobile-nav-active");

@@ -1393,3 +1393,44 @@ class BehzatApp {
 document.addEventListener("DOMContentLoaded", () => {
   window.behzatApp = new BehzatApp();
 });
+
+// ============================================================
+// 4. GLOBAL MOBİL MENÜ FONKSİYONU
+// HTML onclick="toggleMobileMenu(this)" ile çağrılır
+// Bu yöntem JS binding sorunlarını tamamen ortadan kaldırır
+// ============================================================
+function toggleMobileMenu(btn) {
+  const nav = document.getElementById("visitor-nav");
+  if (!nav) return;
+
+  const isOpen = nav.style.display === "block";
+
+  if (isOpen) {
+    // Kapat
+    nav.style.display = "none";
+    btn.classList.remove("open");
+    btn.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  } else {
+    // Aç
+    nav.style.display = "block";
+    btn.classList.add("open");
+    btn.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden"; // arka plan kaydırmasını engelle
+  }
+}
+
+// Sayfa dışına tıklanınca menüyü kapat
+document.addEventListener("click", function(e) {
+  const nav = document.getElementById("visitor-nav");
+  const btn = document.getElementById("mobile-nav-toggle");
+  if (!nav || !btn) return;
+  if (nav.style.display !== "block") return;
+  // Tıklama nav veya buton içinde değilse kapat
+  if (!nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.style.display = "none";
+    btn.classList.remove("open");
+    btn.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  }
+});

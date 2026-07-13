@@ -1428,9 +1428,18 @@ document.addEventListener("click", function(e) {
   if (!nav.classList.contains("mobile-open")) return;
   // Tıklama nav veya buton içinde değilse kapat
   if (!nav.contains(e.target) && !btn.contains(e.target)) {
-    nav.classList.remove("mobile-open");
-    btn.classList.remove("open");
-    btn.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = "";
+    closeMobileMenu();
   }
 });
+
+// Menüyü dışarıdan kapatan global fonksiyon
+function closeMobileMenu() {
+  const nav = document.getElementById("visitor-nav");
+  const btn = document.getElementById("mobile-nav-toggle");
+  if (nav) nav.classList.remove("mobile-open");
+  if (btn) {
+    btn.classList.remove("open");
+    btn.setAttribute("aria-expanded", "false");
+  }
+  document.body.style.overflow = "";
+}

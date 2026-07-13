@@ -3435,3 +3435,42 @@ img {
     }
 }
 
+/* ===== MOBİL MENÜ LİSTESİ GİRİŞ BUTONLARI ===== */
+.mobile-only {
+    display: none !important;
+}
+
+@media (max-width: 900px) {
+    .mobile-only {
+        display: block !important;
+    }
+    
+    .nav-menu .mobile-portal-link {
+        color: #ffffff !important;
+        background-color: var(--primary) !important;
+        margin-top: 1rem !important;
+        border: 1px solid var(--primary) !important;
+        text-align: center !important;
+        justify-content: center !important;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2) !important;
+    }
+    .nav-menu .mobile-portal-link:hover {
+        background-color: var(--primary-hover) !important;
+    }
+    
+    .nav-menu .mobile-admin-link {
+        color: var(--text-dark) !important;
+        background-color: #f1f5f9 !important;
+        margin-top: 0.5rem !important;
+        border: 1px solid var(--border-color) !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+    [data-theme="dark"] .nav-menu .mobile-admin-link {
+        background-color: #334155 !important;
+        color: #f1f5f9 !important;
+        border-color: #475569 !important;
+    }
+}
+
+

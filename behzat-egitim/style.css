@@ -271,7 +271,7 @@ img {
     flex-wrap: nowrap;
 }
 
-.nav-link {
+.nav-link, .mobile-nav-link {
     font-family: 'Outfit', sans-serif;
     font-weight: 500;
     font-size: 0.82rem;
@@ -285,12 +285,13 @@ img {
     transition: var(--transition);
 }
 
-.nav-link i {
+.nav-link i, .mobile-nav-link i {
     font-size: 0.78rem;
     flex-shrink: 0;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover, .nav-link.active,
+.mobile-nav-link:hover, .mobile-nav-link.active {
     color: var(--primary);
     background-color: var(--primary-light);
 }

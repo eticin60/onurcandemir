@@ -264,9 +264,9 @@ class BehzatApp {
     this.$navLinks.forEach(l => l.addEventListener("click", e => {
       e.preventDefault();
       const hash = l.getAttribute("href");
-      this.$navMenu.style.display = "none";
       this.$navMenu.classList.remove("mobile-open");
       this.$mobileToggle?.classList.remove("open");
+      document.body.style.overflow = "";
       document.body.classList.remove("mobile-nav-active");
       this.scrollTo(hash);
       this.$navLinks.forEach(x => x.classList.remove("active"));
@@ -1403,17 +1403,17 @@ function toggleMobileMenu(btn) {
   const nav = document.getElementById("visitor-nav");
   if (!nav) return;
 
-  const isOpen = nav.style.display === "block";
+  const isOpen = nav.classList.contains("mobile-open");
 
   if (isOpen) {
     // Kapat
-    nav.style.display = "none";
+    nav.classList.remove("mobile-open");
     btn.classList.remove("open");
     btn.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
   } else {
     // Aç
-    nav.style.display = "block";
+    nav.classList.add("mobile-open");
     btn.classList.add("open");
     btn.setAttribute("aria-expanded", "true");
     document.body.style.overflow = "hidden"; // arka plan kaydırmasını engelle
@@ -1425,10 +1425,10 @@ document.addEventListener("click", function(e) {
   const nav = document.getElementById("visitor-nav");
   const btn = document.getElementById("mobile-nav-toggle");
   if (!nav || !btn) return;
-  if (nav.style.display !== "block") return;
+  if (!nav.classList.contains("mobile-open")) return;
   // Tıklama nav veya buton içinde değilse kapat
   if (!nav.contains(e.target) && !btn.contains(e.target)) {
-    nav.style.display = "none";
+    nav.classList.remove("mobile-open");
     btn.classList.remove("open");
     btn.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";

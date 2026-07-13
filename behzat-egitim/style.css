@@ -343,11 +343,13 @@ img {
     .nav-link i { font-size: 0.95rem; }
     .nav-btn-text { display: none; }
     .nav-portal-btn, .nav-cta-btn { padding: 0.42rem 0.65rem; }
+}
+
 @media (max-width: 900px) {
 
     /* ===== MOBİL MENÜ - ANA KAPSAYICI ===== */
     .nav-menu {
-        display: none;           /* JS tarafından block yapılacak */
+        display: none !important;  /* Mobilde varsayılan olarak gizle */
         position: fixed !important;
         top: 68px !important;
         left: 0 !important;
@@ -359,6 +361,11 @@ img {
         box-shadow: 0 12px 40px rgba(0,0,0,0.18) !important;
         z-index: 9997 !important;
         padding: 0.5rem 0 1.5rem !important;
+    }
+
+    /* Klasör açıldığında göster */
+    .nav-menu.mobile-open {
+        display: block !important;
     }
 
     /* Karanlık mod için */

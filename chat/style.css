@@ -1,0 +1,1373 @@
+/* ==========================================================================
+   SEVGİLİ CHAT - GENEL STİL & RENK SİSTEMİ
+   ========================================================================== */
+
+:root {
+  --bg-primary: #0a0512;
+  --bg-secondary: #140a24;
+  --accent-pink: #ff4a85;
+  --accent-pink-glow: rgba(255, 74, 133, 0.4);
+  --accent-purple: #9d4edd;
+  --accent-purple-glow: rgba(157, 78, 221, 0.4);
+  --rose-gold: #e0a96d;
+  --text-primary: #ffffff;
+  --text-secondary: #b5a9c0;
+  --glass-bg: rgba(20, 10, 32, 0.65);
+  --glass-border: rgba(255, 74, 133, 0.15);
+  --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.6);
+  --font-main: 'Outfit', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle at 50% 10%, #201138 0%, var(--bg-primary) 70%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+/* Cam Efekti Sınıfı (Glassmorphism) */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* ==========================================================================
+   ANİMASYONLU UÇAN KALPLER ARKA PLANI
+   ========================================================================== */
+
+.heart-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.floating-heart {
+  position: absolute;
+  bottom: -50px;
+  color: var(--accent-pink);
+  opacity: 0.15;
+  filter: drop-shadow(0 0 5px var(--accent-pink-glow));
+  animation: floatUp 8s ease-in infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.25;
+  }
+  90% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(-110vh) rotate(360deg) scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   PAGE MANAGEMENT & LAYOUTS (Mobil Cihaz Odaklı)
+   ========================================================================== */
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 480px;
+  max-height: 920px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: scale(0.96) translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 10;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.page.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+  position: relative;
+}
+
+/* Desktop için pencere görünümü, mobilde tam ekran */
+@media (max-width: 480px) {
+  .page {
+    border-radius: 0;
+    max-height: 100vh;
+  }
+}
+
+/* ==========================================================================
+   GİRİŞ EKRANI (PASSCODE KEYPAD)
+   ========================================================================== */
+
+#login-page {
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-card {
+  width: 100%;
+  padding: 40px 25px;
+  border-radius: 24px;
+  text-align: center;
+  border: 1px solid rgba(255, 74, 133, 0.2);
+}
+
+.love-heart-container {
+  margin-bottom: 20px;
+}
+
+.main-heart-icon {
+  font-size: 55px;
+  color: var(--accent-pink);
+  filter: drop-shadow(0 0 15px var(--accent-pink));
+  animation: heartbeat 1.4s infinite alternate;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
+}
+
+.love-title {
+  font-family: var(--font-serif);
+  font-size: 2.3rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 30%, var(--accent-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* EYES ONLY — Classified Estetik */
+.eyes-only-title {
+  font-family: 'Courier New', 'Lucida Console', monospace !important;
+  font-size: 2rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.35em !important;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #f5c842 0%, #e8a000 50%, #fff3a0 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 0 12px rgba(245, 200, 66, 0.8))
+          drop-shadow(0 0 28px rgba(245, 200, 66, 0.4));
+  animation: eyesOnlyFlicker 4s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes eyesOnlyFlicker {
+  0%, 95%, 100% { opacity: 1; filter: drop-shadow(0 0 12px rgba(245,200,66,0.8)) drop-shadow(0 0 28px rgba(245,200,66,0.4)); }
+  96%           { opacity: 0.85; filter: drop-shadow(0 0 4px rgba(245,200,66,0.4)); }
+  97%           { opacity: 1; filter: drop-shadow(0 0 18px rgba(245,200,66,1)); }
+  98%           { opacity: 0.9; }
+}
+
+.love-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-bottom: 20px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* Kafiyeli Giriş Sözü */
+.login-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.7;
+  text-align: center;
+  margin: 0 0 20px 0;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 74, 133, 0.15);
+  background: linear-gradient(
+    270deg,
+    rgba(255,74,133,0.12),
+    rgba(157,78,221,0.12),
+    rgba(224,169,109,0.10),
+    rgba(255,74,133,0.12)
+  );
+  background-size: 300% 300%;
+  animation: quoteShimmer 6s ease infinite;
+  color: rgba(255,255,255,0.82);
+  text-shadow: 0 0 20px rgba(255,74,133,0.3);
+}
+
+@keyframes quoteShimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Modern Şifre Input */
+.passcode-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,74,133,0.25);
+  border-radius: 18px;
+  padding: 6px 8px 6px 20px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.passcode-input-wrapper:focus-within {
+  border-color: var(--accent-pink);
+  box-shadow: 0 0 16px var(--accent-pink-glow);
+}
+
+#passcode-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  padding: 10px 0;
+  caret-color: var(--accent-pink);
+}
+
+#passcode-input::placeholder {
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 1px;
+  font-size: 0.95rem;
+}
+
+.login-submit-btn {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+  border: none;
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px var(--accent-pink-glow);
+}
+
+.login-submit-btn:active {
+  transform: scale(0.92);
+}
+
+.error-msg {
+  color: #ff3366;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  min-height: 20px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: all 0.3s ease;
+}
+
+.error-msg.visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: shake 0.35s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+/* ==========================================================================
+   SOHBET SAYFASI - HEADER (Üst Başlık)
+   ========================================================================== */
+
+.chat-header {
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--glass-border);
+  z-index: 100;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+  box-shadow: 0 0 8px var(--accent-pink-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--accent-pink);
+}
+
+.status-details h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.online-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #2ec4b6;
+  box-shadow: 0 0 6px #2ec4b6;
+  animation: pulse 1.6s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 10px #2ec4b6; }
+}
+
+.status-text {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.header-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.header-btn:hover, .header-btn:active {
+  background: var(--accent-pink);
+  border-color: var(--accent-pink);
+  box-shadow: 0 0 10px var(--accent-pink-glow);
+  transform: translateY(-2px);
+}
+
+#btn-proposal {
+  color: var(--accent-pink);
+}
+
+#btn-diary {
+  color: var(--rose-gold);
+}
+
+/* ==========================================================================
+   SOHBET SAYFASI - MESAJ AKIŞI (MESSAGES)
+   ========================================================================== */
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 10;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+.chat-messages::-webkit-scrollbar {
+  width: 5px;
+}
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.chat-start-notice {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.chat-start-notice i {
+  color: var(--accent-pink);
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+
+/* Mesaj Baloncukları */
+.msg-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+  animation: messageSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.msg-wrapper.me {
+  align-self: flex-end;
+}
+
+.msg-wrapper.other {
+  align-self: flex-start;
+}
+
+.msg-bubble {
+  padding: 12px 16px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  word-wrap: break-word;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.msg-wrapper.me .msg-bubble {
+  background: linear-gradient(135deg, var(--accent-pink) 0%, #db3368 100%);
+  color: white;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 4px 15px var(--accent-pink-glow);
+}
+
+.msg-wrapper.other .msg-bubble {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-bottom-left-radius: 4px;
+}
+
+.msg-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+.msg-wrapper.me .msg-info {
+  align-self: flex-end;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================================================
+   FOTOĞRAF MESAJI
+   ========================================================================== */
+
+.msg-image {
+  max-width: 100%;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  display: block;
+}
+
+.msg-image:hover {
+  transform: scale(1.02);
+  filter: brightness(1.1);
+}
+
+/* ==========================================================================
+   SES KAYDI MESAJI & OYNATICI
+   ========================================================================== */
+
+.audio-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 180px;
+  padding: 4px 0;
+}
+
+.audio-play-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.audio-play-btn:active {
+  transform: scale(0.9);
+}
+
+.audio-waveform-bars {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 24px;
+}
+
+.wave-bar {
+  width: 3px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 2px;
+  transition: height 0.15s ease;
+}
+
+.msg-wrapper.other .audio-play-btn {
+  background: var(--accent-pink);
+}
+
+.msg-wrapper.other .wave-bar {
+  background-color: rgba(255, 74, 133, 0.4);
+}
+
+/* Ses çalarken dalgaların canlanması */
+.audio-player.playing .wave-bar {
+  animation: wavePulse 0.8s ease-in-out infinite alternate;
+}
+
+.audio-player.playing .wave-bar:nth-child(1) { height: 18px; animation-delay: 0.1s; }
+.audio-player.playing .wave-bar:nth-child(2) { height: 8px;  animation-delay: 0.3s; }
+.audio-player.playing .wave-bar:nth-child(3) { height: 22px; animation-delay: 0.2s; }
+.audio-player.playing .wave-bar:nth-child(4) { height: 12px; animation-delay: 0.4s; }
+.audio-player.playing .wave-bar:nth-child(5) { height: 16px; animation-delay: 0.15s; }
+.audio-player.playing .wave-bar:nth-child(6) { height: 20px; animation-delay: 0.35s; }
+
+@keyframes wavePulse {
+  0% { transform: scaleY(0.4); }
+  100% { transform: scaleY(1.2); }
+}
+
+.audio-time {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   BULUŞMA DAVETİ KARTI (Sohbet Akışı İçinde)
+   ========================================================================== */
+
+.proposal-card {
+  background: linear-gradient(135deg, rgba(20, 10, 32, 0.9) 0%, rgba(35, 12, 45, 0.9) 100%);
+  border: 2px solid var(--accent-pink);
+  border-radius: 22px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 0 20px var(--accent-pink-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.proposal-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 74, 133, 0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.prop-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed rgba(255, 74, 133, 0.3);
+  padding-bottom: 8px;
+}
+
+.prop-card-concept {
+  font-size: 1.8rem;
+}
+
+.prop-card-title {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--rose-gold);
+}
+
+.prop-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.prop-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+
+.prop-detail-item i {
+  color: var(--accent-pink);
+  width: 16px;
+  text-align: center;
+}
+
+.prop-detail-item strong {
+  color: var(--text-primary);
+}
+
+.prop-card-note {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid var(--accent-pink);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: #e2d9eb;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.prop-card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  position: relative;
+  min-height: 44px;
+}
+
+.prop-btn {
+  flex: 1;
+  height: 42px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: none;
+}
+
+.prop-btn.accept-yes {
+  background: linear-gradient(135deg, var(--accent-pink) 0%, #db3368 100%);
+  color: white;
+  box-shadow: 0 4px 10px var(--accent-pink-glow);
+}
+
+.prop-btn.accept-absolutely {
+  background: linear-gradient(135deg, #ffb3c6 0%, var(--accent-pink) 100%);
+  color: #5c0620;
+  box-shadow: 0 4px 10px var(--accent-pink-glow);
+}
+
+/* Kaçan Reddetme Butonu (Hayır) */
+.prop-btn.reject-no {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  z-index: 1000;
+}
+
+/* Kabul Edilmiş Durum */
+.prop-card-accepted {
+  text-align: center;
+  padding: 10px;
+  background: rgba(46, 196, 182, 0.1);
+  border: 1px solid #2ec4b6;
+  color: #2ec4b6;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  animation: scaleBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@keyframes scaleBounce {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   YAZIYOR... GÖSTERGESİ (Typing Indicator)
+   ========================================================================== */
+
+.typing-indicator-container {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 24px;
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.typing-bubble {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 12px;
+  border-radius: 16px;
+  border-bottom-left-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.typing-bubble .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-pink);
+  border: none;
+  border-radius: 50%;
+  animation: typingBounce 1s infinite;
+}
+
+.typing-bubble .dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-bubble .dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-5px); }
+}
+
+.typing-text {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   SOHBET SAYFASI - INPUT BAR (Alt Mesaj Girişi)
+   ========================================================================== */
+
+.chat-input-bar {
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid var(--glass-border);
+  z-index: 100;
+  background: rgba(14, 7, 24, 0.85);
+}
+
+.input-action-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.input-action-btn:active {
+  transform: scale(0.9);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#btn-photo {
+  color: var(--rose-gold);
+}
+
+.input-wrapper {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  max-height: 100px;
+}
+
+.input-wrapper textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: white;
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  resize: none;
+  outline: none;
+  max-height: 80px;
+  line-height: 1.3;
+}
+
+.input-wrapper textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.send-actions {
+  display: flex;
+  align-items: center;
+}
+
+.record-btn {
+  color: var(--accent-pink);
+  border-color: rgba(255, 74, 133, 0.2);
+}
+
+.record-btn.recording {
+  background: var(--accent-pink);
+  color: white;
+  box-shadow: 0 0 15px var(--accent-pink);
+  animation: recordingPulse 1.2s infinite alternate;
+}
+
+@keyframes recordingPulse {
+  0% { transform: scale(1); box-shadow: 0 0 10px var(--accent-pink); }
+  100% { transform: scale(1.1); box-shadow: 0 0 22px var(--accent-pink); }
+}
+
+.send-btn {
+  background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-purple) 100%);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 4px 10px var(--accent-pink-glow);
+}
+
+/* ==========================================================================
+   MODALLAR (Buluşma Planla & Buluşma Günlüğü)
+   ========================================================================== */
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 2, 10, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Mobil cihazlar için alttan açılan kart */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--glass-bg);
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid var(--glass-border);
+  border-bottom: none;
+  box-shadow: var(--glass-shadow);
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  max-height: 85%;
+}
+
+.modal-overlay.active .modal-card {
+  transform: translateY(0);
+}
+
+.modal-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-header h3 i {
+  color: var(--accent-pink);
+}
+
+.close-modal {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Form Tasarımı */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-group input[type="text"], 
+.form-group input[type="date"], 
+.form-group input[type="time"], 
+.form-group textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px 15px;
+  color: white;
+  font-family: var(--font-main);
+  font-size: 0.92rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+  border-color: var(--accent-pink);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 8px var(--accent-pink-glow);
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .col {
+  flex: 1;
+}
+
+/* Konsept Seçici */
+.concept-selector {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.concept-option {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px 5px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.concept-option input {
+  display: none;
+}
+
+.concept-option .icon {
+  font-size: 1.4rem;
+}
+
+.concept-option .text {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.concept-option.active {
+  background: rgba(255, 74, 133, 0.08);
+  border-color: var(--accent-pink);
+}
+
+.concept-option.active .text {
+  color: var(--accent-pink);
+}
+
+.submit-proposal-btn {
+  width: 100%;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--accent-pink) 0%, #db3368 100%);
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px var(--accent-pink-glow);
+  margin-top: 10px;
+  transition: all 0.2s ease;
+}
+
+.submit-proposal-btn:active {
+  transform: scale(0.97);
+}
+
+/* ==========================================================================
+   BULUŞMA GÜNLÜĞÜ (TIMELINE)
+   ========================================================================== */
+
+.diary-stats {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 12px 30px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--accent-pink);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.empty-timeline {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.timeline-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 15px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  animation: messageSlideIn 0.3s ease forwards;
+}
+
+.timeline-concept-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 74, 133, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.timeline-details {
+  flex: 1;
+}
+
+.timeline-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--rose-gold);
+  margin-bottom: 4px;
+}
+
+.timeline-meta {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.timeline-meta i {
+  color: var(--accent-pink);
+  margin-right: 4px;
+}
+
+.timeline-note {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  border-left: 2px solid rgba(255, 74, 133, 0.4);
+  padding-left: 6px;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   SES KAYDI İÇİN OVERLAY (KART)
+   ========================================================================== */
+
+.audio-recording-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 5, 18, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.audio-recording-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.recording-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  animation: scaleBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.pulse-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--accent-pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: white;
+  box-shadow: 0 0 20px var(--accent-pink);
+  animation: pulseMic 1.2s infinite ease-out;
+}
+
+@keyframes pulseMic {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 74, 133, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(255, 74, 133, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 74, 133, 0); }
+}
+
+.rec-timer {
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+}
+
+.rec-instruction {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   GÖRSEL ÖNİZLEME (LIGHTBOX)
+   ========================================================================== */
+
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  padding-top: 50px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.lightbox-content {
+  margin: auto;
+  display: block;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80%;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  animation: zoom 0.25s ease-out;
+}
+
+@keyframes zoom {
+  from {transform:scale(0.85); opacity: 0;}
+  to {transform:scale(1); opacity: 1;}
+}
+
+.close-lightbox {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.close-lightbox:hover,
+.close-lightbox:focus {
+  color: var(--accent-pink);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Onur için Mesaj Düzenleme & Silme Butonları */
+.msg-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.msg-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: 10px;
+}
+
+.msg-action {
+  cursor: pointer;
+  opacity: 0.4;
+  font-size: 0.75rem;
+  transition: opacity 0.2s ease;
+}
+
+.msg-action:hover {
+  opacity: 1;
+}
+
+.msg-action.delete {
+  color: #ff3366;
+}
+
+.msg-action.edit {
+  color: var(--rose-gold);
+}

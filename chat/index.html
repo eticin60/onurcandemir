@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>EYES ONLY 🔒</title>
+  
+  <!-- Fontlar ve İkonlar -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- CSS Dosyası -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Arka Plan Animasyon Kalpleri (Uçuşan Partiküller) -->
+  <div class="heart-bg" id="heart-bg"></div>
+
+  <!-- ==================== GİRİŞ EKRANI ==================== -->
+  <section class="page active" id="login-page">
+    <div class="login-card glass">
+      <div class="love-heart-container">
+        <i class="fa-solid fa-heart main-heart-icon"></i>
+      </div>
+      <h1 class="love-title eyes-only-title">EYES ONLY</h1>
+      <p class="login-quote">
+        "Where only your name opens this door —<br>
+        and what's written here stays forevermore."
+      </p>
+      <p class="love-subtitle">Devam etmek için şifreni gir</p>
+      
+
+      <!-- Modern Şifre Giriş Alanı -->
+      <div class="passcode-input-wrapper">
+        <input type="password" id="passcode-input" placeholder="Şifre..." autocomplete="off">
+        <button id="btn-login-submit" class="login-submit-btn" title="Giriş Yap">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="error-msg" id="error-message"></div>
+    </div>
+  </section>
+
+  <!-- ==================== SOHBET EKRANI ==================== -->
+  <section class="page" id="chat-page">
+    <!-- Üst Başlık (Header) -->
+    <header class="chat-header glass">
+      <div class="user-info">
+        <div class="avatar-ring">
+          <div class="avatar" id="partner-avatar">❤</div>
+        </div>
+        <div class="status-details">
+          <h2 id="partner-name">Sohbet</h2>
+          <div class="online-indicator">
+            <span class="pulse-dot"></span>
+            <span class="status-text">Çevrimiçi</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Hızlı Menü Butonları -->
+      <div class="header-actions">
+        <button class="header-btn" id="btn-proposal" title="Buluşma Planla">
+          <i class="fa-solid fa-heart-circle-plus"></i>
+        </button>
+        <button class="header-btn" id="btn-diary" title="Buluşma Günlüğü">
+          <i class="fa-solid fa-calendar-heart"></i>
+        </button>
+        <button class="header-btn" id="btn-logout" title="Çıkış Yap">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mesaj Alanı -->
+    <main class="chat-messages" id="messages-container">
+      <!-- Mesajlar JS ile dinamik doldurulacak -->
+      <div class="chat-start-notice">
+        <i class="fa-solid fa-sparkles"></i>
+        <p>Sohbete hoş geldiniz! ❤️ Mesajlarınız uçtan uca şifrelidir.</p>
+      </div>
+    </main>
+
+    <!-- Yazıyor Göstergesi -->
+    <div class="typing-indicator-container" id="typing-indicator">
+      <div class="typing-bubble">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <span class="typing-text">Yazıyor...</span>
+    </div>
+
+    <!-- Alt Giriş Çubuğu -->
+    <footer class="chat-input-bar glass">
+      <!-- Fotoğraf Ekleme -->
+      <button class="input-action-btn" id="btn-photo" title="Fotoğraf Gönder">
+        <i class="fa-solid fa-image"></i>
+      </button>
+      <input type="file" id="photo-input" accept="image/*" style="display: none;">
+
+      <!-- Metin Girişi -->
+      <div class="input-wrapper">
+        <textarea id="message-input" placeholder="Mesaj yaz..." rows="1"></textarea>
+      </div>
+
+      <!-- Ses Kaydı ve Gönderme -->
+      <div class="send-actions">
+        <!-- Ses Kayıt Butonu -->
+        <button class="input-action-btn record-btn" id="btn-record" title="Ses Kaydet (Basılı Tut)">
+          <i class="fa-solid fa-microphone"></i>
+        </button>
+        <!-- Gönder Butonu -->
+        <button class="input-action-btn send-btn" id="btn-send" style="display: none;">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ==================== BULUŞMA TEKLİFİ MODAL ==================== -->
+  <div class="modal-overlay" id="proposal-modal">
+    <div class="modal-card glass animate-in">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-envelope-open-heart"></i> Buluşma Planla</h3>
+        <button class="close-modal" id="close-proposal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="proposal-form">
+          <div class="form-group">
+            <label>Konsept Seçimi</label>
+            <div class="concept-selector">
+              <label class="concept-option active">
+                <input type="radio" name="concept" value="dinner" checked>
+                <span class="icon">🍕</span>
+                <span class="text">Yemek</span>
+              </label>
+              <label class="concept-option">
+                <input type="radio" name="concept" value="coffee">
+                <span class="icon">☕</span>
+                <span class="text">Kahve</span>
+              </label>
+              <label class="concept-option">
+                <input type="radio" name="concept" value="movie">
+                <span class="icon">🍿</span>
+                <span class="text">Sinema</span>
+              </label>
+              <label class="concept-option">
+                <input type="radio" name="concept" value="picnic">
+                <span class="icon">🧺</span>
+                <span class="text">Piknik</span>
+              </label>
+              <label class="concept-option">
+                <input type="radio" name="concept" value="stars">
+                <span class="icon">✨</span>
+                <span class="text">Yıldızlar</span>
+              </label>
+              <label class="concept-option">
+                <input type="radio" name="concept" value="fingirdeme">
+                <span class="icon">🤭</span>
+                <span class="text">Fingirdeme</span>
+              </label>
+              <label class="concept-option">
+                <input type="radio" name="concept" value="fanfinfon">
+                <span class="icon">😈</span>
+                <span class="text">FanFinFon</span>
+              </label>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="prop-date">Tarih</label>
+              <input type="date" id="prop-date" required>
+            </div>
+            <div class="form-group col">
+              <label for="prop-time">Saat</label>
+              <input type="time" id="prop-time" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="prop-location">Buluşma Yeri / Mekan</label>
+            <input type="text" id="prop-location" placeholder="Örn: Akün Sahnesi, Starbucks..." required>
+          </div>
+
+          <div class="form-group">
+            <label for="prop-note">Not</label>
+            <textarea id="prop-note" placeholder="Benimle buluşur musun? ❤️" rows="2"></textarea>
+          </div>
+
+          <button type="submit" class="submit-proposal-btn">
+            Talebi Gönder <i class="fa-solid fa-heart-pulse"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== BULUŞMA GÜNLÜĞÜ MODAL ==================== -->
+  <div class="modal-overlay" id="diary-modal">
+    <div class="modal-card glass animate-in">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-calendar-heart"></i> Buluşma Günlüğümüz</h3>
+        <button class="close-modal" id="close-diary"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="diary-stats">
+          <div class="stat-box">
+            <span class="stat-number" id="stats-planned">0</span>
+            <span class="stat-label">Toplam Randevu</span>
+          </div>
+        </div>
+        <div class="timeline" id="diary-timeline">
+          <!-- Dinamik doldurulacak -->
+          <div class="empty-timeline">Henüz onaylanmış bir buluşmamız yok. İlk adımı sen at! 💕</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== GÖRSEL ÖNİZLEME (LIGHTBOX) ==================== -->
+  <div class="lightbox" id="image-lightbox">
+    <span class="close-lightbox" id="close-lightbox">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+  </div>
+
+  <!-- ==================== SES KAYDI YÜKLENİYOR / KULLANICI UYARISI ==================== -->
+  <div class="audio-recording-overlay" id="record-overlay">
+    <div class="recording-card">
+      <div class="pulse-ring">
+        <i class="fa-solid fa-microphone"></i>
+      </div>
+      <div class="rec-timer" id="recording-timer">00:00</div>
+      <p class="rec-instruction">Ses kaydediliyor... Bıraktığında gönderilecektir.</p>
+    </div>
+  </div>
+
+  <!-- JavaScript Kütüphaneleri -->
+  <!-- CryptoJS (AES Şifreleme) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <!-- Confetti Kütüphanesi -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Uygulama Kodları -->
+  <script src="app.js"></script>
+</body>
+</html>
